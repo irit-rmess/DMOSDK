@@ -1,0 +1,149 @@
+# DMOSDK - DecaWave Module Open Software Development Kit
+# Copyright (C) 2018-2019 IRIT-RMESS
+#
+# This file is part of DMOSDK.
+#
+# DMOSDK is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# DMOSDK is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with DMOSDK.  If not, see <http://www.gnu.org/licenses/>.
+
+menu "FreeRTOS"
+  config configUSE_PREEMPTION
+    bool "Preemption"
+    default y
+  config configUSE_PORT_OPTIMISED_TASK_SELECTION
+    bool "Port optimised task selection"
+    default n
+  config configUSE_TICKLESS_IDLE
+    bool "Tickless idle"
+    default n
+  config configMAX_PRIORITIES
+    int "Max priorities"
+    default 5
+  config configMINIMAL_STACK_SIZE
+    int "Minimal stack size"
+    default 128
+  config configMAX_TASK_NAME_LEN
+    int "Maximum task name length"
+    default 128
+  config configUSE_16_BIT_TICKS
+    bool "16 bit ticks"
+    default n
+  config configIDLE_SHOULD_YIELD
+    bool "Idle should yield"
+    default y
+  config configUSE_TASK_NOTIFICATIONS
+    bool "Task notifications"
+    default y
+  config configUSE_MUTEXES
+    bool "Mutexes"
+    default y
+  config configUSE_RECURSIVE_MUTEXES
+    bool "Recursive mutexes"
+    default y
+  config configUSE_COUNTING_SEMAPHORES
+    bool "Counting Semaphores"
+    default y
+  config configUSE_ALTERNATIVE_API
+    bool "[Deprecated] Alternative API"
+    default n
+  config configQUEUE_REGISTRY_SIZE
+    int "Queue registry size"
+    default 10
+  config configUSE_QUEUE_SETS
+    bool "Queue sets"
+    default n
+  config configUSE_TIME_SLICING
+    bool "Time slicing"
+    default n
+  config configUSE_NEWLIB_REENTRANT
+    bool "Newlib reentrant"
+    default n
+  config configENABLE_BACKWARD_COMPATIBILITY
+    bool "Backward compatibility"
+    default n
+  config configNUM_THREAD_LOCAL_STORAGE_POINTERS
+    int "Number of thread local storage pointers"
+    default 5
+  menu "Memory allocation"
+    config configSUPPORT_STATIC_ALLOCATION
+      bool "Support static allocation"
+      default n
+    config configSUPPORT_DYNAMIC_ALLOCATION
+      bool "Support dynamic allocation"
+      default y
+    config configTOTAL_HEAP_SIZE
+      int "Total heap size"
+      default 10240
+    config configAPPLICATION_ALLOCATED_HEAP
+      bool "Application allocated heap"
+      default n
+  endmenu
+  menu "Hook function"
+    config configUSE_IDLE_HOOK
+      bool "Idle"
+      default n
+    config configUSE_TICK_HOOK
+      bool "Tick"
+      default n
+    config configCHECK_FOR_STACK_OVERFLOW
+      bool "Check for stack overflow"
+      default n
+    config configUSE_MALLOC_FAILED_HOOK
+      bool "Malloc failled"
+      default n
+    config configUSE_DAEMON_TASK_STARTUP_HOOK
+      bool "Daemon task startup"
+      default n
+  endmenu
+  menu "Run time and task stats"
+    config configGENERATE_RUN_TIME_STATS
+      bool "Generate run time stats"
+      default n
+    config configUSE_TRACE_FACILITY
+      bool "Trace facility"
+      default n
+    config configUSE_STATS_FORMATTING_FUNCTIONS
+      bool "Stats formatting functions"
+      default n
+  endmenu
+  menu "Co-routines"
+    config configUSE_CO_ROUTINES
+      bool "Co-routines"
+      default n
+    config configMAX_CO_ROUTINE_PRIORITIES
+      int "Maximum co-routine priorities"
+      default 1
+  endmenu
+  menu "Software timer"
+    config configUSE_TIMERS
+      bool "Timers"
+      default n
+    config configTIMER_TASK_PRIORITY
+      int "Timer task priority"
+      default 3
+    config configTIMER_QUEUE_LENGTH
+      int "Timer queue length"
+      default 10
+    config configTIMER_TASK_STACK_DEPTH
+      int "Timer task stack depth"
+      default 128
+  endmenu
+  menu "Interrupt nesting behavior"
+    config configKERNEL_INTERRUPT_PRIORITY
+      int "Kernel interrupt priority"
+      default 15
+    config configMAX_SYSCALL_INTERRUPT_PRIORITY
+      int "Maximum syscall interrupt priority"
+      default 2
+  endmenu
+endmenu
