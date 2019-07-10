@@ -36,5 +36,6 @@ typedef enum
 
 void log(log_facility_t facility, log_severity_t severity, const char * format, ...);
 
+int logger_init();
 #endif
 
