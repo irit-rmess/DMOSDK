@@ -31,10 +31,13 @@ typedef enum
 typedef enum
 {
     LOG_FACILITY_APP,
-    LOG_FACILITY_OTHER
+    LOG_FACILITY_OTHER,
+    LOG_FACILITY_COUNT
 } log_facility_t;
 
 void set_logger_severity(log_severity_t severity);
+
+void enable_logger_facility(log_facility_t facility, bool enable);
 
 void log(log_facility_t facility, log_severity_t severity, const char * format, ...);
 

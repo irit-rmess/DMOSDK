@@ -36,6 +36,8 @@ static char facility_desc[][10] = {
     "other"
 };
 
+static bool facility_enable[LOG_FACILITY_COUNT] = {true};
+
 static nrfx_rtc_t const rtc = NRFX_RTC_INSTANCE(0);
 
 static volatile uint64_t overflows;
@@ -45,6 +47,12 @@ static log_severity_t logger_severity = LOG_SEVERITY_ERROR;
 void set_logger_severity(log_severity_t severity)
 {
     logger_severity = severity;
+}
+
+void enable_logger_facility(log_facility_t facility, bool enable)
+{
+    if (facility < LOG_FACILITY_COUNT)
+        facility_enable[facility] = enable;
 }
 
 void uint64_to_string(uint64_t value, char buffer[])
@@ -65,6 +73,8 @@ void uint64_to_string(uint64_t value, char buffer[])
 void log(log_facility_t facility, log_severity_t severity, const char * format, ...)
 {
     if (severity > logger_severity) return;
+    if (!facility_enable[facility]) return;
+
     uint64_t timestamp = nrfx_rtc_counter_get(&rtc) + (overflows << 24);
     static char timestamp_string[21];
     uint64_to_string(timestamp, timestamp_string);
