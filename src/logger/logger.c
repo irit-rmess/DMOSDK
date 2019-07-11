@@ -38,17 +38,36 @@ static char facility_desc[][10] = {
 
 static nrfx_rtc_t const rtc = NRFX_RTC_INSTANCE(0);
 
+static volatile uint64_t overflows;
+
+void uint64_to_string(uint64_t value, char buffer[])
+{
+    uint64_t divider = 10;
+    while (value / divider)
+        divider *= 10;
+    int i = 0;
+    while (divider != 1)
+    {
+        buffer[i] = '0' + (value % divider) / (divider / 10);
+        divider /= 10;
+        i++;
+    }
+    buffer[i] = 0;
+}
+
 void log(log_facility_t facility, log_severity_t severity, const char * format, ...)
 {
-    uint32_t timestamp = nrfx_rtc_counter_get(&rtc);
+    uint64_t timestamp = nrfx_rtc_counter_get(&rtc) + (overflows << 24);
+    static char timestamp_string[21];
+    uint64_to_string(timestamp, timestamp_string);
     static char message[100];
     va_list va;
     va_start(va, format);
     vsprintf(message, format, va);
     va_end(va);
     printf(
-            "{\"command\":\"log\",\"payload\":{\"timestamp\":%lu,\"facility\":\"%s\",\"severity\":\"%s\",\"message\":\"%s\"}}\r\n",
-            timestamp,
+            "{\"command\":\"log\",\"payload\":{\"timestamp\":%s,\"facility\":\"%s\",\"severity\":\"%s\",\"message\":\"%s\"}}\r\n",
+            timestamp_string,
             facility_desc[facility],
             severity_desc[severity],
             message
@@ -57,7 +76,10 @@ void log(log_facility_t facility, log_severity_t severity, const char * format, 
 
 static void rtc_event_handler(nrfx_rtc_int_type_t type)
 {
-
+    if (type == NRFX_RTC_INT_OVERFLOW)
+    {
+        overflows++;
+    }
 }
 
 static void clock_event_handler(nrfx_clock_evt_type_t type)
