@@ -34,6 +34,8 @@ typedef enum
     LOG_FACILITY_OTHER
 } log_facility_t;
 
+void set_logger_severity(log_severity_t severity);
+
 void log(log_facility_t facility, log_severity_t severity, const char * format, ...);
 
 int logger_init();
