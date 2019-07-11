@@ -35,12 +35,36 @@ typedef enum
     LOG_FACILITY_COUNT
 } log_facility_t;
 
+/**
+ * @brief Sets logger severity level
+ *
+ * @param[in] severity Severity level to set
+ */
 void set_logger_severity(log_severity_t severity);
 
+/**
+ * @brief Enable or disable logs for a facility
+ *
+ * @param[in] facility
+ * @param[in] enable True to enable, false to disable
+ */
 void enable_logger_facility(log_facility_t facility, bool enable);
 
+/**
+ * @brief Logs a message
+ *
+ * Outputs JSON. Depends on printf. The message is timestamped using the RTC.
+ * @param[in] facility
+ * @param[in] severity
+ * @param[in] format Message to log using printf format
+ */
 void log(log_facility_t facility, log_severity_t severity, const char * format, ...);
 
+/**
+ * @brief Logger initialization
+ *
+ * Configures the LFCLK and the RTC for timestamping messages.
+ */
 int logger_init();
 #endif
 

@@ -44,18 +44,36 @@ static volatile uint64_t overflows;
 
 static log_severity_t logger_severity = LOG_SEVERITY_ERROR;
 
-void set_logger_severity(log_severity_t severity)
+/**
+ * @brief RTC event handler
+ *
+ * Handles overflows.
+ * @param[in] type RTC event type
+ */
+static void rtc_event_handler(nrfx_rtc_int_type_t type)
 {
-    logger_severity = severity;
+    if (type == NRFX_RTC_INT_OVERFLOW)
+    {
+        overflows++;
+    }
 }
 
-void enable_logger_facility(log_facility_t facility, bool enable)
-{
-    if (facility < LOG_FACILITY_COUNT)
-        facility_enable[facility] = enable;
-}
+/**
+ * @brief Clock event handler
+ *
+ * Unused but necessary for nrfx_clock.
+ * @param[in] type Clock event type
+ */
+static void clock_event_handler(nrfx_clock_evt_type_t type) {}
 
-void uint64_to_string(uint64_t value, char buffer[])
+/**
+ * @brief Converts unsigned 64 bit int to string
+ *
+ * Helper function to compensate newlib nano printf's lack of long long format support.
+ * @param[in]  value  Unsigned int to convert
+ * @param[out] buffer Buffer for the generated string
+ */
+static void uint64_to_string(uint64_t value, char buffer[])
 {
     uint64_t divider = 10;
     while (value / divider)
@@ -68,6 +86,17 @@ void uint64_to_string(uint64_t value, char buffer[])
         i++;
     }
     buffer[i] = 0;
+}
+
+void set_logger_severity(log_severity_t severity)
+{
+    logger_severity = severity;
+}
+
+void enable_logger_facility(log_facility_t facility, bool enable)
+{
+    if (facility < LOG_FACILITY_COUNT)
+        facility_enable[facility] = enable;
 }
 
 void log(log_facility_t facility, log_severity_t severity, const char * format, ...)
@@ -90,19 +119,6 @@ void log(log_facility_t facility, log_severity_t severity, const char * format, 
             severity_desc[severity],
             message
     );
-}
-
-static void rtc_event_handler(nrfx_rtc_int_type_t type)
-{
-    if (type == NRFX_RTC_INT_OVERFLOW)
-    {
-        overflows++;
-    }
-}
-
-static void clock_event_handler(nrfx_clock_evt_type_t type)
-{
-
 }
 
 int logger_init()
