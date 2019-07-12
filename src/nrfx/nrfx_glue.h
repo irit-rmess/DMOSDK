@@ -49,6 +49,21 @@ extern "C" {
 // at linking time.
 #include <soc/nrfx_irqs.h>
 
+#define FORCE_INLINE inline __attribute__((always_inline))
+
+FORCE_INLINE static void mask_all_interrupts()
+{
+    uint32_t new_basepri;
+
+    __asm volatile
+    (
+        "mov %0, #1\n" \
+        "msr basepri, %0\n" \
+        "isb\n" \
+        "dsb\n" \
+        :"=r" (new_basepri) : : "memory"
+    );
+}
 //------------------------------------------------------------------------------
 
 /**
@@ -56,14 +71,14 @@ extern "C" {
  *
  * @param expression Expression to be evaluated.
  */
-#define NRFX_ASSERT(expression)
+#define NRFX_ASSERT(expression) if ( (expression) == 0 ) { mask_all_interrupts(); while(1); }
 
 /**
  * @brief Macro for placing a compile time assertion.
  *
  * @param expression Expression to be evaluated.
  */
-#define NRFX_STATIC_ASSERT(expression)
+#define NRFX_STATIC_ASSERT(expression) _Static_assert(expression, "nrfx assert failed")
 
 //------------------------------------------------------------------------------
 
