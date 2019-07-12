@@ -19,7 +19,7 @@
 FROM ubuntu:19.04
 LABEL Description="Image bundling all the compilation tools for DMOSDK"
 
-WORKDIR /dmosdk
+WORKDIR /DMOSDK
 
 # Install any needed packages specified in requirements.txt
 RUN apt update && \
