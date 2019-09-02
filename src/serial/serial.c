@@ -113,10 +113,18 @@ static void serial_receive_task(void * pvParameter)
     static uint8_t uart_rx_buffer;
     while (true)
     {
+        nrfx_uart_rx_enable(&serial);
         uint32_t notification_value;
         nrfx_uart_rx(&serial, &uart_rx_buffer, 1);
         xTaskNotifyWait(0, 0, &notification_value, portMAX_DELAY);
-        if (notification_value == NOTIFY_UART_ERROR) continue;
+        if (notification_value != NOTIFY_UART_RX_DONE)
+        {
+            if (notification_value == NOTIFY_UART_ERROR)
+                serial_send("Error: UART RX Error\r\n", 22);
+            else
+                serial_send("Error: Receive Task Notification Error\r\n", 40);
+            continue;
+        }
         size_t bytes = xStreamBufferSend(receive_stream_buffer,
                 &uart_rx_buffer, 1, 0);
         if (bytes == 0)
