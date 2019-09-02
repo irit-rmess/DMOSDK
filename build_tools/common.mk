@@ -145,13 +145,24 @@ INC += \
 ifeq ($(CONFIG_SERIAL), y)
 SRC_C += \
   $(DWM1001_FRAMEWORK_PATH)/src/serial/serial.c \
-  $(DWM1001_FRAMEWORK_PATH)/src/serial/retarget.c \
+  $(DWM1001_FRAMEWORK_PATH)/src/serial/printf.c
+
+INC += \
+  $(DWM1001_FRAMEWORK_PATH)/src/serial
+endif
+
+# logger
+ifeq ($(CONFIG_LOGGER), y)
+SRC_C += \
   $(DWM1001_FRAMEWORK_PATH)/src/logger/logger.c
 
 INC += \
-  $(DWM1001_FRAMEWORK_PATH)/src/serial \
   $(DWM1001_FRAMEWORK_PATH)/src/logger
 endif
+
+# nanoprintf
+INC += \
+  $(EXTERNAL_PATH)/nanoprintf
 
 # Decawave driver
 

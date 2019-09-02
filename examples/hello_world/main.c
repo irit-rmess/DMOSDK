@@ -26,11 +26,11 @@
  */
 
 #include <stdbool.h>
-#include <stdio.h>
 
 #include "FreeRTOS.h"
 #include "task.h"
 
+#include "printf.h"
 #include "serial.h"
 
 #define TASK_DELAY 1000
