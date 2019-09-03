@@ -5,3 +5,4 @@
 - FreeRTOS: 10.2.0 
 - nrfx: 1.7.2
 - nanoprintf: commit 64f84ce
+- jsmn: 1.1.0

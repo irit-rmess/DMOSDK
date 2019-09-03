@@ -164,6 +164,27 @@ endif
 INC += \
   $(EXTERNAL_PATH)/nanoprintf
 
+# reader
+SRC_C += \
+  $(DWM1001_FRAMEWORK_PATH)/src/reader/reader.c
+
+INC += \
+  $(DWM1001_FRAMEWORK_PATH)/src/reader
+
+# json
+SRC_C += \
+  $(DWM1001_FRAMEWORK_PATH)/src/json/json.c
+
+INC += \
+  $(DWM1001_FRAMEWORK_PATH)/src/json
+
+# commands
+SRC_C += \
+  $(DWM1001_FRAMEWORK_PATH)/src/commands/commands.c
+
+INC += \
+  $(DWM1001_FRAMEWORK_PATH)/src/commands
+
 # Decawave driver
 
 ifeq ($(CONFIG_DECA_DRIVER_ENABLED), y)
@@ -251,6 +272,9 @@ INC += \
   $(NRFX_PATH)/mdk \
   $(NRFX_PATH)/soc \
 
+# JSMN
+INC += \
+  $(EXTERNAL_PATH)/jsmn
 
 ################################################################################
 #  Move objects files in build directory
