@@ -20,6 +20,8 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
+#define STRING(s) "\"" s "\""
+
 typedef enum
 {
     LOG_SEVERITY_ERROR,
@@ -31,6 +33,7 @@ typedef enum
 typedef enum
 {
     LOG_FACILITY_APP,
+    LOG_FACILITY_SYS,
     LOG_FACILITY_OTHER,
     LOG_FACILITY_COUNT
 } log_facility_t;

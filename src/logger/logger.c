@@ -17,11 +17,11 @@
  * along with DMOSDK.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <stdio.h>
 #include <stdarg.h>
 
 #include "nrfx_clock.h"
 #include "nrfx_rtc.h"
+#include "printf.h"
 #include "logger.h"
 
 static char severity_desc[][10] = {
@@ -33,10 +33,11 @@ static char severity_desc[][10] = {
 
 static char facility_desc[][10] = {
     "app",
+    "sys",
     "other"
 };
 
-static bool facility_enable[LOG_FACILITY_COUNT] = {true};
+static bool facility_enable[LOG_FACILITY_COUNT] = {true, true, true};
 
 static nrfx_rtc_t const rtc = NRFX_RTC_INSTANCE(0);
 
@@ -66,28 +67,6 @@ static void rtc_event_handler(nrfx_rtc_int_type_t type)
  */
 static void clock_event_handler(nrfx_clock_evt_type_t type) {}
 
-/**
- * @brief Converts unsigned 64 bit int to string
- *
- * Helper function to compensate newlib nano printf's lack of long long format support.
- * @param[in]  value  Unsigned int to convert
- * @param[out] buffer Buffer for the generated string
- */
-static void uint64_to_string(uint64_t value, char buffer[])
-{
-    uint64_t divider = 10;
-    while (value / divider)
-        divider *= 10;
-    int i = 0;
-    while (divider != 1)
-    {
-        buffer[i] = '0' + (value % divider) / (divider / 10);
-        divider /= 10;
-        i++;
-    }
-    buffer[i] = 0;
-}
-
 void set_logger_severity(log_severity_t severity)
 {
     logger_severity = severity;
@@ -105,20 +84,19 @@ void log(log_facility_t facility, log_severity_t severity, const char * format, 
     if (!facility_enable[facility]) return;
 
     uint64_t timestamp = nrfx_rtc_counter_get(&rtc) + (overflows << 24);
-    static char timestamp_string[21];
-    uint64_to_string(timestamp, timestamp_string);
-    static char message[100];
-    va_list va;
-    va_start(va, format);
-    vsprintf(message, format, va);
-    va_end(va);
-    printf(
-            "{\"command\":\"log\",\"payload\":{\"timestamp\":%s,\"facility\":\"%s\",\"severity\":\"%s\",\"message\":\"%s\"}}\r\n",
-            timestamp_string,
+    pprintf(
+            "{\"command\":\"log\",\"payload\":{\"timestamp\":%llu,\"facility\":\"%s\",\"severity\":\"%s\",\"message\":",
+            timestamp,
             facility_desc[facility],
-            severity_desc[severity],
-            message
-    );
+            severity_desc[severity]
+          );
+
+    va_list va; {}
+    va_start(va, format);
+    vpprintf(format, va);
+    va_end(va);
+
+    printf("}}\r\n");
 }
 
 int logger_init()
