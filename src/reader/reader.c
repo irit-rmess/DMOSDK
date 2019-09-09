@@ -23,6 +23,7 @@
 #include "serial.h"
 #include "logger.h"
 #include "json.h"
+#include "commands.h"
 
 #include "reader.h"
 
@@ -45,6 +46,9 @@ static void reader_task(void *pvParameters)
     static char buffer[BUFFER_SIZE];
     int i = 0;
     bool reset_parser = true;
+
+    static jsmntok_t tokens[64]; /* We expect no more than 64 tokens */
+    static parser_t parser = PARSER(tokens);
     while (1)
     {
         if (i >= BUFFER_SIZE)
@@ -59,9 +63,22 @@ static void reader_task(void *pvParameters)
             LOG_READER(LOG_SEVERITY_ERROR, STRING("Read error"));
             continue;
         }
+
+        if (buffer[i] == '\0')
+        {
+            i = 0;
+            reset_parser = true;
+            continue;
+        }
+
         i += len;
 
-        int res = json_parse(buffer, i, reset_parser);
+        int res = json_parse(&parser, buffer, i, reset_parser);
+        if (res > 0)
+        {
+            json_parse_command(buffer, tokens, res);
+        }
+
         if (res == JSON_INCOMPLETE)
         {
             reset_parser = false;

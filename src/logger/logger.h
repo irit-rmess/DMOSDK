@@ -66,6 +66,11 @@ void enable_logger_facility(log_facility_t facility, bool enable);
 void log(log_facility_t facility, log_severity_t severity, const char * format, ...);
 
 /**
+ * @brief Loads logger parameters from config in flash
+ */
+void logger_load_saved_config();
+
+/**
  * @brief Logger initialization
  *
  * Configures the LFCLK and the RTC for timestamping messages.

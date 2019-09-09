@@ -38,7 +38,8 @@ CMSIS_PATH = $(EXTERNAL_PATH)/CMSIS
 BUILD_TOOLS_PATH = $(DWM1001_FRAMEWORK_PATH)/build_tools
 KCONFIG_PATH = $(BUILD_TOOLS_PATH)/kconfig
 
-LINKER_SCRIPT = $(BUILD_TOOLS_PATH)/linker_script.ld
+LINKER_SCRIPT_TEMPLATE = $(BUILD_TOOLS_PATH)/linker_script.ld.in
+LINKER_SCRIPT = $(BUILD_DIR)/linker_script.ld
 KCONFIG_FILE = $(DWM1001_FRAMEWORK_PATH)/configs/kconfig
 
 TOOLCHAIN ?= arm-none-eabi-
@@ -63,6 +64,7 @@ print_red = /bin/echo -e "\x1b[1m\x1b[31m$1\x1b[0m"
 print_green = /bin/echo -e "\x1b[32m$1\x1b[0m"
 print_yellow = /bin/echo -e "\x1b[33m$1\x1b[0m"
 print_blue = /bin/echo -e "\x1b[36m$1\x1b[0m"
+print_light_blue = /bin/echo -e "\x1b[94m$1\x1b[0m"
 
 ################################################################################
 #  Compilation Flags
@@ -184,6 +186,15 @@ SRC_C += \
 
 INC += \
   $(DWM1001_FRAMEWORK_PATH)/src/commands
+
+ifeq ($(CONFIG_CONFIG_SECTION), y)
+# config
+SRC_C += \
+  $(DWM1001_FRAMEWORK_PATH)/src/config/config.c
+
+INC += \
+  $(DWM1001_FRAMEWORK_PATH)/src/config
+endif
 
 # Decawave driver
 
@@ -328,9 +339,13 @@ $(BUILD_DIR)/$(BIN).hex: $(BUILD_DIR)/$(BIN).elf
 	@$(call print_red,"--- Show number of bytes used by section")
 	$(CMD_ECHO) $(OBJCOPY) -O binary $< $@
 
-$(BUILD_DIR)/$(BIN).elf: $(OBJS_ASM) $(OBJS_C)
+$(BUILD_DIR)/$(BIN).elf: $(OBJS_ASM) $(OBJS_C) | $(LINKER_SCRIPT)
 	@$(call print_blue,"LD   $(notdir $@)")
 	$(CMD_ECHO) $(LD) $(LDFLAGS) -o $@ $^ $(LIBS)
+
+$(LINKER_SCRIPT): $(LINKER_SCRIPT_TEMPLATE)
+	@$(call print_light_blue,"PP   $(notdir $@)")
+	$(CMD_ECHO) $(CC) $(DEFINES) $(DEF) $(INCLUDES) -E -P -x c -o $@ $<
 
 clean:
 	@$(call print_red,"--- Clean all files")

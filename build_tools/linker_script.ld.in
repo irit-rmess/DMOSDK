@@ -17,6 +17,8 @@
  * along with DMOSDK.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "build_config.h"
+
 /* Linker script to configure memory regions. */
 
 SEARCH_DIR(.)
@@ -28,4 +30,16 @@ MEMORY
   RAM (rwx) :  ORIGIN = 0x20000000, LENGTH = 0x10000
 }
 
-INCLUDE "nrf52_common.ld"
+#ifdef CONFIG_SECTION
+SECTIONS
+{
+    .config_section ORIGIN(FLASH) + LENGTH(FLASH) - CONFIG_SECTION_SIZE (NOLOAD) :
+    {
+      __config_section_start = .;
+      KEEP(*(.config))
+      __config_section_end = .;
+    } > FLASH
+}
+#endif
+
+INCLUDE "nrf_common.ld"

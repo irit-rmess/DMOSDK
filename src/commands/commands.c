@@ -21,7 +21,10 @@
 #include "logger.h"
 #include "json.h"
 
+#include "config.h"
 #include "commands.h"
+
+#define OUTPUT_CMD(code, format, ...) printf("{\"command\":\"config\",\"payload\":{\"code\":" #code ",\"output\":" format "}}\r\n" __VA_OPT__(,) __VA_ARGS__)
 
 #define LOG_CMD(severity, format, ...) log(LOG_FACILITY_OTHER, severity, "{\"util\":\"cmd\",\"message\":" format "}" __VA_OPT__(,) __VA_ARGS__)
 
@@ -65,7 +68,7 @@ int json_parse_command(char *buffer, jsmntok_t *tokens, int num_tokens)
     }
 
     handle_json_command(buffer, cmd_tok, pld_tok);
-    return JSON_PARSED;
+    return 1;
 }
 
 void handle_json_command(char *buffer, jsmntok_t *cmd_tok, jsmntok_t *pld_tok)
@@ -104,9 +107,33 @@ int cmd_help(char *buffer, jsmntok_t *pld_tok)
     return 0;
 }
 
+/**
+ * @brief Prints/Writes config in flash command
+ *
+ * Prints/Writes config in flash if payload is empty/defined.
+ * @param[in] buffer
+ * @param[in] pld_tok Payload token
+ */
 int cmd_config(char *buffer, jsmntok_t *pld_tok)
 {
-    // TODO
+    if (pld_tok == NULL)
+    {
+        if (config_read())
+        {
+            OUTPUT_CMD(1, "Internal error");
+            return 1;
+        }
+        OUTPUT_CMD(0, "%.*s", config.size, config.buffer);
+        return 0;
+    }
+
+    int bytes = config_write(
+                    buffer + pld_tok->start,
+                    pld_tok->end - pld_tok->start
+                );
+    OUTPUT_CMD(0, "{\"address\":\"%#x\",\"bytes_writen\":%d}",
+            config.buffer, bytes);
+
     return 0;
 }
 

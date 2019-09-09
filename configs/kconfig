@@ -40,6 +40,15 @@ menu "Global configuration"
         select NRFX_RTC_ENABLED
         select NRFX_RTC0_ENABLED
         bool "Logger"
+    config CONFIG_SECTION
+        select NRFX_NVMC_ENABLED
+        bool "Config section"
+    menu "Configuration"
+        depends on CONFIG_SECTION
+        config CONFIG_SECTION_SIZE
+            hex "Size"
+                default 0x1000
+    endmenu
 endmenu
 
 menu "Deca Driver"

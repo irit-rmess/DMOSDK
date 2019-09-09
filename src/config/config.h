@@ -17,50 +17,52 @@
  * along with DMOSDK.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef JSON_H
-#define JSON_H
+/**
+ * @file
+ * @brief Utility to manage a JSON config in flash
+ *
+ * Config format:
+ * \0 CONFIG \0 <size (uint16_t)> <json> \0
+ */
 
-#include <stdbool.h>
+#ifndef CONFIG_H
+#define CONFIG_H
 
+#include <stdint.h>
 #define JSMN_HEADER
 #include "jsmn.h"
 
-#define NUM_TOKENS(tokens) (sizeof(tokens)/sizeof(tokens[0]))
-#define PARSER(tokens) {.tokens = (tokens), .num_tokens = NUM_TOKENS(tokens)}
-
-enum json_parse_codes
-{
-    JSON_INCOMPLETE = 0,
-    JSON_PARSER_ERROR = -1,
-    JSON_INCORRECT_FORMAT = -2
-};
-
 typedef struct
 {
-    jsmn_parser jsmn;
-    jsmntok_t *tokens;
+    const char * const buffer;
+    uint16_t size;
+    jsmntok_t * tokens;
     int num_tokens;
-} parser_t;
+} config_t;
+
+enum config_read_codes
+{
+    CONFIG_PARSED = 0,
+    CONFIG_HEADER_ERROR = 1,
+    CONFIG_JSON_PARSE_ERROR = 2
+};
+
+extern config_t config;
 
 /**
- * @brief Compares a token with a string
+ * @brief Reads config from flash
  *
- * @param[in] json Buffer
- * @param[in] tok  Token
- * @param[in] s    String to compare
- * @return 0 if the token matches, -1 if not.
+ * Parses config as JSON
+ * @return ::config_read_codes
  */
-int jsoneq(const char *json, jsmntok_t *tok, const char *s);
+int config_read();
 
 /**
- * @brief Parses JSON
+ * @brief Writes config to flash
  *
- * @param[in] parser
  * @param[in] buffer
  * @param[in] len
- * @param[in] reset True resets the parser
- * @return number of tokens found or ::json_parse_codes on error
+ * @return number of bytes written to flash
  */
-int json_parse(parser_t *parser, char *buffer, int len, bool reset);
-
+int config_write(char *buffer, uint16_t len);
 #endif

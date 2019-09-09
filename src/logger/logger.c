@@ -22,6 +22,8 @@
 #include "nrfx_clock.h"
 #include "nrfx_rtc.h"
 #include "printf.h"
+#include "config.h"
+#include "json.h"
 #include "logger.h"
 
 static char severity_desc[][10] = {
@@ -97,6 +99,54 @@ void log(log_facility_t facility, log_severity_t severity, const char * format, 
     va_end(va);
 
     printf("}}\r\n");
+}
+
+void logger_load_saved_config()
+{
+    for (int i = 0; i < config.num_tokens; i++)
+    {
+        if (jsoneq(config.buffer, config.tokens + i, "logger") == 0)
+        {
+            ++i;
+            jsmntok_t *t_log = config.tokens + i;
+            ++i;
+            for (int child = 0; child < t_log->size; child++)
+            {
+                jsmntok_t *t_child = config.tokens + i;
+                if (jsoneq(config.buffer, config.tokens + i, "severity") == 0)
+                {
+                    ++i;
+                    jsmntok_t *t_sev = config.tokens + i;
+                    if (jsoneq(config.buffer, t_sev, "debug") == 0)
+                    {
+                        set_logger_severity(LOG_SEVERITY_DEBUG);
+                    }
+                    else if (jsoneq(config.buffer, t_sev, "info") == 0)
+                    {
+                        set_logger_severity(LOG_SEVERITY_INFO);
+                    }
+                    else if (jsoneq(config.buffer, t_sev, "warning") == 0)
+                    {
+                        set_logger_severity(LOG_SEVERITY_WARNING);
+                    }
+                    else if (jsoneq(config.buffer, t_sev, "error") == 0)
+                    {
+                        set_logger_severity(LOG_SEVERITY_ERROR);
+                    }
+                    return;
+                }
+                else
+                {
+                    // Ignore unknown attributes, find the next sibling
+                    ++i;
+                    while(i < config.num_tokens
+                        && (t_child + 1)->end > config.tokens[i].start)
+                        ++i;
+                }
+            }
+            return;
+        }
+    }
 }
 
 int logger_init()
