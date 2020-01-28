@@ -21,7 +21,6 @@
 #include "task.h"
 
 #include "serial.h"
-#include "logger.h"
 #include "json.h"
 #include "commands.h"
 
@@ -29,9 +28,14 @@
 
 #define BUFFER_SIZE 1000
 
+#if LOGGER == 1
+#include "logger.h"
 #define LOG_READER(severity, format, ...) log(LOG_FACILITY_SYS, severity, "{\"task\":\"reader\",\"message\":" format "}" __VA_OPT__(,) __VA_ARGS__)
+#else
+#define LOG_READER(severity, format, ...)
+#endif
 
-#define READER_TASK_PRIORITY 1 
+#define READER_TASK_PRIORITY 1
 
 static TaskHandle_t reader_task_handle;
 
