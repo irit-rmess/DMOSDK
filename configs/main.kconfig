@@ -38,6 +38,8 @@ menu "Global configuration"
         select NRFX_RTC_ENABLED
         select NRFX_RTC0_ENABLED
         bool "Logger"
+    config COMMANDS
+        bool "Commands"
     config CONFIG_SECTION
         select NRFX_NVMC_ENABLED
         bool "Config section"

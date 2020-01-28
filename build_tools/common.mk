@@ -166,6 +166,7 @@ endif
 INC += \
   $(EXTERNAL_PATH)/nanoprintf
 
+ifeq ($(CONFIG_COMMANDS), y)
 # reader
 SRC_C += \
   $(DWM1001_FRAMEWORK_PATH)/src/reader/reader.c
@@ -186,6 +187,7 @@ SRC_C += \
 
 INC += \
   $(DWM1001_FRAMEWORK_PATH)/src/commands
+endif
 
 ifeq ($(CONFIG_CONFIG_SECTION), y)
 # config
