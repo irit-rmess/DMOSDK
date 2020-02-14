@@ -19,8 +19,6 @@
 FROM ubuntu:19.04
 LABEL Description="Image bundling all the compilation tools for DMOSDK"
 
-WORKDIR /DMOSDK
-
 # Install any needed packages specified in requirements.txt
 RUN apt update && \
     apt upgrade -y && \
@@ -33,6 +31,4 @@ RUN apt update && \
       python3 && \
     apt clean
 
-RUN curl https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/8-2018q4/gcc-arm-none-eabi-8-2018-q4-major-linux.tar.bz2 --compressed | tar xj -C /
-
-ENV PATH "/gcc-arm-none-eabi-8-2018-q4-major/bin:$PATH"
+RUN curl https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/9-2019q4/gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2 --compressed | tar xj --strip-components=1 -C /usr/local
