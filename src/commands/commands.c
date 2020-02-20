@@ -29,13 +29,15 @@
 #define LOG_CMD(severity, format, ...) log(LOG_FACILITY_OTHER, severity, "{\"util\":\"cmd\",\"message\":" format "}" __VA_OPT__(,) __VA_ARGS__)
 
 int cmd_help(char *buffer, jsmntok_t *pld_tok);
+int cmd_ping(char *buffer, jsmntok_t *pld_tok);
 int cmd_config(char *buffer, jsmntok_t *pld_tok);
 int cmd_reboot(char *buffer, jsmntok_t *pld_tok);
 int cmd_send(char *buffer, jsmntok_t *pld_tok);
 
 json_cmd_desc_t json_cmd_desc_table[] = {
     {"help", cmd_help, "Gives help on the commands"},
-    {"config", cmd_config, "Configure the node"},
+    {"ping", cmd_ping, "Checks for the node's availability"},
+    {"config", cmd_config, "Configures the node"},
     {"reboot", cmd_reboot, "Reboots the node"},
     {"send", cmd_send, "Sends a message"},
     {NULL, NULL, NULL}
@@ -104,6 +106,18 @@ int cmd_help(char *buffer, jsmntok_t *pld_tok)
     }
     printf("{\"name\":\"%s\",\"description\":\"%s\"}]}}\r\n",
             json_cmd_desc_table[i].name, json_cmd_desc_table[i].help);
+    return 0;
+}
+
+/**
+ * @brief Gives help on the commands
+ *
+ * @param[in] buffer
+ * @param[in] pld_tok Payload token
+ */
+int cmd_ping(char *buffer, jsmntok_t *pld_tok)
+{
+    printf("{\"command\":\"ping\",\"payload\":\"pong\"}\r\n");
     return 0;
 }
 
