@@ -58,6 +58,7 @@ int config_read()
 
     config.size = (uint16_t) *(__config_section_start + SOS_SIZE);
 
+    LOG_CONFIG(LOG_SEVERITY_DEBUG, STRING("Config saved is:\r\n%.*s"), config.size, (char *)config_data_start);
     int res = json_parse(
                   &parser, (char *)config_data_start,
                   config.size,
