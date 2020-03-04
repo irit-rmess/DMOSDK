@@ -138,13 +138,14 @@ int cmd_config(char *buffer, jsmntok_t *pld_tok)
     {
         if (config_read())
         {
-            OUTPUT_CMD(1, "Internal error");
+            OUTPUT_CMD(1, STRING("Internal error"));
             return 1;
         }
         OUTPUT_CMD(0, "%.*s", config.size, config.buffer);
         return 0;
     }
 
+    LOG_CMD(LOG_SEVERITY_DEBUG, STRING("Writing the following config into flash:\r\n%.*s"), pld_tok->end - pld_tok->start, buffer + pld_tok->start);
     int bytes = config_write(
                     buffer + pld_tok->start,
                     pld_tok->end - pld_tok->start
