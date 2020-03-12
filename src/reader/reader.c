@@ -23,17 +23,11 @@
 #include "serial.h"
 #include "json.h"
 #include "commands.h"
+#include "logger.h"
 
 #include "reader.h"
 
 #define BUFFER_SIZE 1000
-
-#if LOGGER == 1
-#include "logger.h"
-#define LOG_READER(severity, format, ...) log(LOG_FACILITY_SYS, severity, "{\"task\":\"reader\",\"message\":" format "}" __VA_OPT__(,) __VA_ARGS__)
-#else
-#define LOG_READER(severity, format, ...)
-#endif
 
 #define READER_TASK_PRIORITY 1
 
@@ -57,14 +51,14 @@ static void reader_task(void *pvParameters)
     {
         if (i >= BUFFER_SIZE)
         {
-            LOG_READER(LOG_SEVERITY_ERROR, STRING("Commands buffer overflow"));
+            LOG(LOG_SEVERITY_ERROR, STRING("Commands buffer overflow"));
             i = 0;
             reset_parser = true;
         }
         long len = serial_receive(buffer + i, 1);
         if (!(len > 0))
         {
-            LOG_READER(LOG_SEVERITY_ERROR, STRING("Read error"));
+            LOG(LOG_SEVERITY_ERROR, STRING("Read error"));
             continue;
         }
 

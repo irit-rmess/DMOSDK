@@ -157,10 +157,10 @@ endif
 ifeq ($(CONFIG_LOGGER), y)
 SRC_C += \
   $(DWM1001_FRAMEWORK_PATH)/src/logger/logger.c
+endif
 
 INC += \
   $(DWM1001_FRAMEWORK_PATH)/src/logger
-endif
 
 # nanoprintf
 INC += \

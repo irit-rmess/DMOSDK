@@ -22,16 +22,11 @@
 #include "jsmn.h"
 
 #include "commands.h"
+#include "logger.h"
 
 #include "json.h"
 
-
-#if LOGGER == 1
-#include "logger.h"
-#define LOG_JSON(severity, format, ...) log(LOG_FACILITY_OTHER, severity, "{\"util\":\"json\",\"message\":" format "}" __VA_OPT__(,) __VA_ARGS__)
-#else
-#define LOG_JSON(severity, format, ...)
-#endif
+#define LOG_JSON(severity, format, ...) LOG(severity, "{\"util\":\"json\",\"message\":" format "}" __VA_OPT__(,) __VA_ARGS__)
 
 int jsoneq(const char *json, jsmntok_t *tok, const char *s) {
 	if (tok->type == JSMN_STRING && (int) strlen(s) == tok->end - tok->start &&
