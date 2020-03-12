@@ -20,9 +20,12 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
+#if LOGGER == 1
+
 #include <stdbool.h>
 
 #define STRING(s) "\"" s "\""
+#define LOG(severity, format, ...) log(severity, format __VA_OPT__(,) __VA_ARGS__)
 
 typedef enum
 {
@@ -32,14 +35,6 @@ typedef enum
     LOG_SEVERITY_DEBUG
 } log_severity_t;
 
-typedef enum
-{
-    LOG_FACILITY_APP,
-    LOG_FACILITY_SYS,
-    LOG_FACILITY_OTHER,
-    LOG_FACILITY_COUNT
-} log_facility_t;
-
 /**
  * @brief Sets logger severity level
  *
@@ -48,22 +43,13 @@ typedef enum
 void set_logger_severity(log_severity_t severity);
 
 /**
- * @brief Enable or disable logs for a facility
- *
- * @param[in] facility
- * @param[in] enable True to enable, false to disable
- */
-void enable_logger_facility(log_facility_t facility, bool enable);
-
-/**
  * @brief Logs a message
  *
  * Outputs JSON. Depends on printf. The message is timestamped using the RTC.
- * @param[in] facility
  * @param[in] severity
  * @param[in] format Message to log using printf format
  */
-void log(log_facility_t facility, log_severity_t severity, const char * format, ...);
+void log(log_severity_t severity, const char * format, ...);
 
 /**
  * @brief Loads logger parameters from config in flash
@@ -76,5 +62,13 @@ void logger_load_saved_config();
  * Configures the LFCLK and the RTC for timestamping messages.
  */
 int logger_init();
+
+#else
+
+#define STRING(s)
+#define LOG(severity, format, ...)
+
+#endif
+
 #endif
 

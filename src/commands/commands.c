@@ -22,15 +22,10 @@
 
 #include "config.h"
 #include "commands.h"
+#include "logger.h"
 
 #define OUTPUT_CMD(code, format, ...) printf("{\"command\":\"config\",\"payload\":{\"code\":" #code ",\"output\":" format "}}\r\n" __VA_OPT__(,) __VA_ARGS__)
-
-#if LOGGER == 1
-#include "logger.h"
-#define LOG_CMD(severity, format, ...) log(LOG_FACILITY_OTHER, severity, "{\"util\":\"cmd\",\"message\":" format "}" __VA_OPT__(,) __VA_ARGS__)
-#else
-#define LOG_CMD(severity, format, ...)
-#endif
+#define LOG_CMD(severity, format, ...) LOG(severity, "{\"util\":\"cmd\",\"message\":" format "}" __VA_OPT__(,) __VA_ARGS__)
 
 int cmd_help(char *buffer, jsmntok_t *pld_tok);
 int cmd_ping(char *buffer, jsmntok_t *pld_tok);

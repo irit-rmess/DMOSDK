@@ -22,17 +22,12 @@
 #include "nrfx_nvmc.h"
 
 #include "serial.h"
-
 #include "json.h"
+#include "logger.h"
 
 #include "config.h"
 
-#if LOGGER == 1
-#include "logger.h"
-#define LOG_CONFIG(severity, format, ...) log(LOG_FACILITY_OTHER, severity, "{\"util\":\"config\",\"message\":" format "}" __VA_OPT__(,) __VA_ARGS__)
-#else
-#define LOG_CONFIG(severity, format, ...)
-#endif
+#define LOG_CONFIG(severity, format, ...) LOG(severity, "{\"util\":\"config\",\"message\":" format "}" __VA_OPT__(,) __VA_ARGS__)
 
 #define SOS_SIZE 8
 #define HEADER_SIZE (SOS_SIZE + sizeof(uint16_t))

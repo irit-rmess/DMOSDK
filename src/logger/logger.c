@@ -19,8 +19,12 @@
 
 #include <stdarg.h>
 
+#include "FreeRTOS.h"
+#include "task.h"
+
 #include "nrfx_clock.h"
 #include "nrfx_rtc.h"
+
 #include "printf.h"
 #include "config.h"
 #include "json.h"
@@ -32,14 +36,6 @@ static char severity_desc[][10] = {
     "info",
     "debug"
 };
-
-static char facility_desc[][10] = {
-    "app",
-    "sys",
-    "other"
-};
-
-static bool facility_enable[LOG_FACILITY_COUNT] = {true, true, true};
 
 static nrfx_rtc_t const rtc = NRFX_RTC_INSTANCE(0);
 
@@ -74,22 +70,15 @@ void set_logger_severity(log_severity_t severity)
     logger_severity = severity;
 }
 
-void enable_logger_facility(log_facility_t facility, bool enable)
-{
-    if (facility < LOG_FACILITY_COUNT)
-        facility_enable[facility] = enable;
-}
-
-void log(log_facility_t facility, log_severity_t severity, const char * format, ...)
+void log(log_severity_t severity, const char * format, ...)
 {
     if (severity > logger_severity) return;
-    if (!facility_enable[facility]) return;
 
     uint64_t timestamp = nrfx_rtc_counter_get(&rtc) + (overflows << 24);
     pprintf(
-            "{\"command\":\"log\",\"payload\":{\"timestamp\":%llu,\"facility\":\"%s\",\"severity\":\"%s\",\"message\":",
+            "{\"command\":\"log\",\"payload\":{\"timestamp\":%llu,\"task\":\"%s\",\"severity\":\"%s\",\"message\":",
             timestamp,
-            facility_desc[facility],
+            pcTaskGetName(xTaskGetCurrentTaskHandle()),
             severity_desc[severity]
           );
 
