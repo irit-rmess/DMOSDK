@@ -32,6 +32,9 @@ extern uint32_t SystemCoreClock;
 #define configCPU_CLOCK_HZ                      ( SystemCoreClock )
 #define configTICK_RATE_HZ                      1024
 
+#define MS_TO_TICKS(t) (((t) * configTICK_RATE_HZ) / 1000)
+#define TICKS_TO_MS(t) (((t) * 1000) / configTICK_RATE_HZ)
+
 /* Define to trap errors during development. */
 #define configASSERT( x ) if( ( x ) == pdFALSE ) { taskDISABLE_INTERRUPTS(); for( ;; ); }
 
