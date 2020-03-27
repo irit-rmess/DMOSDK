@@ -149,6 +149,13 @@ SRC_C += \
 INC += \
   $(DWM1001_FRAMEWORK_PATH)/src/rtc
 
+# heartbeat
+SRC_C += \
+  $(DWM1001_FRAMEWORK_PATH)/src/heartbeat/heartbeat.c
+
+INC += \
+  $(DWM1001_FRAMEWORK_PATH)/src/heartbeat
+
 # serial
 
 ifeq ($(CONFIG_SERIAL), y)
