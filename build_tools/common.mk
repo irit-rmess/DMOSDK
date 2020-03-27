@@ -303,6 +303,13 @@ INC += \
 INC += \
   $(EXTERNAL_PATH)/jsmn
 
+# strntol
+INC += \
+  $(EXTERNAL_PATH)/strntol
+
+SRC_C += \
+  $(EXTERNAL_PATH)/strntol/strntol.c
+
 ################################################################################
 #  Move objects files in build directory
 ################################################################################
