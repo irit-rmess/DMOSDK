@@ -56,13 +56,6 @@ void log(log_severity_t severity, const char * format, ...);
  */
 void logger_load_saved_config();
 
-/**
- * @brief Logger initialization
- *
- * Configures the LFCLK and the RTC for timestamping messages.
- */
-int logger_init();
-
 #else
 
 #define STRING(s)

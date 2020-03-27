@@ -22,12 +22,10 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-#include "nrfx_clock.h"
-#include "nrfx_rtc.h"
-
 #include "printf.h"
 #include "config.h"
 #include "json.h"
+#include "rtc.h"
 #include "logger.h"
 
 static char severity_desc[][10] = {
@@ -37,33 +35,7 @@ static char severity_desc[][10] = {
     "debug"
 };
 
-static nrfx_rtc_t const rtc = NRFX_RTC_INSTANCE(0);
-
-static volatile uint64_t overflows;
-
 static log_severity_t logger_severity = LOG_SEVERITY_ERROR;
-
-/**
- * @brief RTC event handler
- *
- * Handles overflows.
- * @param[in] type RTC event type
- */
-static void rtc_event_handler(nrfx_rtc_int_type_t type)
-{
-    if (type == NRFX_RTC_INT_OVERFLOW)
-    {
-        overflows++;
-    }
-}
-
-/**
- * @brief Clock event handler
- *
- * Unused but necessary for nrfx_clock.
- * @param[in] type Clock event type
- */
-static void clock_event_handler(nrfx_clock_evt_type_t type) {}
 
 void set_logger_severity(log_severity_t severity)
 {
@@ -74,7 +46,8 @@ void log(log_severity_t severity, const char * format, ...)
 {
     if (severity > logger_severity) return;
 
-    uint64_t timestamp = nrfx_rtc_counter_get(&rtc) + (overflows << 24);
+    timestamp_t timestamp = rtc_is_inialized() ? rtc_timestamp() : 0;
+
     pprintf(
             "{\"command\":\"log\",\"payload\":{\"timestamp\":%llu,\"task\":\"%s\",\"severity\":\"%s\",\"message\":",
             timestamp,
@@ -136,17 +109,4 @@ void logger_load_saved_config()
             return;
         }
     }
-}
-
-int logger_init()
-{
-    nrfx_clock_init(clock_event_handler);
-    nrfx_clock_lfclk_start();
-    nrfx_rtc_config_t config = NRFX_RTC_DEFAULT_CONFIG;
-    nrfx_err_t res = nrfx_rtc_init(&rtc, &config, rtc_event_handler);
-    if (res != NRFX_SUCCESS)
-        return 1;
-    nrfx_rtc_overflow_enable(&rtc, true);
-    nrfx_rtc_enable(&rtc);
-    return 0;
 }

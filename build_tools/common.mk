@@ -142,6 +142,13 @@ INC += \
 INC += \
   $(DWM1001_FRAMEWORK_PATH)/src/nrfx
 
+# RTC
+SRC_C += \
+  $(DWM1001_FRAMEWORK_PATH)/src/rtc/rtc.c
+
+INC += \
+  $(DWM1001_FRAMEWORK_PATH)/src/rtc
+
 # serial
 
 ifeq ($(CONFIG_SERIAL), y)
