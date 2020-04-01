@@ -17,35 +17,16 @@
  * along with DMOSDK.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef HEARTBEAT_H
-#define HEARTBEAT_H
+#ifndef HEARTBEAT_CONFIG_H
+#define HEARTBEAT_CONFIG_H
 
-#include <stdint.h>
-
-#include "heartbeat_config.h"
-
-#define HEARTBEAT_DEFAULT_LED_GPIO 22
-#define HEARTBEAT_DEFAULT_PERIOD 1000
+#if CONFIG == 1
 
 /**
- * @brief Heartbeat initialization
- *
- * Creates a task that toggles a led periodically
+ * @brief Loads heartbeat parameters from config in flash
  */
-int heartbeat_init();
+void heartbeat_load_saved_config();
 
-/**
- * @brief Sets heartbeat period
- *
- * @param[in] p Period in ms
- */
-void set_period(uint32_t p);
-
-/**
- * @brief Sets heartbeat LED gpio
- *
- * @param[in] gpio GPIO number
- */
-void set_led_gpio(int gpio);
+#endif
 
 #endif

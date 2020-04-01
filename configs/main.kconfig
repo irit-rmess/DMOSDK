@@ -27,6 +27,8 @@ menu "Global configuration"
     config BOARD
         string
         default DWM1001-DEV if BOARD_DWM1001_DEV
+    config HEARTBEAT
+        bool "Heartbeat"
     config SERIAL
         select NRFX_UART_ENABLED
         select NRFX_UART0_ENABLED

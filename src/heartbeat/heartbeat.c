@@ -22,8 +22,6 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-#include "config.h"
-#include "json.h"
 #include "logger.h"
 #include "strntol.h"
 
@@ -89,44 +87,6 @@ void set_led_gpio(int pin)
     reset_led_gpio();
     led_gpio = pin;
     configure_led_gpio();
-}
-
-void heartbeat_load_saved_config()
-{
-    for (int i = 0; i < config.num_tokens; i++)
-    {
-        if (jsoneq(config.buffer, config.tokens + i, "heartbeat") == 0)
-        {
-            ++i;
-            jsmntok_t *t_log = config.tokens + i;
-            ++i;
-            for (int child = 0; child < t_log->size; child++)
-            {
-                jsmntok_t *t_child = config.tokens + i;
-                if (jsoneq(config.buffer, config.tokens + i, "period") == 0)
-                {
-                    ++i;
-                    jsmntok_t *t_per = config.tokens + i;
-                    set_period(strntol(config.buffer + t_per->start, t_per->end - t_per->start, NULL, 10));
-                }
-                if (jsoneq(config.buffer, config.tokens + i, "led_gpio") == 0)
-                {
-                    ++i;
-                    jsmntok_t *t_led_gpio = config.tokens + i;
-                    set_led_gpio(strntol(config.buffer + t_led_gpio->start, t_led_gpio->end - t_led_gpio->start, NULL, 10));
-                }
-                else
-                {
-                    // Ignore unknown attributes, find the next sibling
-                    ++i;
-                    while(i < config.num_tokens
-                        && (t_child + 1)->end > config.tokens[i].start)
-                        ++i;
-                }
-            }
-            return;
-        }
-    }
 }
 
 int heartbeat_init()

@@ -157,11 +157,13 @@ INC += \
   $(DWM1001_FRAMEWORK_PATH)/src/rtc
 
 # heartbeat
+ifeq ($(CONFIG_HEARTBEAT), y)
 SRC_C += \
   $(DWM1001_FRAMEWORK_PATH)/src/heartbeat/heartbeat.c
 
 INC += \
   $(DWM1001_FRAMEWORK_PATH)/src/heartbeat
+endif
 
 # serial
 
