@@ -17,7 +17,8 @@
  * along with DMOSDK.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "nrfx_clock.h"
+#include "clock.h"
+
 #include "nrfx_rtc.h"
 
 #include "rtc.h"
@@ -42,14 +43,6 @@ static void rtc_event_handler(nrfx_rtc_int_type_t type)
     }
 }
 
-/**
- * @brief Clock event handler
- *
- * Unused but necessary for nrfx_clock.
- * @param[in] type Clock event type
- */
-static void clock_event_handler(nrfx_clock_evt_type_t type) {}
-
 bool rtc_is_inialized()
 {
     return is_initialized;
@@ -62,8 +55,7 @@ timestamp_t rtc_timestamp()
 
 int rtc_init()
 {
-    nrfx_clock_init(clock_event_handler);
-    nrfx_clock_lfclk_start();
+    clock_lfclk_start();
     nrfx_rtc_config_t config = NRFX_RTC_DEFAULT_CONFIG;
     nrfx_err_t res = nrfx_rtc_init(&rtc, &config, rtc_event_handler);
     if (res != NRFX_SUCCESS)

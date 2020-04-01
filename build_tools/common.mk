@@ -142,6 +142,13 @@ INC += \
 INC += \
   $(DWM1001_FRAMEWORK_PATH)/src/nrfx
 
+# Clock
+SRC_C += \
+  $(DWM1001_FRAMEWORK_PATH)/src/clock/clock.c
+
+INC += \
+  $(DWM1001_FRAMEWORK_PATH)/src/clock
+
 # RTC
 SRC_C += \
   $(DWM1001_FRAMEWORK_PATH)/src/rtc/rtc.c

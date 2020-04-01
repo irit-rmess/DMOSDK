@@ -2233,6 +2233,7 @@ menu "nRF_Drivers"
         bool "Enable RTC0 instance"
         default y
       config NRFX_RTC1_ENABLED
+        depends on !TICK_SOURCE_RTC
         bool "Enable RTC1 instance"
         default y
       config NRFX_RTC2_ENABLED

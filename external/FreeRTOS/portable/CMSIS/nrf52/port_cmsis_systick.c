@@ -107,7 +107,9 @@ void vPortSetupTimerInterrupt( void )
 #endif
 
 #include "nrf_rtc.h"
-#include "nrf_drv_clock.h"
+#include "clock.h"
+
+#define configSYSTICK_CLOCK_HZ  RTC_INPUT_FREQ
 
 /*-----------------------------------------------------------*/
 
@@ -163,8 +165,8 @@ void xPortSysTickHandler( void )
  */
 void vPortSetupTimerInterrupt( void )
 {
-    /* Request LF clock */
-    nrf_drv_clock_lfclk_request(NULL);
+    /* Start LF clock */
+    clock_lfclk_start();
 
     /* Configure SysTick to interrupt at the requested rate. */
     nrf_rtc_prescaler_set(portNRF_RTC_REG, portNRF_RTC_PRESCALER);

@@ -22,18 +22,14 @@
 
 /* Here is a good place to include header files that are required across
 your application. */
-#include <stdint.h>
-extern uint32_t SystemCoreClock;
-
 #include "build_config.h"
-
-#define configPRIO_BITS             __NVIC_PRIO_BITS
-
-#define configCPU_CLOCK_HZ                      ( SystemCoreClock )
-#define configTICK_RATE_HZ                      1024
 
 #define MS_TO_TICKS(t) (((t) * configTICK_RATE_HZ) / 1000)
 #define TICKS_TO_MS(t) (((t) * 1000) / configTICK_RATE_HZ)
+
+#define configPRIO_BITS                         __NVIC_PRIO_BITS
+
+#define configCPU_CLOCK_HZ                      ( SystemCoreClock )
 
 /* Define to trap errors during development. */
 #define configASSERT( x ) if( ( x ) == pdFALSE ) { taskDISABLE_INTERRUPTS(); for( ;; ); }
@@ -68,7 +64,21 @@ standard names - or at least those used in the unmodified vector table. */
 
 #define vPortSVCHandler                         SVC_Handler
 #define xPortPendSVHandler                      PendSV_Handler
-#define xPortSysTickHandler                     SysTick_Handler
+
+#if (configTICK_SOURCE == FREERTOS_USE_SYSTICK)
+    /* Access to current system core clock is required only if we are ticking the system by systimer */
+    #if (configTICK_SOURCE == FREERTOS_USE_SYSTICK)
+        #include <stdint.h>
+        extern uint32_t SystemCoreClock;
+    #endif
+    // do not define configSYSTICK_CLOCK_HZ for SysTick to be configured automatically
+    // to CPU clock source
+    #define xPortSysTickHandler     SysTick_Handler
+#elif (configTICK_SOURCE == FREERTOS_USE_RTC)
+    #define xPortSysTickHandler     RTC1_IRQHandler
+#else
+    #error  Unsupported configTICK_SOURCE value
+#endif
 
 /* A header file that defines trace macro can be included here. */
 

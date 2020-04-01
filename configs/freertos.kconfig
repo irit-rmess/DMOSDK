@@ -17,14 +17,63 @@
 # along with DMOSDK.  If not, see <http://www.gnu.org/licenses/>.
 
 menu "FreeRTOS"
+  menu "Tick"
+    config FREERTOS_USE_SYSTICK
+      int
+      default 1
+    config FREERTOS_USE_RTC
+      int
+      default 0
+    choice configTICK_SOURCE
+      prompt "Tick Source"
+      default TICK_SOURCE_SYSTICK
+      config TICK_SOURCE_SYSTICK
+        bool "Systick"
+      config TICK_SOURCE_RTC
+        select NRFX_CLOCK_ENABLED
+        select NRFX_CLOCK_CONFIG_LF_SRC_1
+        bool "RTC"
+    endchoice
+    config configTICK_SOURCE
+      int
+        default FREERTOS_USE_SYSTICK if TICK_SOURCE_SYSTICK
+        default FREERTOS_USE_RTC if TICK_SOURCE_RTC
+    config configTICK_RATE_HZ
+      int "Tick Rate Hz"
+      default 1024
+    config configUSE_TICKLESS_IDLE
+      bool "Tickless idle"
+      default n
+    config configUSE_16_BIT_TICKS
+      bool "16 bit ticks"
+      default n
+    menu "Debug"
+      config configUSE_DISABLE_TICK_AUTO_CORRECTION_DEBUG
+      bool "Disable tick auto correction"
+      help
+        Set the value of configUSE_DISABLE_TICK_AUTO_CORRECTION_DEBUG to below for enabling or disabling RTOS tick auto correction:
+        0. This is default. If the RTC tick interrupt is masked for more than 1 tick by higher priority interrupts, then most likely
+           one or more RTC ticks are lost. The tick interrupt inside RTOS will detect this and make a correction needed. This is needed
+           for the RTOS internal timers to be more accurate.
+        1. The auto correction for RTOS tick is disabled even though few RTC tick interrupts were lost. This feature is desirable when debugging
+           the RTOS application and stepping though the code. After stepping when the application is continued in debug mode, the auto-corrections of
+           RTOS tick might cause asserts. Setting configUSE_DISABLE_TICK_AUTO_CORRECTION_DEBUG to 1 will make RTC and RTOS go out of sync but could
+           convenient for debugging.
+      config configUSE_TICKLESS_IDLE_SIMPLE_DEBUG
+      bool "Tickless idle simple"
+      help
+        To help debugging the option configUSE_TICKLESS_IDLE_SIMPLE_DEBUG was presented.
+        This option would make sure that even if program execution was stopped inside
+        this function no more than expected number of ticks would be skipped.
+        Normally RTC works all the time even if firmware execution was stopped
+        and that may lead to skipping too much of ticks.
+    endmenu
+  endmenu
   config configUSE_PREEMPTION
     bool "Preemption"
     default y
   config configUSE_PORT_OPTIMISED_TASK_SELECTION
     bool "Port optimised task selection"
-    default n
-  config configUSE_TICKLESS_IDLE
-    bool "Tickless idle"
     default n
   config configMAX_PRIORITIES
     int "Max priorities"
@@ -35,9 +84,6 @@ menu "FreeRTOS"
   config configMAX_TASK_NAME_LEN
     int "Maximum task name length"
     default 128
-  config configUSE_16_BIT_TICKS
-    bool "16 bit ticks"
-    default n
   config configIDLE_SHOULD_YIELD
     bool "Idle should yield"
     default y
