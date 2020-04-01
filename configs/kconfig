@@ -36,10 +36,6 @@ menu "Global configuration"
         select NRFX_UART0_ENABLED
         bool "Serial"
     config LOGGER
-        select NRFX_CLOCK_ENABLED
-        select NRFX_CLOCK_CONFIG_LF_SRC_1
-        select NRFX_RTC_ENABLED
-        select NRFX_RTC0_ENABLED
         bool "Logger"
     config COMMANDS
         bool "Commands"
