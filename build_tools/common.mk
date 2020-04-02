@@ -143,21 +143,25 @@ INC += \
   $(DWM1001_FRAMEWORK_PATH)/src/nrfx
 
 # Clock
+ifeq ($(CONFIG_CLOCK_SERVICE), y)
 SRC_C += \
   $(DWM1001_FRAMEWORK_PATH)/src/clock/clock.c
 
 INC += \
   $(DWM1001_FRAMEWORK_PATH)/src/clock
+endif
 
 # RTC
+ifeq ($(CONFIG_RTC_SERVICE), y)
 SRC_C += \
   $(DWM1001_FRAMEWORK_PATH)/src/rtc/rtc.c
 
 INC += \
   $(DWM1001_FRAMEWORK_PATH)/src/rtc
+endif
 
 # heartbeat
-ifeq ($(CONFIG_HEARTBEAT), y)
+ifeq ($(CONFIG_HEARTBEAT_SERVICE), y)
 SRC_C += \
   $(DWM1001_FRAMEWORK_PATH)/src/heartbeat/heartbeat.c
 
@@ -167,7 +171,7 @@ endif
 
 # serial
 
-ifeq ($(CONFIG_SERIAL), y)
+ifeq ($(CONFIG_SERIAL_SERVICE), y)
 SRC_C += \
   $(DWM1001_FRAMEWORK_PATH)/src/serial/serial.c \
   $(DWM1001_FRAMEWORK_PATH)/src/serial/printf.c
@@ -177,7 +181,7 @@ INC += \
 endif
 
 # logger
-ifeq ($(CONFIG_LOGGER), y)
+ifeq ($(CONFIG_LOGGER_SERVICE), y)
 SRC_C += \
   $(DWM1001_FRAMEWORK_PATH)/src/logger/logger.c
 endif
@@ -189,20 +193,22 @@ INC += \
 INC += \
   $(EXTERNAL_PATH)/nanoprintf
 
-ifeq ($(CONFIG_COMMANDS), y)
-# reader
-SRC_C += \
-  $(DWM1001_FRAMEWORK_PATH)/src/reader/reader.c
-
-INC += \
-  $(DWM1001_FRAMEWORK_PATH)/src/reader
-
+ifeq ($(CONFIG_JSON_SERVICE), y)
 # json
 SRC_C += \
   $(DWM1001_FRAMEWORK_PATH)/src/json/json.c
 
 INC += \
   $(DWM1001_FRAMEWORK_PATH)/src/json
+endif
+
+ifeq ($(CONFIG_COMMANDS_SERVICE), y)
+# reader
+SRC_C += \
+  $(DWM1001_FRAMEWORK_PATH)/src/reader/reader.c
+
+INC += \
+  $(DWM1001_FRAMEWORK_PATH)/src/reader
 
 # commands
 SRC_C += \
@@ -212,7 +218,7 @@ INC += \
   $(DWM1001_FRAMEWORK_PATH)/src/commands
 endif
 
-ifeq ($(CONFIG_CONFIG_SECTION), y)
+ifeq ($(CONFIG_CONFIG_SECTION_SERVICE), y)
 # config
 SRC_C += \
   $(DWM1001_FRAMEWORK_PATH)/src/config/config.c

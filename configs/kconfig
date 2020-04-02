@@ -29,25 +29,103 @@ menu "Global configuration"
     config BOARD
         string
         default DWM1001-DEV if BOARD_DWM1001_DEV
-    config HEARTBEAT
-        bool "Heartbeat"
-    config SERIAL
-        select NRFX_UART_ENABLED
-        select NRFX_UART0_ENABLED
-        bool "Serial"
-    config LOGGER
-        bool "Logger"
-    config COMMANDS
-        bool "Commands"
-    config CONFIG_SECTION
-        select NRFX_NVMC_ENABLED
-        bool "Config section"
-    menu "Configuration"
-        depends on CONFIG_SECTION
-        config CONFIG_SECTION_SIZE
-            hex "Size"
-                default 0x1000
+    menu "Services"
+        config CLOCK_SERVICE
+            select NRFX_CLOCK_ENABLED
+            bool "Clock"
+        config COMMANDS_SERVICE
+            select JSON_SERVICE
+            bool "Commands"
+        config CONFIG_SECTION_SERVICE
+            select JSON_SERVICE
+            select NRFX_NVMC_ENABLED
+            bool "Config section"
+        menu "Configuration"
+            depends on CONFIG_SECTION_SERVICE
+            config CONFIG_SECTION_SIZE
+                hex "Size"
+                    default 0x1000
+        endmenu
+        config HEARTBEAT_SERVICE
+            bool "Heartbeat"
+        config JSON_SERVICE
+            bool "JSON"
+        config LOGGER_SERVICE
+            bool "Logger"
+        config RTC_SERVICE
+            select CLOCK_SERVICE
+            select NRFX_RTC_ENABLED
+            select NRFX_RTC0_ENABLED
+            bool "RTC"
+        config SERIAL_SERVICE
+            select NRFX_UART_ENABLED
+            select NRFX_UART0_ENABLED
+            bool "Serial"
+        menu "Configuration"
+            depends on SERIAL_SERVICE
+            choice SERIAL_DEFAULT_BAUDRATE
+                prompt "Serial default baudrate"
+                default SERIAL_DEFAULT_BAUDRATE_115200
+                config SERIAL_DEFAULT_BAUDRATE_1200
+                    bool "1200 baud"
+                config SERIAL_DEFAULT_BAUDRATE_2400
+                    bool "2400 baud"
+                config SERIAL_DEFAULT_BAUDRATE_4800
+                    bool "4800 baud"
+                config SERIAL_DEFAULT_BAUDRATE_9600
+                    bool "9600 baud"
+                config SERIAL_DEFAULT_BAUDRATE_14400
+                    bool "14400 baud"
+                config SERIAL_DEFAULT_BAUDRATE_19200
+                    bool "19200 baud"
+                config SERIAL_DEFAULT_BAUDRATE_28800
+                    bool "28800 baud"
+                config SERIAL_DEFAULT_BAUDRATE_31250
+                    bool "31250 baud"
+                config SERIAL_DEFAULT_BAUDRATE_38400
+                    bool "38400 baud"
+                config SERIAL_DEFAULT_BAUDRATE_56000
+                    bool "56000 baud"
+                config SERIAL_DEFAULT_BAUDRATE_57600
+                    bool "57600 baud"
+                config SERIAL_DEFAULT_BAUDRATE_76800
+                    bool "76800 baud"
+                config SERIAL_DEFAULT_BAUDRATE_115200
+                    bool "115200 baud"
+                config SERIAL_DEFAULT_BAUDRATE_230400
+                    bool "230400 baud"
+                config SERIAL_DEFAULT_BAUDRATE_250000
+                    bool "250000 baud"
+                config SERIAL_DEFAULT_BAUDRATE_460800
+                    bool "460800 baud"
+                config SERIAL_DEFAULT_BAUDRATE_921600
+                    bool "921600 baud"
+                config SERIAL_DEFAULT_BAUDRATE_1000000
+                    bool "1000000 baud"
+            endchoice
+            config SERIAL_DEFAULT_BAUDRATE
+                int
+                    default 1200 if SERIAL_DEFAULT_BAUDRATE_1200
+                    default 2400 if SERIAL_DEFAULT_BAUDRATE_2400
+                    default 4800 if SERIAL_DEFAULT_BAUDRATE_4800
+                    default 9600 if SERIAL_DEFAULT_BAUDRATE_9600
+                    default 14400 if SERIAL_DEFAULT_BAUDRATE_14400
+                    default 19200 if SERIAL_DEFAULT_BAUDRATE_19200
+                    default 28800 if SERIAL_DEFAULT_BAUDRATE_28800
+                    default 31250 if SERIAL_DEFAULT_BAUDRATE_31250
+                    default 38400 if SERIAL_DEFAULT_BAUDRATE_38400
+                    default 56000 if SERIAL_DEFAULT_BAUDRATE_56000
+                    default 57600 if SERIAL_DEFAULT_BAUDRATE_57600
+                    default 76800 if SERIAL_DEFAULT_BAUDRATE_76800
+                    default 115200 if SERIAL_DEFAULT_BAUDRATE_115200
+                    default 230400 if SERIAL_DEFAULT_BAUDRATE_230400
+                    default 250000 if SERIAL_DEFAULT_BAUDRATE_250000
+                    default 460800 if SERIAL_DEFAULT_BAUDRATE_460800
+                    default 921600 if SERIAL_DEFAULT_BAUDRATE_921600
+                    default 1000000 if SERIAL_DEFAULT_BAUDRATE_1000000
+        endmenu
     endmenu
+
 endmenu
 
 menu "Deca Driver"
@@ -69,7 +147,7 @@ menu "FreeRTOS"
       config TICK_SOURCE_SYSTICK
         bool "Systick"
       config TICK_SOURCE_RTC
-        select NRFX_CLOCK_ENABLED
+        select CLOCK_SERVICE
         select NRFX_CLOCK_CONFIG_LF_SRC_1
         bool "RTC"
     endchoice

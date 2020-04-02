@@ -20,7 +20,7 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
-#if LOGGER == 1
+#if LOGGER_SERVICE == 1
 
 #include <stdbool.h>
 

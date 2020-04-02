@@ -30,7 +30,7 @@ menu "FreeRTOS"
       config TICK_SOURCE_SYSTICK
         bool "Systick"
       config TICK_SOURCE_RTC
-        select NRFX_CLOCK_ENABLED
+        select CLOCK_SERVICE
         select NRFX_CLOCK_CONFIG_LF_SRC_1
         bool "RTC"
     endchoice
