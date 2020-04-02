@@ -1,6 +1,6 @@
 # External software
 
-- [CMSIS](https://github.com/ARM-software/CMSIS_5): 5.5.1
+- [CMSIS](https://github.com/ARM-software/CMSIS_5): 5.6.0
 - [deca_driver](https://www.decawave.com/software/): 5.1.0 from DW1000 Application Programming Interface with STM32F10x Application examples v2.14
 - [FreeRTOS](https://github.com/FreeRTOS/FreeRTOS): 10.2.0 
 - [nrfx](https://github.com/NordicSemiconductor/nrfx): 2.1.0
