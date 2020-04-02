@@ -16,10 +16,9 @@
 # You should have received a copy of the GNU General Public License
 # along with DMOSDK.  If not, see <http://www.gnu.org/licenses/>.
 
-menu "nRF_Drivers"
+  menu "nRF_Drivers"
     config NRFX_CLOCK_ENABLED
       bool "nrfx_clock - CLOCK peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_CLOCK_ENABLED
       choice NRFX_CLOCK_CONFIG_LF_SRC
@@ -45,36 +44,36 @@ menu "nRF_Drivers"
           default 196609 if PREDEFINED_NRFX_CLOCK_CONFIG_LF_SRC_196609
       config NRFX_CLOCK_CONFIG_LF_CAL_ENABLED
         bool "Enables LF Clock Calibration Support"
-      choice NRFX_CLOCK_CONFIG_IRQ_PRIORITY
+      choice NRFX_CLOCK_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
-        default PREDEFINED_NRFX_CLOCK_CONFIG_IRQ_PRIORITY_7
-        config PREDEFINED_NRFX_CLOCK_CONFIG_IRQ_PRIORITY_0
+        default PREDEFINED_NRFX_CLOCK_DEFAULT_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_CLOCK_DEFAULT_CONFIG_IRQ_PRIORITY_0
           bool "0 (highest)"
-        config PREDEFINED_NRFX_CLOCK_CONFIG_IRQ_PRIORITY_1
+        config PREDEFINED_NRFX_CLOCK_DEFAULT_CONFIG_IRQ_PRIORITY_1
           bool "1"
-        config PREDEFINED_NRFX_CLOCK_CONFIG_IRQ_PRIORITY_2
+        config PREDEFINED_NRFX_CLOCK_DEFAULT_CONFIG_IRQ_PRIORITY_2
           bool "2"
-        config PREDEFINED_NRFX_CLOCK_CONFIG_IRQ_PRIORITY_3
+        config PREDEFINED_NRFX_CLOCK_DEFAULT_CONFIG_IRQ_PRIORITY_3
           bool "3"
-        config PREDEFINED_NRFX_CLOCK_CONFIG_IRQ_PRIORITY_4
+        config PREDEFINED_NRFX_CLOCK_DEFAULT_CONFIG_IRQ_PRIORITY_4
           bool "4"
-        config PREDEFINED_NRFX_CLOCK_CONFIG_IRQ_PRIORITY_5
+        config PREDEFINED_NRFX_CLOCK_DEFAULT_CONFIG_IRQ_PRIORITY_5
           bool "5"
-        config PREDEFINED_NRFX_CLOCK_CONFIG_IRQ_PRIORITY_6
+        config PREDEFINED_NRFX_CLOCK_DEFAULT_CONFIG_IRQ_PRIORITY_6
           bool "6"
-        config PREDEFINED_NRFX_CLOCK_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_CLOCK_DEFAULT_CONFIG_IRQ_PRIORITY_7
           bool "7"
       endchoice
-      config  NRFX_CLOCK_CONFIG_IRQ_PRIORITY
+      config  NRFX_CLOCK_DEFAULT_CONFIG_IRQ_PRIORITY
         int
-          default 0 if PREDEFINED_NRFX_CLOCK_CONFIG_IRQ_PRIORITY_0
-          default 1 if PREDEFINED_NRFX_CLOCK_CONFIG_IRQ_PRIORITY_1
-          default 2 if PREDEFINED_NRFX_CLOCK_CONFIG_IRQ_PRIORITY_2
-          default 3 if PREDEFINED_NRFX_CLOCK_CONFIG_IRQ_PRIORITY_3
-          default 4 if PREDEFINED_NRFX_CLOCK_CONFIG_IRQ_PRIORITY_4
-          default 5 if PREDEFINED_NRFX_CLOCK_CONFIG_IRQ_PRIORITY_5
-          default 6 if PREDEFINED_NRFX_CLOCK_CONFIG_IRQ_PRIORITY_6
-          default 7 if PREDEFINED_NRFX_CLOCK_CONFIG_IRQ_PRIORITY_7
+          default 0 if PREDEFINED_NRFX_CLOCK_DEFAULT_CONFIG_IRQ_PRIORITY_0
+          default 1 if PREDEFINED_NRFX_CLOCK_DEFAULT_CONFIG_IRQ_PRIORITY_1
+          default 2 if PREDEFINED_NRFX_CLOCK_DEFAULT_CONFIG_IRQ_PRIORITY_2
+          default 3 if PREDEFINED_NRFX_CLOCK_DEFAULT_CONFIG_IRQ_PRIORITY_3
+          default 4 if PREDEFINED_NRFX_CLOCK_DEFAULT_CONFIG_IRQ_PRIORITY_4
+          default 5 if PREDEFINED_NRFX_CLOCK_DEFAULT_CONFIG_IRQ_PRIORITY_5
+          default 6 if PREDEFINED_NRFX_CLOCK_DEFAULT_CONFIG_IRQ_PRIORITY_6
+          default 7 if PREDEFINED_NRFX_CLOCK_DEFAULT_CONFIG_IRQ_PRIORITY_7
       config NRFX_CLOCK_CONFIG_LOG_ENABLED
         bool "Enables logging in the module."
       menu "Configuration"
@@ -170,147 +169,38 @@ menu "nRF_Drivers"
     endmenu
     config NRFX_COMP_ENABLED
       bool "nrfx_comp - COMP peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_COMP_ENABLED
-      choice NRFX_COMP_CONFIG_REF
-        prompt "Reference voltage"
-        default PREDEFINED_NRFX_COMP_CONFIG_REF_1
-        config PREDEFINED_NRFX_COMP_CONFIG_REF_0
-          bool "Internal 1.2V"
-        config PREDEFINED_NRFX_COMP_CONFIG_REF_1
-          bool "Internal 1.8V"
-        config PREDEFINED_NRFX_COMP_CONFIG_REF_2
-          bool "Internal 2.4V"
-        config PREDEFINED_NRFX_COMP_CONFIG_REF_4
-          bool "VDD"
-        config PREDEFINED_NRFX_COMP_CONFIG_REF_7
-          bool "ARef"
-      endchoice
-      config  NRFX_COMP_CONFIG_REF
-        int
-          default 0 if PREDEFINED_NRFX_COMP_CONFIG_REF_0
-          default 1 if PREDEFINED_NRFX_COMP_CONFIG_REF_1
-          default 2 if PREDEFINED_NRFX_COMP_CONFIG_REF_2
-          default 4 if PREDEFINED_NRFX_COMP_CONFIG_REF_4
-          default 7 if PREDEFINED_NRFX_COMP_CONFIG_REF_7
-      choice NRFX_COMP_CONFIG_MAIN_MODE
-        prompt "Main mode"
-        default PREDEFINED_NRFX_COMP_CONFIG_MAIN_MODE_0
-        config PREDEFINED_NRFX_COMP_CONFIG_MAIN_MODE_0
-          bool "Single ended"
-        config PREDEFINED_NRFX_COMP_CONFIG_MAIN_MODE_1
-          bool "Differential"
-      endchoice
-      config  NRFX_COMP_CONFIG_MAIN_MODE
-        int
-          default 0 if PREDEFINED_NRFX_COMP_CONFIG_MAIN_MODE_0
-          default 1 if PREDEFINED_NRFX_COMP_CONFIG_MAIN_MODE_1
-      choice NRFX_COMP_CONFIG_SPEED_MODE
-        prompt "Speed mode"
-        default PREDEFINED_NRFX_COMP_CONFIG_SPEED_MODE_2
-        config PREDEFINED_NRFX_COMP_CONFIG_SPEED_MODE_0
-          bool "Low power"
-        config PREDEFINED_NRFX_COMP_CONFIG_SPEED_MODE_1
-          bool "Normal"
-        config PREDEFINED_NRFX_COMP_CONFIG_SPEED_MODE_2
-          bool "High speed"
-      endchoice
-      config  NRFX_COMP_CONFIG_SPEED_MODE
-        int
-          default 0 if PREDEFINED_NRFX_COMP_CONFIG_SPEED_MODE_0
-          default 1 if PREDEFINED_NRFX_COMP_CONFIG_SPEED_MODE_1
-          default 2 if PREDEFINED_NRFX_COMP_CONFIG_SPEED_MODE_2
-      choice NRFX_COMP_CONFIG_HYST
-        prompt "Hystheresis"
-        default PREDEFINED_NRFX_COMP_CONFIG_HYST_0
-        config PREDEFINED_NRFX_COMP_CONFIG_HYST_0
-          bool "No"
-        config PREDEFINED_NRFX_COMP_CONFIG_HYST_1
-          bool "50mV"
-      endchoice
-      config  NRFX_COMP_CONFIG_HYST
-        int
-          default 0 if PREDEFINED_NRFX_COMP_CONFIG_HYST_0
-          default 1 if PREDEFINED_NRFX_COMP_CONFIG_HYST_1
-      choice NRFX_COMP_CONFIG_ISOURCE
-        prompt "Current Source"
-        default PREDEFINED_NRFX_COMP_CONFIG_ISOURCE_0
-        config PREDEFINED_NRFX_COMP_CONFIG_ISOURCE_0
-          bool "Off"
-        config PREDEFINED_NRFX_COMP_CONFIG_ISOURCE_1
-          bool "2.5 uA"
-        config PREDEFINED_NRFX_COMP_CONFIG_ISOURCE_2
-          bool "5 uA"
-        config PREDEFINED_NRFX_COMP_CONFIG_ISOURCE_3
-          bool "10 uA"
-      endchoice
-      config  NRFX_COMP_CONFIG_ISOURCE
-        int
-          default 0 if PREDEFINED_NRFX_COMP_CONFIG_ISOURCE_0
-          default 1 if PREDEFINED_NRFX_COMP_CONFIG_ISOURCE_1
-          default 2 if PREDEFINED_NRFX_COMP_CONFIG_ISOURCE_2
-          default 3 if PREDEFINED_NRFX_COMP_CONFIG_ISOURCE_3
-      choice NRFX_COMP_CONFIG_INPUT
-        prompt "Analog input"
-        default PREDEFINED_NRFX_COMP_CONFIG_INPUT_0
-        config PREDEFINED_NRFX_COMP_CONFIG_INPUT_0
-          bool "0"
-        config PREDEFINED_NRFX_COMP_CONFIG_INPUT_1
-          bool "1"
-        config PREDEFINED_NRFX_COMP_CONFIG_INPUT_2
-          bool "2"
-        config PREDEFINED_NRFX_COMP_CONFIG_INPUT_3
-          bool "3"
-        config PREDEFINED_NRFX_COMP_CONFIG_INPUT_4
-          bool "4"
-        config PREDEFINED_NRFX_COMP_CONFIG_INPUT_5
-          bool "5"
-        config PREDEFINED_NRFX_COMP_CONFIG_INPUT_6
-          bool "6"
-        config PREDEFINED_NRFX_COMP_CONFIG_INPUT_7
-          bool "7"
-      endchoice
-      config  NRFX_COMP_CONFIG_INPUT
-        int
-          default 0 if PREDEFINED_NRFX_COMP_CONFIG_INPUT_0
-          default 1 if PREDEFINED_NRFX_COMP_CONFIG_INPUT_1
-          default 2 if PREDEFINED_NRFX_COMP_CONFIG_INPUT_2
-          default 3 if PREDEFINED_NRFX_COMP_CONFIG_INPUT_3
-          default 4 if PREDEFINED_NRFX_COMP_CONFIG_INPUT_4
-          default 5 if PREDEFINED_NRFX_COMP_CONFIG_INPUT_5
-          default 6 if PREDEFINED_NRFX_COMP_CONFIG_INPUT_6
-          default 7 if PREDEFINED_NRFX_COMP_CONFIG_INPUT_7
-      choice NRFX_COMP_CONFIG_IRQ_PRIORITY
+      choice NRFX_COMP_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
-        default PREDEFINED_NRFX_COMP_CONFIG_IRQ_PRIORITY_7
-        config PREDEFINED_NRFX_COMP_CONFIG_IRQ_PRIORITY_0
+        default PREDEFINED_NRFX_COMP_DEFAULT_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_COMP_DEFAULT_CONFIG_IRQ_PRIORITY_0
           bool "0 (highest)"
-        config PREDEFINED_NRFX_COMP_CONFIG_IRQ_PRIORITY_1
+        config PREDEFINED_NRFX_COMP_DEFAULT_CONFIG_IRQ_PRIORITY_1
           bool "1"
-        config PREDEFINED_NRFX_COMP_CONFIG_IRQ_PRIORITY_2
+        config PREDEFINED_NRFX_COMP_DEFAULT_CONFIG_IRQ_PRIORITY_2
           bool "2"
-        config PREDEFINED_NRFX_COMP_CONFIG_IRQ_PRIORITY_3
+        config PREDEFINED_NRFX_COMP_DEFAULT_CONFIG_IRQ_PRIORITY_3
           bool "3"
-        config PREDEFINED_NRFX_COMP_CONFIG_IRQ_PRIORITY_4
+        config PREDEFINED_NRFX_COMP_DEFAULT_CONFIG_IRQ_PRIORITY_4
           bool "4"
-        config PREDEFINED_NRFX_COMP_CONFIG_IRQ_PRIORITY_5
+        config PREDEFINED_NRFX_COMP_DEFAULT_CONFIG_IRQ_PRIORITY_5
           bool "5"
-        config PREDEFINED_NRFX_COMP_CONFIG_IRQ_PRIORITY_6
+        config PREDEFINED_NRFX_COMP_DEFAULT_CONFIG_IRQ_PRIORITY_6
           bool "6"
-        config PREDEFINED_NRFX_COMP_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_COMP_DEFAULT_CONFIG_IRQ_PRIORITY_7
           bool "7"
       endchoice
-      config  NRFX_COMP_CONFIG_IRQ_PRIORITY
+      config  NRFX_COMP_DEFAULT_CONFIG_IRQ_PRIORITY
         int
-          default 0 if PREDEFINED_NRFX_COMP_CONFIG_IRQ_PRIORITY_0
-          default 1 if PREDEFINED_NRFX_COMP_CONFIG_IRQ_PRIORITY_1
-          default 2 if PREDEFINED_NRFX_COMP_CONFIG_IRQ_PRIORITY_2
-          default 3 if PREDEFINED_NRFX_COMP_CONFIG_IRQ_PRIORITY_3
-          default 4 if PREDEFINED_NRFX_COMP_CONFIG_IRQ_PRIORITY_4
-          default 5 if PREDEFINED_NRFX_COMP_CONFIG_IRQ_PRIORITY_5
-          default 6 if PREDEFINED_NRFX_COMP_CONFIG_IRQ_PRIORITY_6
-          default 7 if PREDEFINED_NRFX_COMP_CONFIG_IRQ_PRIORITY_7
+          default 0 if PREDEFINED_NRFX_COMP_DEFAULT_CONFIG_IRQ_PRIORITY_0
+          default 1 if PREDEFINED_NRFX_COMP_DEFAULT_CONFIG_IRQ_PRIORITY_1
+          default 2 if PREDEFINED_NRFX_COMP_DEFAULT_CONFIG_IRQ_PRIORITY_2
+          default 3 if PREDEFINED_NRFX_COMP_DEFAULT_CONFIG_IRQ_PRIORITY_3
+          default 4 if PREDEFINED_NRFX_COMP_DEFAULT_CONFIG_IRQ_PRIORITY_4
+          default 5 if PREDEFINED_NRFX_COMP_DEFAULT_CONFIG_IRQ_PRIORITY_5
+          default 6 if PREDEFINED_NRFX_COMP_DEFAULT_CONFIG_IRQ_PRIORITY_6
+          default 7 if PREDEFINED_NRFX_COMP_DEFAULT_CONFIG_IRQ_PRIORITY_7
       config NRFX_COMP_CONFIG_LOG_ENABLED
         bool "Enables logging in the module."
       menu "Configuration"
@@ -404,44 +294,90 @@ menu "nRF_Drivers"
             default 8 if PREDEFINED_NRFX_COMP_CONFIG_DEBUG_COLOR_8
       endmenu
     endmenu
+    config NRFX_EGU_ENABLED
+      bool "nrfx_egu - EGU peripheral driver."
+    menu "Configuration"
+      depends on NRFX_EGU_ENABLED
+      config NRFX_EGU0_ENABLED
+        bool "Enable EGU0 instance."
+      config NRFX_EGU1_ENABLED
+        bool "Enable EGU1 instance."
+      config NRFX_EGU2_ENABLED
+        bool "Enable EGU2 instance."
+      config NRFX_EGU3_ENABLED
+        bool "Enable EGU3 instance."
+      config NRFX_EGU4_ENABLED
+        bool "Enable EGU4 instance."
+      config NRFX_EGU5_ENABLED
+        bool "Enable EGU5 instance."
+      choice NRFX_EGU_DEFAULT_CONFIG_IRQ_PRIORITY
+        prompt "Interrupt priority."
+        default PREDEFINED_NRFX_EGU_DEFAULT_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_EGU_DEFAULT_CONFIG_IRQ_PRIORITY_0
+          bool "0 (highest)"
+        config PREDEFINED_NRFX_EGU_DEFAULT_CONFIG_IRQ_PRIORITY_1
+          bool "1"
+        config PREDEFINED_NRFX_EGU_DEFAULT_CONFIG_IRQ_PRIORITY_2
+          bool "2"
+        config PREDEFINED_NRFX_EGU_DEFAULT_CONFIG_IRQ_PRIORITY_3
+          bool "3"
+        config PREDEFINED_NRFX_EGU_DEFAULT_CONFIG_IRQ_PRIORITY_4
+          bool "4"
+        config PREDEFINED_NRFX_EGU_DEFAULT_CONFIG_IRQ_PRIORITY_5
+          bool "5"
+        config PREDEFINED_NRFX_EGU_DEFAULT_CONFIG_IRQ_PRIORITY_6
+          bool "6"
+        config PREDEFINED_NRFX_EGU_DEFAULT_CONFIG_IRQ_PRIORITY_7
+          bool "7"
+      endchoice
+      config  NRFX_EGU_DEFAULT_CONFIG_IRQ_PRIORITY
+        int
+          default 0 if PREDEFINED_NRFX_EGU_DEFAULT_CONFIG_IRQ_PRIORITY_0
+          default 1 if PREDEFINED_NRFX_EGU_DEFAULT_CONFIG_IRQ_PRIORITY_1
+          default 2 if PREDEFINED_NRFX_EGU_DEFAULT_CONFIG_IRQ_PRIORITY_2
+          default 3 if PREDEFINED_NRFX_EGU_DEFAULT_CONFIG_IRQ_PRIORITY_3
+          default 4 if PREDEFINED_NRFX_EGU_DEFAULT_CONFIG_IRQ_PRIORITY_4
+          default 5 if PREDEFINED_NRFX_EGU_DEFAULT_CONFIG_IRQ_PRIORITY_5
+          default 6 if PREDEFINED_NRFX_EGU_DEFAULT_CONFIG_IRQ_PRIORITY_6
+          default 7 if PREDEFINED_NRFX_EGU_DEFAULT_CONFIG_IRQ_PRIORITY_7
+    endmenu
     config NRFX_GPIOTE_ENABLED
       bool "nrfx_gpiote - GPIOTE peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_GPIOTE_ENABLED
       config NRFX_GPIOTE_CONFIG_NUM_OF_LOW_POWER_EVENTS
         int "NRFX_GPIOTE_CONFIG_NUM_OF_LOW_POWER_EVENTS - Number of lower power input pins"
         default 1
-      choice NRFX_GPIOTE_CONFIG_IRQ_PRIORITY
+      choice NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
-        default PREDEFINED_NRFX_GPIOTE_CONFIG_IRQ_PRIORITY_7
-        config PREDEFINED_NRFX_GPIOTE_CONFIG_IRQ_PRIORITY_0
+        default PREDEFINED_NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY_0
           bool "0 (highest)"
-        config PREDEFINED_NRFX_GPIOTE_CONFIG_IRQ_PRIORITY_1
+        config PREDEFINED_NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY_1
           bool "1"
-        config PREDEFINED_NRFX_GPIOTE_CONFIG_IRQ_PRIORITY_2
+        config PREDEFINED_NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY_2
           bool "2"
-        config PREDEFINED_NRFX_GPIOTE_CONFIG_IRQ_PRIORITY_3
+        config PREDEFINED_NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY_3
           bool "3"
-        config PREDEFINED_NRFX_GPIOTE_CONFIG_IRQ_PRIORITY_4
+        config PREDEFINED_NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY_4
           bool "4"
-        config PREDEFINED_NRFX_GPIOTE_CONFIG_IRQ_PRIORITY_5
+        config PREDEFINED_NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY_5
           bool "5"
-        config PREDEFINED_NRFX_GPIOTE_CONFIG_IRQ_PRIORITY_6
+        config PREDEFINED_NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY_6
           bool "6"
-        config PREDEFINED_NRFX_GPIOTE_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY_7
           bool "7"
       endchoice
-      config  NRFX_GPIOTE_CONFIG_IRQ_PRIORITY
+      config  NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY
         int
-          default 0 if PREDEFINED_NRFX_GPIOTE_CONFIG_IRQ_PRIORITY_0
-          default 1 if PREDEFINED_NRFX_GPIOTE_CONFIG_IRQ_PRIORITY_1
-          default 2 if PREDEFINED_NRFX_GPIOTE_CONFIG_IRQ_PRIORITY_2
-          default 3 if PREDEFINED_NRFX_GPIOTE_CONFIG_IRQ_PRIORITY_3
-          default 4 if PREDEFINED_NRFX_GPIOTE_CONFIG_IRQ_PRIORITY_4
-          default 5 if PREDEFINED_NRFX_GPIOTE_CONFIG_IRQ_PRIORITY_5
-          default 6 if PREDEFINED_NRFX_GPIOTE_CONFIG_IRQ_PRIORITY_6
-          default 7 if PREDEFINED_NRFX_GPIOTE_CONFIG_IRQ_PRIORITY_7
+          default 0 if PREDEFINED_NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY_0
+          default 1 if PREDEFINED_NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY_1
+          default 2 if PREDEFINED_NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY_2
+          default 3 if PREDEFINED_NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY_3
+          default 4 if PREDEFINED_NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY_4
+          default 5 if PREDEFINED_NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY_5
+          default 6 if PREDEFINED_NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY_6
+          default 7 if PREDEFINED_NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY_7
       config NRFX_GPIOTE_CONFIG_LOG_ENABLED
         bool "Enables logging in the module."
       menu "Configuration"
@@ -537,216 +473,38 @@ menu "nRF_Drivers"
     endmenu
     config NRFX_I2S_ENABLED
       bool "nrfx_i2s - I2S peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_I2S_ENABLED
-      config NRFX_I2S_CONFIG_SCK_PIN
-        int "NRFX_I2S_CONFIG_SCK_PIN - SCK pin"
-        default 31
-      config NRFX_I2S_CONFIG_LRCK_PIN
-        int "NRFX_I2S_CONFIG_LRCK_PIN - LRCK pin"
-        default 30
-      config NRFX_I2S_CONFIG_MCK_PIN
-        int "NRFX_I2S_CONFIG_MCK_PIN - MCK pin"
-        default 255
-      config NRFX_I2S_CONFIG_SDOUT_PIN
-        int "NRFX_I2S_CONFIG_SDOUT_PIN - SDOUT pin"
-        default 29
-      config NRFX_I2S_CONFIG_SDIN_PIN
-        int "NRFX_I2S_CONFIG_SDIN_PIN - SDIN pin"
-        default 28
-      choice NRFX_I2S_CONFIG_MASTER
-        prompt "Mode"
-        default PREDEFINED_NRFX_I2S_CONFIG_MASTER_0
-        config PREDEFINED_NRFX_I2S_CONFIG_MASTER_0
-          bool "Master"
-        config PREDEFINED_NRFX_I2S_CONFIG_MASTER_1
-          bool "Slave"
-      endchoice
-      config  NRFX_I2S_CONFIG_MASTER
-        int
-          default 0 if PREDEFINED_NRFX_I2S_CONFIG_MASTER_0
-          default 1 if PREDEFINED_NRFX_I2S_CONFIG_MASTER_1
-      choice NRFX_I2S_CONFIG_FORMAT
-        prompt "Format"
-        default PREDEFINED_NRFX_I2S_CONFIG_FORMAT_0
-        config PREDEFINED_NRFX_I2S_CONFIG_FORMAT_0
-          bool "I2S"
-        config PREDEFINED_NRFX_I2S_CONFIG_FORMAT_1
-          bool "Aligned"
-      endchoice
-      config  NRFX_I2S_CONFIG_FORMAT
-        int
-          default 0 if PREDEFINED_NRFX_I2S_CONFIG_FORMAT_0
-          default 1 if PREDEFINED_NRFX_I2S_CONFIG_FORMAT_1
-      choice NRFX_I2S_CONFIG_ALIGN
-        prompt "Alignment"
-        default PREDEFINED_NRFX_I2S_CONFIG_ALIGN_0
-        config PREDEFINED_NRFX_I2S_CONFIG_ALIGN_0
-          bool "Left"
-        config PREDEFINED_NRFX_I2S_CONFIG_ALIGN_1
-          bool "Right"
-      endchoice
-      config  NRFX_I2S_CONFIG_ALIGN
-        int
-          default 0 if PREDEFINED_NRFX_I2S_CONFIG_ALIGN_0
-          default 1 if PREDEFINED_NRFX_I2S_CONFIG_ALIGN_1
-      choice NRFX_I2S_CONFIG_SWIDTH
-        prompt "Sample width (bits)"
-        default PREDEFINED_NRFX_I2S_CONFIG_SWIDTH_1
-        config PREDEFINED_NRFX_I2S_CONFIG_SWIDTH_0
-          bool "8"
-        config PREDEFINED_NRFX_I2S_CONFIG_SWIDTH_1
-          bool "16"
-        config PREDEFINED_NRFX_I2S_CONFIG_SWIDTH_2
-          bool "24"
-      endchoice
-      config  NRFX_I2S_CONFIG_SWIDTH
-        int
-          default 0 if PREDEFINED_NRFX_I2S_CONFIG_SWIDTH_0
-          default 1 if PREDEFINED_NRFX_I2S_CONFIG_SWIDTH_1
-          default 2 if PREDEFINED_NRFX_I2S_CONFIG_SWIDTH_2
-      choice NRFX_I2S_CONFIG_CHANNELS
-        prompt "Channels"
-        default PREDEFINED_NRFX_I2S_CONFIG_CHANNELS_1
-        config PREDEFINED_NRFX_I2S_CONFIG_CHANNELS_0
-          bool "Stereo"
-        config PREDEFINED_NRFX_I2S_CONFIG_CHANNELS_1
-          bool "Left"
-        config PREDEFINED_NRFX_I2S_CONFIG_CHANNELS_2
-          bool "Right"
-      endchoice
-      config  NRFX_I2S_CONFIG_CHANNELS
-        int
-          default 0 if PREDEFINED_NRFX_I2S_CONFIG_CHANNELS_0
-          default 1 if PREDEFINED_NRFX_I2S_CONFIG_CHANNELS_1
-          default 2 if PREDEFINED_NRFX_I2S_CONFIG_CHANNELS_2
-      choice NRFX_I2S_CONFIG_MCK_SETUP
-        prompt "MCK behavior"
-        default PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_536870912
-        config PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_0
-          bool "Disabled"
-        config PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_2147483648
-          bool "32MHz/2"
-        config PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_1342177280
-          bool "32MHz/3"
-        config PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_1073741824
-          bool "32MHz/4"
-        config PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_805306368
-          bool "32MHz/5"
-        config PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_671088640
-          bool "32MHz/6"
-        config PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_536870912
-          bool "32MHz/8"
-        config PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_402653184
-          bool "32MHz/10"
-        config PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_369098752
-          bool "32MHz/11"
-        config PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_285212672
-          bool "32MHz/15"
-        config PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_268435456
-          bool "32MHz/16"
-        config PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_201326592
-          bool "32MHz/21"
-        config PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_184549376
-          bool "32MHz/23"
-        config PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_142606336
-          bool "32MHz/30"
-        config PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_138412032
-          bool "32MHz/31"
-        config PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_134217728
-          bool "32MHz/32"
-        config PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_100663296
-          bool "32MHz/42"
-        config PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_68157440
-          bool "32MHz/63"
-        config PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_34340864
-          bool "32MHz/125"
-      endchoice
-      config  NRFX_I2S_CONFIG_MCK_SETUP
-        int
-          default 0 if PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_0
-          default 2147483648 if PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_2147483648
-          default 1342177280 if PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_1342177280
-          default 1073741824 if PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_1073741824
-          default 805306368 if PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_805306368
-          default 671088640 if PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_671088640
-          default 536870912 if PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_536870912
-          default 402653184 if PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_402653184
-          default 369098752 if PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_369098752
-          default 285212672 if PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_285212672
-          default 268435456 if PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_268435456
-          default 201326592 if PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_201326592
-          default 184549376 if PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_184549376
-          default 142606336 if PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_142606336
-          default 138412032 if PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_138412032
-          default 134217728 if PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_134217728
-          default 100663296 if PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_100663296
-          default 68157440 if PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_68157440
-          default 34340864 if PREDEFINED_NRFX_I2S_CONFIG_MCK_SETUP_34340864
-      choice NRFX_I2S_CONFIG_RATIO
-        prompt "MCK/LRCK ratio"
-        default PREDEFINED_NRFX_I2S_CONFIG_RATIO_5
-        config PREDEFINED_NRFX_I2S_CONFIG_RATIO_0
-          bool "32x"
-        config PREDEFINED_NRFX_I2S_CONFIG_RATIO_1
-          bool "48x"
-        config PREDEFINED_NRFX_I2S_CONFIG_RATIO_2
-          bool "64x"
-        config PREDEFINED_NRFX_I2S_CONFIG_RATIO_3
-          bool "96x"
-        config PREDEFINED_NRFX_I2S_CONFIG_RATIO_4
-          bool "128x"
-        config PREDEFINED_NRFX_I2S_CONFIG_RATIO_5
-          bool "192x"
-        config PREDEFINED_NRFX_I2S_CONFIG_RATIO_6
-          bool "256x"
-        config PREDEFINED_NRFX_I2S_CONFIG_RATIO_7
-          bool "384x"
-        config PREDEFINED_NRFX_I2S_CONFIG_RATIO_8
-          bool "512x"
-      endchoice
-      config  NRFX_I2S_CONFIG_RATIO
-        int
-          default 0 if PREDEFINED_NRFX_I2S_CONFIG_RATIO_0
-          default 1 if PREDEFINED_NRFX_I2S_CONFIG_RATIO_1
-          default 2 if PREDEFINED_NRFX_I2S_CONFIG_RATIO_2
-          default 3 if PREDEFINED_NRFX_I2S_CONFIG_RATIO_3
-          default 4 if PREDEFINED_NRFX_I2S_CONFIG_RATIO_4
-          default 5 if PREDEFINED_NRFX_I2S_CONFIG_RATIO_5
-          default 6 if PREDEFINED_NRFX_I2S_CONFIG_RATIO_6
-          default 7 if PREDEFINED_NRFX_I2S_CONFIG_RATIO_7
-          default 8 if PREDEFINED_NRFX_I2S_CONFIG_RATIO_8
-      choice NRFX_I2S_CONFIG_IRQ_PRIORITY
+      choice NRFX_I2S_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
-        default PREDEFINED_NRFX_I2S_CONFIG_IRQ_PRIORITY_7
-        config PREDEFINED_NRFX_I2S_CONFIG_IRQ_PRIORITY_0
+        default PREDEFINED_NRFX_I2S_DEFAULT_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_I2S_DEFAULT_CONFIG_IRQ_PRIORITY_0
           bool "0 (highest)"
-        config PREDEFINED_NRFX_I2S_CONFIG_IRQ_PRIORITY_1
+        config PREDEFINED_NRFX_I2S_DEFAULT_CONFIG_IRQ_PRIORITY_1
           bool "1"
-        config PREDEFINED_NRFX_I2S_CONFIG_IRQ_PRIORITY_2
+        config PREDEFINED_NRFX_I2S_DEFAULT_CONFIG_IRQ_PRIORITY_2
           bool "2"
-        config PREDEFINED_NRFX_I2S_CONFIG_IRQ_PRIORITY_3
+        config PREDEFINED_NRFX_I2S_DEFAULT_CONFIG_IRQ_PRIORITY_3
           bool "3"
-        config PREDEFINED_NRFX_I2S_CONFIG_IRQ_PRIORITY_4
+        config PREDEFINED_NRFX_I2S_DEFAULT_CONFIG_IRQ_PRIORITY_4
           bool "4"
-        config PREDEFINED_NRFX_I2S_CONFIG_IRQ_PRIORITY_5
+        config PREDEFINED_NRFX_I2S_DEFAULT_CONFIG_IRQ_PRIORITY_5
           bool "5"
-        config PREDEFINED_NRFX_I2S_CONFIG_IRQ_PRIORITY_6
+        config PREDEFINED_NRFX_I2S_DEFAULT_CONFIG_IRQ_PRIORITY_6
           bool "6"
-        config PREDEFINED_NRFX_I2S_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_I2S_DEFAULT_CONFIG_IRQ_PRIORITY_7
           bool "7"
       endchoice
-      config  NRFX_I2S_CONFIG_IRQ_PRIORITY
+      config  NRFX_I2S_DEFAULT_CONFIG_IRQ_PRIORITY
         int
-          default 0 if PREDEFINED_NRFX_I2S_CONFIG_IRQ_PRIORITY_0
-          default 1 if PREDEFINED_NRFX_I2S_CONFIG_IRQ_PRIORITY_1
-          default 2 if PREDEFINED_NRFX_I2S_CONFIG_IRQ_PRIORITY_2
-          default 3 if PREDEFINED_NRFX_I2S_CONFIG_IRQ_PRIORITY_3
-          default 4 if PREDEFINED_NRFX_I2S_CONFIG_IRQ_PRIORITY_4
-          default 5 if PREDEFINED_NRFX_I2S_CONFIG_IRQ_PRIORITY_5
-          default 6 if PREDEFINED_NRFX_I2S_CONFIG_IRQ_PRIORITY_6
-          default 7 if PREDEFINED_NRFX_I2S_CONFIG_IRQ_PRIORITY_7
+          default 0 if PREDEFINED_NRFX_I2S_DEFAULT_CONFIG_IRQ_PRIORITY_0
+          default 1 if PREDEFINED_NRFX_I2S_DEFAULT_CONFIG_IRQ_PRIORITY_1
+          default 2 if PREDEFINED_NRFX_I2S_DEFAULT_CONFIG_IRQ_PRIORITY_2
+          default 3 if PREDEFINED_NRFX_I2S_DEFAULT_CONFIG_IRQ_PRIORITY_3
+          default 4 if PREDEFINED_NRFX_I2S_DEFAULT_CONFIG_IRQ_PRIORITY_4
+          default 5 if PREDEFINED_NRFX_I2S_DEFAULT_CONFIG_IRQ_PRIORITY_5
+          default 6 if PREDEFINED_NRFX_I2S_DEFAULT_CONFIG_IRQ_PRIORITY_6
+          default 7 if PREDEFINED_NRFX_I2S_DEFAULT_CONFIG_IRQ_PRIORITY_7
       config NRFX_I2S_CONFIG_LOG_ENABLED
         bool "Enables logging in the module."
       menu "Configuration"
@@ -842,143 +600,38 @@ menu "nRF_Drivers"
     endmenu
     config NRFX_LPCOMP_ENABLED
       bool "nrfx_lpcomp - LPCOMP peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_LPCOMP_ENABLED
-      choice NRFX_LPCOMP_CONFIG_REFERENCE
-        prompt "Reference voltage"
-        default PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_3
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_0
-          bool "Supply 1/8"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_1
-          bool "Supply 2/8"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_2
-          bool "Supply 3/8"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_3
-          bool "Supply 4/8"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_4
-          bool "Supply 5/8"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_5
-          bool "Supply 6/8"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_6
-          bool "Supply 7/8"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_8
-          bool "Supply 1/16 (nRF52)"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_9
-          bool "Supply 3/16 (nRF52)"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_10
-          bool "Supply 5/16 (nRF52)"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_11
-          bool "Supply 7/16 (nRF52)"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_12
-          bool "Supply 9/16 (nRF52)"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_13
-          bool "Supply 11/16 (nRF52)"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_14
-          bool "Supply 13/16 (nRF52)"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_15
-          bool "Supply 15/16 (nRF52)"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_7
-          bool "External Ref 0"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_65543
-          bool "External Ref 1"
-      endchoice
-      config  NRFX_LPCOMP_CONFIG_REFERENCE
-        int
-          default 0 if PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_0
-          default 1 if PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_1
-          default 2 if PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_2
-          default 3 if PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_3
-          default 4 if PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_4
-          default 5 if PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_5
-          default 6 if PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_6
-          default 8 if PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_8
-          default 9 if PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_9
-          default 10 if PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_10
-          default 11 if PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_11
-          default 12 if PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_12
-          default 13 if PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_13
-          default 14 if PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_14
-          default 15 if PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_15
-          default 7 if PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_7
-          default 65543 if PREDEFINED_NRFX_LPCOMP_CONFIG_REFERENCE_65543
-      choice NRFX_LPCOMP_CONFIG_DETECTION
-        prompt "Detection"
-        default PREDEFINED_NRFX_LPCOMP_CONFIG_DETECTION_2
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_DETECTION_0
-          bool "Crossing"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_DETECTION_1
-          bool "Up"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_DETECTION_2
-          bool "Down"
-      endchoice
-      config  NRFX_LPCOMP_CONFIG_DETECTION
-        int
-          default 0 if PREDEFINED_NRFX_LPCOMP_CONFIG_DETECTION_0
-          default 1 if PREDEFINED_NRFX_LPCOMP_CONFIG_DETECTION_1
-          default 2 if PREDEFINED_NRFX_LPCOMP_CONFIG_DETECTION_2
-      choice NRFX_LPCOMP_CONFIG_INPUT
-        prompt "Analog input"
-        default PREDEFINED_NRFX_LPCOMP_CONFIG_INPUT_0
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_INPUT_0
-          bool "0"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_INPUT_1
-          bool "1"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_INPUT_2
-          bool "2"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_INPUT_3
-          bool "3"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_INPUT_4
-          bool "4"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_INPUT_5
-          bool "5"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_INPUT_6
-          bool "6"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_INPUT_7
-          bool "7"
-      endchoice
-      config  NRFX_LPCOMP_CONFIG_INPUT
-        int
-          default 0 if PREDEFINED_NRFX_LPCOMP_CONFIG_INPUT_0
-          default 1 if PREDEFINED_NRFX_LPCOMP_CONFIG_INPUT_1
-          default 2 if PREDEFINED_NRFX_LPCOMP_CONFIG_INPUT_2
-          default 3 if PREDEFINED_NRFX_LPCOMP_CONFIG_INPUT_3
-          default 4 if PREDEFINED_NRFX_LPCOMP_CONFIG_INPUT_4
-          default 5 if PREDEFINED_NRFX_LPCOMP_CONFIG_INPUT_5
-          default 6 if PREDEFINED_NRFX_LPCOMP_CONFIG_INPUT_6
-          default 7 if PREDEFINED_NRFX_LPCOMP_CONFIG_INPUT_7
-      config NRFX_LPCOMP_CONFIG_HYST
-        bool "Hysteresis"
-      choice NRFX_LPCOMP_CONFIG_IRQ_PRIORITY
+      choice NRFX_LPCOMP_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
-        default PREDEFINED_NRFX_LPCOMP_CONFIG_IRQ_PRIORITY_7
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_IRQ_PRIORITY_0
+        default PREDEFINED_NRFX_LPCOMP_DEFAULT_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_LPCOMP_DEFAULT_CONFIG_IRQ_PRIORITY_0
           bool "0 (highest)"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_IRQ_PRIORITY_1
+        config PREDEFINED_NRFX_LPCOMP_DEFAULT_CONFIG_IRQ_PRIORITY_1
           bool "1"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_IRQ_PRIORITY_2
+        config PREDEFINED_NRFX_LPCOMP_DEFAULT_CONFIG_IRQ_PRIORITY_2
           bool "2"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_IRQ_PRIORITY_3
+        config PREDEFINED_NRFX_LPCOMP_DEFAULT_CONFIG_IRQ_PRIORITY_3
           bool "3"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_IRQ_PRIORITY_4
+        config PREDEFINED_NRFX_LPCOMP_DEFAULT_CONFIG_IRQ_PRIORITY_4
           bool "4"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_IRQ_PRIORITY_5
+        config PREDEFINED_NRFX_LPCOMP_DEFAULT_CONFIG_IRQ_PRIORITY_5
           bool "5"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_IRQ_PRIORITY_6
+        config PREDEFINED_NRFX_LPCOMP_DEFAULT_CONFIG_IRQ_PRIORITY_6
           bool "6"
-        config PREDEFINED_NRFX_LPCOMP_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_LPCOMP_DEFAULT_CONFIG_IRQ_PRIORITY_7
           bool "7"
       endchoice
-      config  NRFX_LPCOMP_CONFIG_IRQ_PRIORITY
+      config  NRFX_LPCOMP_DEFAULT_CONFIG_IRQ_PRIORITY
         int
-          default 0 if PREDEFINED_NRFX_LPCOMP_CONFIG_IRQ_PRIORITY_0
-          default 1 if PREDEFINED_NRFX_LPCOMP_CONFIG_IRQ_PRIORITY_1
-          default 2 if PREDEFINED_NRFX_LPCOMP_CONFIG_IRQ_PRIORITY_2
-          default 3 if PREDEFINED_NRFX_LPCOMP_CONFIG_IRQ_PRIORITY_3
-          default 4 if PREDEFINED_NRFX_LPCOMP_CONFIG_IRQ_PRIORITY_4
-          default 5 if PREDEFINED_NRFX_LPCOMP_CONFIG_IRQ_PRIORITY_5
-          default 6 if PREDEFINED_NRFX_LPCOMP_CONFIG_IRQ_PRIORITY_6
-          default 7 if PREDEFINED_NRFX_LPCOMP_CONFIG_IRQ_PRIORITY_7
+          default 0 if PREDEFINED_NRFX_LPCOMP_DEFAULT_CONFIG_IRQ_PRIORITY_0
+          default 1 if PREDEFINED_NRFX_LPCOMP_DEFAULT_CONFIG_IRQ_PRIORITY_1
+          default 2 if PREDEFINED_NRFX_LPCOMP_DEFAULT_CONFIG_IRQ_PRIORITY_2
+          default 3 if PREDEFINED_NRFX_LPCOMP_DEFAULT_CONFIG_IRQ_PRIORITY_3
+          default 4 if PREDEFINED_NRFX_LPCOMP_DEFAULT_CONFIG_IRQ_PRIORITY_4
+          default 5 if PREDEFINED_NRFX_LPCOMP_DEFAULT_CONFIG_IRQ_PRIORITY_5
+          default 6 if PREDEFINED_NRFX_LPCOMP_DEFAULT_CONFIG_IRQ_PRIORITY_6
+          default 7 if PREDEFINED_NRFX_LPCOMP_DEFAULT_CONFIG_IRQ_PRIORITY_7
       config NRFX_LPCOMP_CONFIG_LOG_ENABLED
         bool "Enables logging in the module."
       menu "Configuration"
@@ -1074,39 +727,59 @@ menu "nRF_Drivers"
     endmenu
     config NRFX_NFCT_ENABLED
       bool "nrfx_nfct - NFCT peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_NFCT_ENABLED
-      choice NRFX_NFCT_CONFIG_IRQ_PRIORITY
+      choice NRFX_NFCT_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
-        default PREDEFINED_NRFX_NFCT_CONFIG_IRQ_PRIORITY_7
-        config PREDEFINED_NRFX_NFCT_CONFIG_IRQ_PRIORITY_0
+        default PREDEFINED_NRFX_NFCT_DEFAULT_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_NFCT_DEFAULT_CONFIG_IRQ_PRIORITY_0
           bool "0 (highest)"
-        config PREDEFINED_NRFX_NFCT_CONFIG_IRQ_PRIORITY_1
+        config PREDEFINED_NRFX_NFCT_DEFAULT_CONFIG_IRQ_PRIORITY_1
           bool "1"
-        config PREDEFINED_NRFX_NFCT_CONFIG_IRQ_PRIORITY_2
+        config PREDEFINED_NRFX_NFCT_DEFAULT_CONFIG_IRQ_PRIORITY_2
           bool "2"
-        config PREDEFINED_NRFX_NFCT_CONFIG_IRQ_PRIORITY_3
+        config PREDEFINED_NRFX_NFCT_DEFAULT_CONFIG_IRQ_PRIORITY_3
           bool "3"
-        config PREDEFINED_NRFX_NFCT_CONFIG_IRQ_PRIORITY_4
+        config PREDEFINED_NRFX_NFCT_DEFAULT_CONFIG_IRQ_PRIORITY_4
           bool "4"
-        config PREDEFINED_NRFX_NFCT_CONFIG_IRQ_PRIORITY_5
+        config PREDEFINED_NRFX_NFCT_DEFAULT_CONFIG_IRQ_PRIORITY_5
           bool "5"
-        config PREDEFINED_NRFX_NFCT_CONFIG_IRQ_PRIORITY_6
+        config PREDEFINED_NRFX_NFCT_DEFAULT_CONFIG_IRQ_PRIORITY_6
           bool "6"
-        config PREDEFINED_NRFX_NFCT_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_NFCT_DEFAULT_CONFIG_IRQ_PRIORITY_7
           bool "7"
       endchoice
-      config  NRFX_NFCT_CONFIG_IRQ_PRIORITY
+      config  NRFX_NFCT_DEFAULT_CONFIG_IRQ_PRIORITY
         int
-          default 0 if PREDEFINED_NRFX_NFCT_CONFIG_IRQ_PRIORITY_0
-          default 1 if PREDEFINED_NRFX_NFCT_CONFIG_IRQ_PRIORITY_1
-          default 2 if PREDEFINED_NRFX_NFCT_CONFIG_IRQ_PRIORITY_2
-          default 3 if PREDEFINED_NRFX_NFCT_CONFIG_IRQ_PRIORITY_3
-          default 4 if PREDEFINED_NRFX_NFCT_CONFIG_IRQ_PRIORITY_4
-          default 5 if PREDEFINED_NRFX_NFCT_CONFIG_IRQ_PRIORITY_5
-          default 6 if PREDEFINED_NRFX_NFCT_CONFIG_IRQ_PRIORITY_6
-          default 7 if PREDEFINED_NRFX_NFCT_CONFIG_IRQ_PRIORITY_7
+          default 0 if PREDEFINED_NRFX_NFCT_DEFAULT_CONFIG_IRQ_PRIORITY_0
+          default 1 if PREDEFINED_NRFX_NFCT_DEFAULT_CONFIG_IRQ_PRIORITY_1
+          default 2 if PREDEFINED_NRFX_NFCT_DEFAULT_CONFIG_IRQ_PRIORITY_2
+          default 3 if PREDEFINED_NRFX_NFCT_DEFAULT_CONFIG_IRQ_PRIORITY_3
+          default 4 if PREDEFINED_NRFX_NFCT_DEFAULT_CONFIG_IRQ_PRIORITY_4
+          default 5 if PREDEFINED_NRFX_NFCT_DEFAULT_CONFIG_IRQ_PRIORITY_5
+          default 6 if PREDEFINED_NRFX_NFCT_DEFAULT_CONFIG_IRQ_PRIORITY_6
+          default 7 if PREDEFINED_NRFX_NFCT_DEFAULT_CONFIG_IRQ_PRIORITY_7
+      choice NRFX_NFCT_CONFIG_TIMER_INSTANCE_ID
+        prompt "Timer instance used for workarounds in the driver."
+        default PREDEFINED_NRFX_NFCT_CONFIG_TIMER_INSTANCE_ID_4
+        config PREDEFINED_NRFX_NFCT_CONFIG_TIMER_INSTANCE_ID_0
+          bool "0"
+        config PREDEFINED_NRFX_NFCT_CONFIG_TIMER_INSTANCE_ID_1
+          bool "1"
+        config PREDEFINED_NRFX_NFCT_CONFIG_TIMER_INSTANCE_ID_2
+          bool "2"
+        config PREDEFINED_NRFX_NFCT_CONFIG_TIMER_INSTANCE_ID_3
+          bool "3"
+        config PREDEFINED_NRFX_NFCT_CONFIG_TIMER_INSTANCE_ID_4
+          bool "4"
+      endchoice
+      config  NRFX_NFCT_CONFIG_TIMER_INSTANCE_ID
+        int
+          default 0 if PREDEFINED_NRFX_NFCT_CONFIG_TIMER_INSTANCE_ID_0
+          default 1 if PREDEFINED_NRFX_NFCT_CONFIG_TIMER_INSTANCE_ID_1
+          default 2 if PREDEFINED_NRFX_NFCT_CONFIG_TIMER_INSTANCE_ID_2
+          default 3 if PREDEFINED_NRFX_NFCT_CONFIG_TIMER_INSTANCE_ID_3
+          default 4 if PREDEFINED_NRFX_NFCT_CONFIG_TIMER_INSTANCE_ID_4
       config NRFX_NFCT_CONFIG_LOG_ENABLED
         bool "Enables logging in the module."
       menu "Configuration"
@@ -1202,84 +875,43 @@ menu "nRF_Drivers"
     endmenu
     config NRFX_NVMC_ENABLED
       bool "nrfx_nvmc - NVMC peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_NVMC_ENABLED
     endmenu
     config NRFX_PDM_ENABLED
       bool "nrfx_pdm - PDM peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_PDM_ENABLED
-      choice NRFX_PDM_CONFIG_MODE
-        prompt "Mode"
-        default PREDEFINED_NRFX_PDM_CONFIG_MODE_1
-        config PREDEFINED_NRFX_PDM_CONFIG_MODE_0
-          bool "Stereo"
-        config PREDEFINED_NRFX_PDM_CONFIG_MODE_1
-          bool "Mono"
-      endchoice
-      config  NRFX_PDM_CONFIG_MODE
-        int
-          default 0 if PREDEFINED_NRFX_PDM_CONFIG_MODE_0
-          default 1 if PREDEFINED_NRFX_PDM_CONFIG_MODE_1
-      choice NRFX_PDM_CONFIG_EDGE
-        prompt "Edge"
-        default PREDEFINED_NRFX_PDM_CONFIG_EDGE_0
-        config PREDEFINED_NRFX_PDM_CONFIG_EDGE_0
-          bool "Left falling"
-        config PREDEFINED_NRFX_PDM_CONFIG_EDGE_1
-          bool "Left rising"
-      endchoice
-      config  NRFX_PDM_CONFIG_EDGE
-        int
-          default 0 if PREDEFINED_NRFX_PDM_CONFIG_EDGE_0
-          default 1 if PREDEFINED_NRFX_PDM_CONFIG_EDGE_1
-      choice NRFX_PDM_CONFIG_CLOCK_FREQ
-        prompt "Clock frequency"
-        default PREDEFINED_NRFX_PDM_CONFIG_CLOCK_FREQ_138412032
-        config PREDEFINED_NRFX_PDM_CONFIG_CLOCK_FREQ_134217728
-          bool "1000k"
-        config PREDEFINED_NRFX_PDM_CONFIG_CLOCK_FREQ_138412032
-          bool "1032k (default)"
-        config PREDEFINED_NRFX_PDM_CONFIG_CLOCK_FREQ_142606336
-          bool "1067k"
-      endchoice
-      config  NRFX_PDM_CONFIG_CLOCK_FREQ
-        int
-          default 134217728 if PREDEFINED_NRFX_PDM_CONFIG_CLOCK_FREQ_134217728
-          default 138412032 if PREDEFINED_NRFX_PDM_CONFIG_CLOCK_FREQ_138412032
-          default 142606336 if PREDEFINED_NRFX_PDM_CONFIG_CLOCK_FREQ_142606336
-      choice NRFX_PDM_CONFIG_IRQ_PRIORITY
+      choice NRFX_PDM_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
-        default PREDEFINED_NRFX_PDM_CONFIG_IRQ_PRIORITY_7
-        config PREDEFINED_NRFX_PDM_CONFIG_IRQ_PRIORITY_0
+        default PREDEFINED_NRFX_PDM_DEFAULT_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_PDM_DEFAULT_CONFIG_IRQ_PRIORITY_0
           bool "0 (highest)"
-        config PREDEFINED_NRFX_PDM_CONFIG_IRQ_PRIORITY_1
+        config PREDEFINED_NRFX_PDM_DEFAULT_CONFIG_IRQ_PRIORITY_1
           bool "1"
-        config PREDEFINED_NRFX_PDM_CONFIG_IRQ_PRIORITY_2
+        config PREDEFINED_NRFX_PDM_DEFAULT_CONFIG_IRQ_PRIORITY_2
           bool "2"
-        config PREDEFINED_NRFX_PDM_CONFIG_IRQ_PRIORITY_3
+        config PREDEFINED_NRFX_PDM_DEFAULT_CONFIG_IRQ_PRIORITY_3
           bool "3"
-        config PREDEFINED_NRFX_PDM_CONFIG_IRQ_PRIORITY_4
+        config PREDEFINED_NRFX_PDM_DEFAULT_CONFIG_IRQ_PRIORITY_4
           bool "4"
-        config PREDEFINED_NRFX_PDM_CONFIG_IRQ_PRIORITY_5
+        config PREDEFINED_NRFX_PDM_DEFAULT_CONFIG_IRQ_PRIORITY_5
           bool "5"
-        config PREDEFINED_NRFX_PDM_CONFIG_IRQ_PRIORITY_6
+        config PREDEFINED_NRFX_PDM_DEFAULT_CONFIG_IRQ_PRIORITY_6
           bool "6"
-        config PREDEFINED_NRFX_PDM_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_PDM_DEFAULT_CONFIG_IRQ_PRIORITY_7
           bool "7"
       endchoice
-      config  NRFX_PDM_CONFIG_IRQ_PRIORITY
+      config  NRFX_PDM_DEFAULT_CONFIG_IRQ_PRIORITY
         int
-          default 0 if PREDEFINED_NRFX_PDM_CONFIG_IRQ_PRIORITY_0
-          default 1 if PREDEFINED_NRFX_PDM_CONFIG_IRQ_PRIORITY_1
-          default 2 if PREDEFINED_NRFX_PDM_CONFIG_IRQ_PRIORITY_2
-          default 3 if PREDEFINED_NRFX_PDM_CONFIG_IRQ_PRIORITY_3
-          default 4 if PREDEFINED_NRFX_PDM_CONFIG_IRQ_PRIORITY_4
-          default 5 if PREDEFINED_NRFX_PDM_CONFIG_IRQ_PRIORITY_5
-          default 6 if PREDEFINED_NRFX_PDM_CONFIG_IRQ_PRIORITY_6
-          default 7 if PREDEFINED_NRFX_PDM_CONFIG_IRQ_PRIORITY_7
+          default 0 if PREDEFINED_NRFX_PDM_DEFAULT_CONFIG_IRQ_PRIORITY_0
+          default 1 if PREDEFINED_NRFX_PDM_DEFAULT_CONFIG_IRQ_PRIORITY_1
+          default 2 if PREDEFINED_NRFX_PDM_DEFAULT_CONFIG_IRQ_PRIORITY_2
+          default 3 if PREDEFINED_NRFX_PDM_DEFAULT_CONFIG_IRQ_PRIORITY_3
+          default 4 if PREDEFINED_NRFX_PDM_DEFAULT_CONFIG_IRQ_PRIORITY_4
+          default 5 if PREDEFINED_NRFX_PDM_DEFAULT_CONFIG_IRQ_PRIORITY_5
+          default 6 if PREDEFINED_NRFX_PDM_DEFAULT_CONFIG_IRQ_PRIORITY_6
+          default 7 if PREDEFINED_NRFX_PDM_DEFAULT_CONFIG_IRQ_PRIORITY_7
       config NRFX_PDM_CONFIG_LOG_ENABLED
         bool "Enables logging in the module."
       menu "Configuration"
@@ -1375,47 +1007,41 @@ menu "nRF_Drivers"
     endmenu
     config NRFX_POWER_ENABLED
       bool "nrfx_power - POWER peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_POWER_ENABLED
-      choice NRFX_POWER_CONFIG_IRQ_PRIORITY
+      choice NRFX_POWER_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
-        default PREDEFINED_NRFX_POWER_CONFIG_IRQ_PRIORITY_7
-        config PREDEFINED_NRFX_POWER_CONFIG_IRQ_PRIORITY_0
+        default PREDEFINED_NRFX_POWER_DEFAULT_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_POWER_DEFAULT_CONFIG_IRQ_PRIORITY_0
           bool "0 (highest)"
-        config PREDEFINED_NRFX_POWER_CONFIG_IRQ_PRIORITY_1
+        config PREDEFINED_NRFX_POWER_DEFAULT_CONFIG_IRQ_PRIORITY_1
           bool "1"
-        config PREDEFINED_NRFX_POWER_CONFIG_IRQ_PRIORITY_2
+        config PREDEFINED_NRFX_POWER_DEFAULT_CONFIG_IRQ_PRIORITY_2
           bool "2"
-        config PREDEFINED_NRFX_POWER_CONFIG_IRQ_PRIORITY_3
+        config PREDEFINED_NRFX_POWER_DEFAULT_CONFIG_IRQ_PRIORITY_3
           bool "3"
-        config PREDEFINED_NRFX_POWER_CONFIG_IRQ_PRIORITY_4
+        config PREDEFINED_NRFX_POWER_DEFAULT_CONFIG_IRQ_PRIORITY_4
           bool "4"
-        config PREDEFINED_NRFX_POWER_CONFIG_IRQ_PRIORITY_5
+        config PREDEFINED_NRFX_POWER_DEFAULT_CONFIG_IRQ_PRIORITY_5
           bool "5"
-        config PREDEFINED_NRFX_POWER_CONFIG_IRQ_PRIORITY_6
+        config PREDEFINED_NRFX_POWER_DEFAULT_CONFIG_IRQ_PRIORITY_6
           bool "6"
-        config PREDEFINED_NRFX_POWER_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_POWER_DEFAULT_CONFIG_IRQ_PRIORITY_7
           bool "7"
       endchoice
-      config  NRFX_POWER_CONFIG_IRQ_PRIORITY
+      config  NRFX_POWER_DEFAULT_CONFIG_IRQ_PRIORITY
         int
-          default 0 if PREDEFINED_NRFX_POWER_CONFIG_IRQ_PRIORITY_0
-          default 1 if PREDEFINED_NRFX_POWER_CONFIG_IRQ_PRIORITY_1
-          default 2 if PREDEFINED_NRFX_POWER_CONFIG_IRQ_PRIORITY_2
-          default 3 if PREDEFINED_NRFX_POWER_CONFIG_IRQ_PRIORITY_3
-          default 4 if PREDEFINED_NRFX_POWER_CONFIG_IRQ_PRIORITY_4
-          default 5 if PREDEFINED_NRFX_POWER_CONFIG_IRQ_PRIORITY_5
-          default 6 if PREDEFINED_NRFX_POWER_CONFIG_IRQ_PRIORITY_6
-          default 7 if PREDEFINED_NRFX_POWER_CONFIG_IRQ_PRIORITY_7
-      config NRFX_POWER_CONFIG_DEFAULT_DCDCEN
-        bool "The default configuration of main DCDC regulator"
-      config NRFX_POWER_CONFIG_DEFAULT_DCDCENHV
-        bool "The default configuration of High Voltage DCDC regulator"
+          default 0 if PREDEFINED_NRFX_POWER_DEFAULT_CONFIG_IRQ_PRIORITY_0
+          default 1 if PREDEFINED_NRFX_POWER_DEFAULT_CONFIG_IRQ_PRIORITY_1
+          default 2 if PREDEFINED_NRFX_POWER_DEFAULT_CONFIG_IRQ_PRIORITY_2
+          default 3 if PREDEFINED_NRFX_POWER_DEFAULT_CONFIG_IRQ_PRIORITY_3
+          default 4 if PREDEFINED_NRFX_POWER_DEFAULT_CONFIG_IRQ_PRIORITY_4
+          default 5 if PREDEFINED_NRFX_POWER_DEFAULT_CONFIG_IRQ_PRIORITY_5
+          default 6 if PREDEFINED_NRFX_POWER_DEFAULT_CONFIG_IRQ_PRIORITY_6
+          default 7 if PREDEFINED_NRFX_POWER_DEFAULT_CONFIG_IRQ_PRIORITY_7
     endmenu
     config NRFX_PPI_ENABLED
       bool "nrfx_ppi - PPI peripheral allocator"
-      default y
     menu "Configuration"
       depends on NRFX_PPI_ENABLED
       config NRFX_PPI_CONFIG_LOG_ENABLED
@@ -1513,24 +1139,18 @@ menu "nRF_Drivers"
     endmenu
     config NRFX_PRS_ENABLED
       bool "nrfx_prs - Peripheral Resource Sharing module"
-      default y
     menu "Configuration"
       depends on NRFX_PRS_ENABLED
       config NRFX_PRS_BOX_0_ENABLED
         bool "Enables box 0 in the module."
-        default y
       config NRFX_PRS_BOX_1_ENABLED
         bool "Enables box 1 in the module."
-        default y
       config NRFX_PRS_BOX_2_ENABLED
         bool "Enables box 2 in the module."
-        default y
       config NRFX_PRS_BOX_3_ENABLED
         bool "Enables box 3 in the module."
-        default y
       config NRFX_PRS_BOX_4_ENABLED
         bool "Enables box 4 in the module."
-        default y
       config NRFX_PRS_CONFIG_LOG_ENABLED
         bool "Enables logging in the module."
       menu "Configuration"
@@ -1626,105 +1246,14 @@ menu "nRF_Drivers"
     endmenu
     config NRFX_PWM_ENABLED
       bool "nrfx_pwm - PWM peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_PWM_ENABLED
       config NRFX_PWM0_ENABLED
         bool "Enable PWM0 instance"
-        default y
       config NRFX_PWM1_ENABLED
         bool "Enable PWM1 instance"
-        default y
       config NRFX_PWM2_ENABLED
         bool "Enable PWM2 instance"
-        default y
-      config NRFX_PWM_DEFAULT_CONFIG_OUT0_PIN
-        int "NRFX_PWM_DEFAULT_CONFIG_OUT0_PIN - Out0 pin"
-        default 31
-      config NRFX_PWM_DEFAULT_CONFIG_OUT1_PIN
-        int "NRFX_PWM_DEFAULT_CONFIG_OUT1_PIN - Out1 pin"
-        default 31
-      config NRFX_PWM_DEFAULT_CONFIG_OUT2_PIN
-        int "NRFX_PWM_DEFAULT_CONFIG_OUT2_PIN - Out2 pin"
-        default 31
-      config NRFX_PWM_DEFAULT_CONFIG_OUT3_PIN
-        int "NRFX_PWM_DEFAULT_CONFIG_OUT3_PIN - Out3 pin"
-        default 31
-      choice NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK
-        prompt "Base clock"
-        default PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK_4
-        config PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK_0
-          bool "16 MHz"
-        config PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK_1
-          bool "8 MHz"
-        config PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK_2
-          bool "4 MHz"
-        config PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK_3
-          bool "2 MHz"
-        config PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK_4
-          bool "1 MHz"
-        config PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK_5
-          bool "500 kHz"
-        config PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK_6
-          bool "250 kHz"
-        config PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK_7
-          bool "125 kHz"
-      endchoice
-      config  NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK
-        int
-          default 0 if PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK_0
-          default 1 if PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK_1
-          default 2 if PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK_2
-          default 3 if PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK_3
-          default 4 if PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK_4
-          default 5 if PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK_5
-          default 6 if PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK_6
-          default 7 if PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK_7
-      choice NRFX_PWM_DEFAULT_CONFIG_COUNT_MODE
-        prompt "Count mode"
-        default PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_COUNT_MODE_0
-        config PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_COUNT_MODE_0
-          bool "Up"
-        config PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_COUNT_MODE_1
-          bool "Up and Down"
-      endchoice
-      config  NRFX_PWM_DEFAULT_CONFIG_COUNT_MODE
-        int
-          default 0 if PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_COUNT_MODE_0
-          default 1 if PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_COUNT_MODE_1
-      config NRFX_PWM_DEFAULT_CONFIG_TOP_VALUE
-        int "NRFX_PWM_DEFAULT_CONFIG_TOP_VALUE - Top value"
-        default 1000
-      choice NRFX_PWM_DEFAULT_CONFIG_LOAD_MODE
-        prompt "Load mode"
-        default PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_LOAD_MODE_0
-        config PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_LOAD_MODE_0
-          bool "Common"
-        config PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_LOAD_MODE_1
-          bool "Grouped"
-        config PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_LOAD_MODE_2
-          bool "Individual"
-        config PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_LOAD_MODE_3
-          bool "Waveform"
-      endchoice
-      config  NRFX_PWM_DEFAULT_CONFIG_LOAD_MODE
-        int
-          default 0 if PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_LOAD_MODE_0
-          default 1 if PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_LOAD_MODE_1
-          default 2 if PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_LOAD_MODE_2
-          default 3 if PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_LOAD_MODE_3
-      choice NRFX_PWM_DEFAULT_CONFIG_STEP_MODE
-        prompt "Step mode"
-        default PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_STEP_MODE_0
-        config PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_STEP_MODE_0
-          bool "Auto"
-        config PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_STEP_MODE_1
-          bool "Triggered"
-      endchoice
-      config  NRFX_PWM_DEFAULT_CONFIG_STEP_MODE
-        int
-          default 0 if PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_STEP_MODE_0
-          default 1 if PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_STEP_MODE_1
       choice NRFX_PWM_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
         default PREDEFINED_NRFX_PWM_DEFAULT_CONFIG_IRQ_PRIORITY_7
@@ -1879,127 +1408,38 @@ menu "nRF_Drivers"
     endmenu
     config NRFX_QDEC_ENABLED
       bool "nrfx_qdec - QDEC peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_QDEC_ENABLED
-      choice NRFX_QDEC_CONFIG_REPORTPER
-        prompt "Report period"
-        default PREDEFINED_NRFX_QDEC_CONFIG_REPORTPER_0
-        config PREDEFINED_NRFX_QDEC_CONFIG_REPORTPER_0
-          bool "10 Samples"
-        config PREDEFINED_NRFX_QDEC_CONFIG_REPORTPER_1
-          bool "40 Samples"
-        config PREDEFINED_NRFX_QDEC_CONFIG_REPORTPER_2
-          bool "80 Samples"
-        config PREDEFINED_NRFX_QDEC_CONFIG_REPORTPER_3
-          bool "120 Samples"
-        config PREDEFINED_NRFX_QDEC_CONFIG_REPORTPER_4
-          bool "160 Samples"
-        config PREDEFINED_NRFX_QDEC_CONFIG_REPORTPER_5
-          bool "200 Samples"
-        config PREDEFINED_NRFX_QDEC_CONFIG_REPORTPER_6
-          bool "240 Samples"
-        config PREDEFINED_NRFX_QDEC_CONFIG_REPORTPER_7
-          bool "280 Samples"
-      endchoice
-      config  NRFX_QDEC_CONFIG_REPORTPER
-        int
-          default 0 if PREDEFINED_NRFX_QDEC_CONFIG_REPORTPER_0
-          default 1 if PREDEFINED_NRFX_QDEC_CONFIG_REPORTPER_1
-          default 2 if PREDEFINED_NRFX_QDEC_CONFIG_REPORTPER_2
-          default 3 if PREDEFINED_NRFX_QDEC_CONFIG_REPORTPER_3
-          default 4 if PREDEFINED_NRFX_QDEC_CONFIG_REPORTPER_4
-          default 5 if PREDEFINED_NRFX_QDEC_CONFIG_REPORTPER_5
-          default 6 if PREDEFINED_NRFX_QDEC_CONFIG_REPORTPER_6
-          default 7 if PREDEFINED_NRFX_QDEC_CONFIG_REPORTPER_7
-      choice NRFX_QDEC_CONFIG_SAMPLEPER
-        prompt "Sample period"
-        default PREDEFINED_NRFX_QDEC_CONFIG_SAMPLEPER_7
-        config PREDEFINED_NRFX_QDEC_CONFIG_SAMPLEPER_0
-          bool "128 us"
-        config PREDEFINED_NRFX_QDEC_CONFIG_SAMPLEPER_1
-          bool "256 us"
-        config PREDEFINED_NRFX_QDEC_CONFIG_SAMPLEPER_2
-          bool "512 us"
-        config PREDEFINED_NRFX_QDEC_CONFIG_SAMPLEPER_3
-          bool "1024 us"
-        config PREDEFINED_NRFX_QDEC_CONFIG_SAMPLEPER_4
-          bool "2048 us"
-        config PREDEFINED_NRFX_QDEC_CONFIG_SAMPLEPER_5
-          bool "4096 us"
-        config PREDEFINED_NRFX_QDEC_CONFIG_SAMPLEPER_6
-          bool "8192 us"
-        config PREDEFINED_NRFX_QDEC_CONFIG_SAMPLEPER_7
-          bool "16384 us"
-      endchoice
-      config  NRFX_QDEC_CONFIG_SAMPLEPER
-        int
-          default 0 if PREDEFINED_NRFX_QDEC_CONFIG_SAMPLEPER_0
-          default 1 if PREDEFINED_NRFX_QDEC_CONFIG_SAMPLEPER_1
-          default 2 if PREDEFINED_NRFX_QDEC_CONFIG_SAMPLEPER_2
-          default 3 if PREDEFINED_NRFX_QDEC_CONFIG_SAMPLEPER_3
-          default 4 if PREDEFINED_NRFX_QDEC_CONFIG_SAMPLEPER_4
-          default 5 if PREDEFINED_NRFX_QDEC_CONFIG_SAMPLEPER_5
-          default 6 if PREDEFINED_NRFX_QDEC_CONFIG_SAMPLEPER_6
-          default 7 if PREDEFINED_NRFX_QDEC_CONFIG_SAMPLEPER_7
-      config NRFX_QDEC_CONFIG_PIO_A
-        int "NRFX_QDEC_CONFIG_PIO_A - A pin"
-        default 31
-      config NRFX_QDEC_CONFIG_PIO_B
-        int "NRFX_QDEC_CONFIG_PIO_B - B pin"
-        default 31
-      config NRFX_QDEC_CONFIG_PIO_LED
-        int "NRFX_QDEC_CONFIG_PIO_LED - LED pin"
-        default 31
-      config NRFX_QDEC_CONFIG_LEDPRE
-        int "NRFX_QDEC_CONFIG_LEDPRE - LED pre"
-        default 511
-      choice NRFX_QDEC_CONFIG_LEDPOL
-        prompt "LED polarity"
-        default PREDEFINED_NRFX_QDEC_CONFIG_LEDPOL_1
-        config PREDEFINED_NRFX_QDEC_CONFIG_LEDPOL_0
-          bool "Active low"
-        config PREDEFINED_NRFX_QDEC_CONFIG_LEDPOL_1
-          bool "Active high"
-      endchoice
-      config  NRFX_QDEC_CONFIG_LEDPOL
-        int
-          default 0 if PREDEFINED_NRFX_QDEC_CONFIG_LEDPOL_0
-          default 1 if PREDEFINED_NRFX_QDEC_CONFIG_LEDPOL_1
-      config NRFX_QDEC_CONFIG_DBFEN
-        bool "Debouncing enable"
-      config NRFX_QDEC_CONFIG_SAMPLE_INTEN
-        bool "Sample ready interrupt enable"
-      choice NRFX_QDEC_CONFIG_IRQ_PRIORITY
+      choice NRFX_QDEC_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
-        default PREDEFINED_NRFX_QDEC_CONFIG_IRQ_PRIORITY_7
-        config PREDEFINED_NRFX_QDEC_CONFIG_IRQ_PRIORITY_0
+        default PREDEFINED_NRFX_QDEC_DEFAULT_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_QDEC_DEFAULT_CONFIG_IRQ_PRIORITY_0
           bool "0 (highest)"
-        config PREDEFINED_NRFX_QDEC_CONFIG_IRQ_PRIORITY_1
+        config PREDEFINED_NRFX_QDEC_DEFAULT_CONFIG_IRQ_PRIORITY_1
           bool "1"
-        config PREDEFINED_NRFX_QDEC_CONFIG_IRQ_PRIORITY_2
+        config PREDEFINED_NRFX_QDEC_DEFAULT_CONFIG_IRQ_PRIORITY_2
           bool "2"
-        config PREDEFINED_NRFX_QDEC_CONFIG_IRQ_PRIORITY_3
+        config PREDEFINED_NRFX_QDEC_DEFAULT_CONFIG_IRQ_PRIORITY_3
           bool "3"
-        config PREDEFINED_NRFX_QDEC_CONFIG_IRQ_PRIORITY_4
+        config PREDEFINED_NRFX_QDEC_DEFAULT_CONFIG_IRQ_PRIORITY_4
           bool "4"
-        config PREDEFINED_NRFX_QDEC_CONFIG_IRQ_PRIORITY_5
+        config PREDEFINED_NRFX_QDEC_DEFAULT_CONFIG_IRQ_PRIORITY_5
           bool "5"
-        config PREDEFINED_NRFX_QDEC_CONFIG_IRQ_PRIORITY_6
+        config PREDEFINED_NRFX_QDEC_DEFAULT_CONFIG_IRQ_PRIORITY_6
           bool "6"
-        config PREDEFINED_NRFX_QDEC_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_QDEC_DEFAULT_CONFIG_IRQ_PRIORITY_7
           bool "7"
       endchoice
-      config  NRFX_QDEC_CONFIG_IRQ_PRIORITY
+      config  NRFX_QDEC_DEFAULT_CONFIG_IRQ_PRIORITY
         int
-          default 0 if PREDEFINED_NRFX_QDEC_CONFIG_IRQ_PRIORITY_0
-          default 1 if PREDEFINED_NRFX_QDEC_CONFIG_IRQ_PRIORITY_1
-          default 2 if PREDEFINED_NRFX_QDEC_CONFIG_IRQ_PRIORITY_2
-          default 3 if PREDEFINED_NRFX_QDEC_CONFIG_IRQ_PRIORITY_3
-          default 4 if PREDEFINED_NRFX_QDEC_CONFIG_IRQ_PRIORITY_4
-          default 5 if PREDEFINED_NRFX_QDEC_CONFIG_IRQ_PRIORITY_5
-          default 6 if PREDEFINED_NRFX_QDEC_CONFIG_IRQ_PRIORITY_6
-          default 7 if PREDEFINED_NRFX_QDEC_CONFIG_IRQ_PRIORITY_7
+          default 0 if PREDEFINED_NRFX_QDEC_DEFAULT_CONFIG_IRQ_PRIORITY_0
+          default 1 if PREDEFINED_NRFX_QDEC_DEFAULT_CONFIG_IRQ_PRIORITY_1
+          default 2 if PREDEFINED_NRFX_QDEC_DEFAULT_CONFIG_IRQ_PRIORITY_2
+          default 3 if PREDEFINED_NRFX_QDEC_DEFAULT_CONFIG_IRQ_PRIORITY_3
+          default 4 if PREDEFINED_NRFX_QDEC_DEFAULT_CONFIG_IRQ_PRIORITY_4
+          default 5 if PREDEFINED_NRFX_QDEC_DEFAULT_CONFIG_IRQ_PRIORITY_5
+          default 6 if PREDEFINED_NRFX_QDEC_DEFAULT_CONFIG_IRQ_PRIORITY_6
+          default 7 if PREDEFINED_NRFX_QDEC_DEFAULT_CONFIG_IRQ_PRIORITY_7
       config NRFX_QDEC_CONFIG_LOG_ENABLED
         bool "Enables logging in the module."
       menu "Configuration"
@@ -2095,42 +1535,38 @@ menu "nRF_Drivers"
     endmenu
     config NRFX_RNG_ENABLED
       bool "nrfx_rng - RNG peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_RNG_ENABLED
-      config NRFX_RNG_CONFIG_ERROR_CORRECTION
-        bool "Error correction"
-        default y
-      choice NRFX_RNG_CONFIG_IRQ_PRIORITY
+      choice NRFX_RNG_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
-        default PREDEFINED_NRFX_RNG_CONFIG_IRQ_PRIORITY_7
-        config PREDEFINED_NRFX_RNG_CONFIG_IRQ_PRIORITY_0
+        default PREDEFINED_NRFX_RNG_DEFAULT_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_RNG_DEFAULT_CONFIG_IRQ_PRIORITY_0
           bool "0 (highest)"
-        config PREDEFINED_NRFX_RNG_CONFIG_IRQ_PRIORITY_1
+        config PREDEFINED_NRFX_RNG_DEFAULT_CONFIG_IRQ_PRIORITY_1
           bool "1"
-        config PREDEFINED_NRFX_RNG_CONFIG_IRQ_PRIORITY_2
+        config PREDEFINED_NRFX_RNG_DEFAULT_CONFIG_IRQ_PRIORITY_2
           bool "2"
-        config PREDEFINED_NRFX_RNG_CONFIG_IRQ_PRIORITY_3
+        config PREDEFINED_NRFX_RNG_DEFAULT_CONFIG_IRQ_PRIORITY_3
           bool "3"
-        config PREDEFINED_NRFX_RNG_CONFIG_IRQ_PRIORITY_4
+        config PREDEFINED_NRFX_RNG_DEFAULT_CONFIG_IRQ_PRIORITY_4
           bool "4"
-        config PREDEFINED_NRFX_RNG_CONFIG_IRQ_PRIORITY_5
+        config PREDEFINED_NRFX_RNG_DEFAULT_CONFIG_IRQ_PRIORITY_5
           bool "5"
-        config PREDEFINED_NRFX_RNG_CONFIG_IRQ_PRIORITY_6
+        config PREDEFINED_NRFX_RNG_DEFAULT_CONFIG_IRQ_PRIORITY_6
           bool "6"
-        config PREDEFINED_NRFX_RNG_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_RNG_DEFAULT_CONFIG_IRQ_PRIORITY_7
           bool "7"
       endchoice
-      config  NRFX_RNG_CONFIG_IRQ_PRIORITY
+      config  NRFX_RNG_DEFAULT_CONFIG_IRQ_PRIORITY
         int
-          default 0 if PREDEFINED_NRFX_RNG_CONFIG_IRQ_PRIORITY_0
-          default 1 if PREDEFINED_NRFX_RNG_CONFIG_IRQ_PRIORITY_1
-          default 2 if PREDEFINED_NRFX_RNG_CONFIG_IRQ_PRIORITY_2
-          default 3 if PREDEFINED_NRFX_RNG_CONFIG_IRQ_PRIORITY_3
-          default 4 if PREDEFINED_NRFX_RNG_CONFIG_IRQ_PRIORITY_4
-          default 5 if PREDEFINED_NRFX_RNG_CONFIG_IRQ_PRIORITY_5
-          default 6 if PREDEFINED_NRFX_RNG_CONFIG_IRQ_PRIORITY_6
-          default 7 if PREDEFINED_NRFX_RNG_CONFIG_IRQ_PRIORITY_7
+          default 0 if PREDEFINED_NRFX_RNG_DEFAULT_CONFIG_IRQ_PRIORITY_0
+          default 1 if PREDEFINED_NRFX_RNG_DEFAULT_CONFIG_IRQ_PRIORITY_1
+          default 2 if PREDEFINED_NRFX_RNG_DEFAULT_CONFIG_IRQ_PRIORITY_2
+          default 3 if PREDEFINED_NRFX_RNG_DEFAULT_CONFIG_IRQ_PRIORITY_3
+          default 4 if PREDEFINED_NRFX_RNG_DEFAULT_CONFIG_IRQ_PRIORITY_4
+          default 5 if PREDEFINED_NRFX_RNG_DEFAULT_CONFIG_IRQ_PRIORITY_5
+          default 6 if PREDEFINED_NRFX_RNG_DEFAULT_CONFIG_IRQ_PRIORITY_6
+          default 7 if PREDEFINED_NRFX_RNG_DEFAULT_CONFIG_IRQ_PRIORITY_7
       config NRFX_RNG_CONFIG_LOG_ENABLED
         bool "Enables logging in the module."
       menu "Configuration"
@@ -2226,27 +1662,15 @@ menu "nRF_Drivers"
     endmenu
     config NRFX_RTC_ENABLED
       bool "nrfx_rtc - RTC peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_RTC_ENABLED
       config NRFX_RTC0_ENABLED
         bool "Enable RTC0 instance"
-        default y
       config NRFX_RTC1_ENABLED
         depends on !TICK_SOURCE_RTC
         bool "Enable RTC1 instance"
-        default y
       config NRFX_RTC2_ENABLED
         bool "Enable RTC2 instance"
-        default y
-      config NRFX_RTC_MAXIMUM_LATENCY_US
-        int "NRFX_RTC_MAXIMUM_LATENCY_US - Maximum possible time[us] in highest priority interrupt"
-        default 2000
-      config NRFX_RTC_DEFAULT_CONFIG_FREQUENCY
-        int "NRFX_RTC_DEFAULT_CONFIG_FREQUENCY - Frequency"
-        default 32768
-      config NRFX_RTC_DEFAULT_CONFIG_RELIABLE
-        bool "Ensures safe compare event triggering"
       choice NRFX_RTC_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
         default PREDEFINED_NRFX_RTC_DEFAULT_CONFIG_IRQ_PRIORITY_7
@@ -2372,92 +1796,38 @@ menu "nRF_Drivers"
     endmenu
     config NRFX_SAADC_ENABLED
       bool "nrfx_saadc - SAADC peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_SAADC_ENABLED
-      choice NRFX_SAADC_CONFIG_RESOLUTION
-        prompt "Resolution"
-        default PREDEFINED_NRFX_SAADC_CONFIG_RESOLUTION_1
-        config PREDEFINED_NRFX_SAADC_CONFIG_RESOLUTION_0
-          bool "8 bit"
-        config PREDEFINED_NRFX_SAADC_CONFIG_RESOLUTION_1
-          bool "10 bit"
-        config PREDEFINED_NRFX_SAADC_CONFIG_RESOLUTION_2
-          bool "12 bit"
-        config PREDEFINED_NRFX_SAADC_CONFIG_RESOLUTION_3
-          bool "14 bit"
-      endchoice
-      config  NRFX_SAADC_CONFIG_RESOLUTION
-        int
-          default 0 if PREDEFINED_NRFX_SAADC_CONFIG_RESOLUTION_0
-          default 1 if PREDEFINED_NRFX_SAADC_CONFIG_RESOLUTION_1
-          default 2 if PREDEFINED_NRFX_SAADC_CONFIG_RESOLUTION_2
-          default 3 if PREDEFINED_NRFX_SAADC_CONFIG_RESOLUTION_3
-      choice NRFX_SAADC_CONFIG_OVERSAMPLE
-        prompt "Sample period"
-        default PREDEFINED_NRFX_SAADC_CONFIG_OVERSAMPLE_0
-        config PREDEFINED_NRFX_SAADC_CONFIG_OVERSAMPLE_0
-          bool "Disabled"
-        config PREDEFINED_NRFX_SAADC_CONFIG_OVERSAMPLE_1
-          bool "2x"
-        config PREDEFINED_NRFX_SAADC_CONFIG_OVERSAMPLE_2
-          bool "4x"
-        config PREDEFINED_NRFX_SAADC_CONFIG_OVERSAMPLE_3
-          bool "8x"
-        config PREDEFINED_NRFX_SAADC_CONFIG_OVERSAMPLE_4
-          bool "16x"
-        config PREDEFINED_NRFX_SAADC_CONFIG_OVERSAMPLE_5
-          bool "32x"
-        config PREDEFINED_NRFX_SAADC_CONFIG_OVERSAMPLE_6
-          bool "64x"
-        config PREDEFINED_NRFX_SAADC_CONFIG_OVERSAMPLE_7
-          bool "128x"
-        config PREDEFINED_NRFX_SAADC_CONFIG_OVERSAMPLE_8
-          bool "256x"
-      endchoice
-      config  NRFX_SAADC_CONFIG_OVERSAMPLE
-        int
-          default 0 if PREDEFINED_NRFX_SAADC_CONFIG_OVERSAMPLE_0
-          default 1 if PREDEFINED_NRFX_SAADC_CONFIG_OVERSAMPLE_1
-          default 2 if PREDEFINED_NRFX_SAADC_CONFIG_OVERSAMPLE_2
-          default 3 if PREDEFINED_NRFX_SAADC_CONFIG_OVERSAMPLE_3
-          default 4 if PREDEFINED_NRFX_SAADC_CONFIG_OVERSAMPLE_4
-          default 5 if PREDEFINED_NRFX_SAADC_CONFIG_OVERSAMPLE_5
-          default 6 if PREDEFINED_NRFX_SAADC_CONFIG_OVERSAMPLE_6
-          default 7 if PREDEFINED_NRFX_SAADC_CONFIG_OVERSAMPLE_7
-          default 8 if PREDEFINED_NRFX_SAADC_CONFIG_OVERSAMPLE_8
-      config NRFX_SAADC_CONFIG_LP_MODE
-        bool "Enabling low power mode"
-      choice NRFX_SAADC_CONFIG_IRQ_PRIORITY
+      choice NRFX_SAADC_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
-        default PREDEFINED_NRFX_SAADC_CONFIG_IRQ_PRIORITY_7
-        config PREDEFINED_NRFX_SAADC_CONFIG_IRQ_PRIORITY_0
+        default PREDEFINED_NRFX_SAADC_DEFAULT_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_SAADC_DEFAULT_CONFIG_IRQ_PRIORITY_0
           bool "0 (highest)"
-        config PREDEFINED_NRFX_SAADC_CONFIG_IRQ_PRIORITY_1
+        config PREDEFINED_NRFX_SAADC_DEFAULT_CONFIG_IRQ_PRIORITY_1
           bool "1"
-        config PREDEFINED_NRFX_SAADC_CONFIG_IRQ_PRIORITY_2
+        config PREDEFINED_NRFX_SAADC_DEFAULT_CONFIG_IRQ_PRIORITY_2
           bool "2"
-        config PREDEFINED_NRFX_SAADC_CONFIG_IRQ_PRIORITY_3
+        config PREDEFINED_NRFX_SAADC_DEFAULT_CONFIG_IRQ_PRIORITY_3
           bool "3"
-        config PREDEFINED_NRFX_SAADC_CONFIG_IRQ_PRIORITY_4
+        config PREDEFINED_NRFX_SAADC_DEFAULT_CONFIG_IRQ_PRIORITY_4
           bool "4"
-        config PREDEFINED_NRFX_SAADC_CONFIG_IRQ_PRIORITY_5
+        config PREDEFINED_NRFX_SAADC_DEFAULT_CONFIG_IRQ_PRIORITY_5
           bool "5"
-        config PREDEFINED_NRFX_SAADC_CONFIG_IRQ_PRIORITY_6
+        config PREDEFINED_NRFX_SAADC_DEFAULT_CONFIG_IRQ_PRIORITY_6
           bool "6"
-        config PREDEFINED_NRFX_SAADC_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_SAADC_DEFAULT_CONFIG_IRQ_PRIORITY_7
           bool "7"
       endchoice
-      config  NRFX_SAADC_CONFIG_IRQ_PRIORITY
+      config  NRFX_SAADC_DEFAULT_CONFIG_IRQ_PRIORITY
         int
-          default 0 if PREDEFINED_NRFX_SAADC_CONFIG_IRQ_PRIORITY_0
-          default 1 if PREDEFINED_NRFX_SAADC_CONFIG_IRQ_PRIORITY_1
-          default 2 if PREDEFINED_NRFX_SAADC_CONFIG_IRQ_PRIORITY_2
-          default 3 if PREDEFINED_NRFX_SAADC_CONFIG_IRQ_PRIORITY_3
-          default 4 if PREDEFINED_NRFX_SAADC_CONFIG_IRQ_PRIORITY_4
-          default 5 if PREDEFINED_NRFX_SAADC_CONFIG_IRQ_PRIORITY_5
-          default 6 if PREDEFINED_NRFX_SAADC_CONFIG_IRQ_PRIORITY_6
-          default 7 if PREDEFINED_NRFX_SAADC_CONFIG_IRQ_PRIORITY_7
+          default 0 if PREDEFINED_NRFX_SAADC_DEFAULT_CONFIG_IRQ_PRIORITY_0
+          default 1 if PREDEFINED_NRFX_SAADC_DEFAULT_CONFIG_IRQ_PRIORITY_1
+          default 2 if PREDEFINED_NRFX_SAADC_DEFAULT_CONFIG_IRQ_PRIORITY_2
+          default 3 if PREDEFINED_NRFX_SAADC_DEFAULT_CONFIG_IRQ_PRIORITY_3
+          default 4 if PREDEFINED_NRFX_SAADC_DEFAULT_CONFIG_IRQ_PRIORITY_4
+          default 5 if PREDEFINED_NRFX_SAADC_DEFAULT_CONFIG_IRQ_PRIORITY_5
+          default 6 if PREDEFINED_NRFX_SAADC_DEFAULT_CONFIG_IRQ_PRIORITY_6
+          default 7 if PREDEFINED_NRFX_SAADC_DEFAULT_CONFIG_IRQ_PRIORITY_7
       config NRFX_SAADC_CONFIG_LOG_ENABLED
         bool "Enables logging in the module."
       menu "Configuration"
@@ -2553,33 +1923,14 @@ menu "nRF_Drivers"
     endmenu
     config NRFX_SPIM_ENABLED
       bool "nrfx_spim - SPIM peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_SPIM_ENABLED
       config NRFX_SPIM0_ENABLED
         bool "Enable SPIM0 instance"
-        default y
       config NRFX_SPIM1_ENABLED
         bool "Enable SPIM1 instance"
-        default y
       config NRFX_SPIM2_ENABLED
         bool "Enable SPIM2 instance"
-        default y
-      choice NRFX_SPIM_MISO_PULL_CFG
-        prompt "MISO pin pull configuration."
-        default PREDEFINED_NRFX_SPIM_MISO_PULL_CFG_1
-        config PREDEFINED_NRFX_SPIM_MISO_PULL_CFG_0
-          bool "NRF_GPIO_PIN_NOPULL"
-        config PREDEFINED_NRFX_SPIM_MISO_PULL_CFG_1
-          bool "NRF_GPIO_PIN_PULLDOWN"
-        config PREDEFINED_NRFX_SPIM_MISO_PULL_CFG_3
-          bool "NRF_GPIO_PIN_PULLUP"
-      endchoice
-      config  NRFX_SPIM_MISO_PULL_CFG
-        int
-          default 0 if PREDEFINED_NRFX_SPIM_MISO_PULL_CFG_0
-          default 1 if PREDEFINED_NRFX_SPIM_MISO_PULL_CFG_1
-          default 3 if PREDEFINED_NRFX_SPIM_MISO_PULL_CFG_3
       choice NRFX_SPIM_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
         default PREDEFINED_NRFX_SPIM_DEFAULT_CONFIG_IRQ_PRIORITY_7
@@ -2707,18 +2058,14 @@ menu "nRF_Drivers"
     endmenu
     config NRFX_SPIS_ENABLED
       bool "nrfx_spis - SPIS peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_SPIS_ENABLED
       config NRFX_SPIS0_ENABLED
         bool "Enable SPIS0 instance"
-        default y
       config NRFX_SPIS1_ENABLED
         bool "Enable SPIS1 instance"
-        default y
       config NRFX_SPIS2_ENABLED
         bool "Enable SPIS2 instance"
-        default y
       choice NRFX_SPIS_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
         default PREDEFINED_NRFX_SPIS_DEFAULT_CONFIG_IRQ_PRIORITY_7
@@ -2749,12 +2096,6 @@ menu "nRF_Drivers"
           default 5 if PREDEFINED_NRFX_SPIS_DEFAULT_CONFIG_IRQ_PRIORITY_5
           default 6 if PREDEFINED_NRFX_SPIS_DEFAULT_CONFIG_IRQ_PRIORITY_6
           default 7 if PREDEFINED_NRFX_SPIS_DEFAULT_CONFIG_IRQ_PRIORITY_7
-      config NRFX_SPIS_DEFAULT_DEF
-        int "NRFX_SPIS_DEFAULT_DEF - SPIS default DEF character"
-        default 255
-      config NRFX_SPIS_DEFAULT_ORC
-        int "NRFX_SPIS_DEFAULT_ORC - SPIS default ORC character"
-        default 255
       config NRFX_SPIS_CONFIG_LOG_ENABLED
         bool "Enables logging in the module."
       menu "Configuration"
@@ -2852,33 +2193,14 @@ menu "nRF_Drivers"
     endmenu
     config NRFX_SPI_ENABLED
       bool "nrfx_spi - SPI peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_SPI_ENABLED
       config NRFX_SPI0_ENABLED
         bool "Enable SPI0 instance"
-        default y
       config NRFX_SPI1_ENABLED
         bool "Enable SPI1 instance"
-        default y
       config NRFX_SPI2_ENABLED
         bool "Enable SPI2 instance"
-        default y
-      choice NRFX_SPI_MISO_PULL_CFG
-        prompt "MISO pin pull configuration."
-        default PREDEFINED_NRFX_SPI_MISO_PULL_CFG_1
-        config PREDEFINED_NRFX_SPI_MISO_PULL_CFG_0
-          bool "NRF_GPIO_PIN_NOPULL"
-        config PREDEFINED_NRFX_SPI_MISO_PULL_CFG_1
-          bool "NRF_GPIO_PIN_PULLDOWN"
-        config PREDEFINED_NRFX_SPI_MISO_PULL_CFG_3
-          bool "NRF_GPIO_PIN_PULLUP"
-      endchoice
-      config  NRFX_SPI_MISO_PULL_CFG
-        int
-          default 0 if PREDEFINED_NRFX_SPI_MISO_PULL_CFG_0
-          default 1 if PREDEFINED_NRFX_SPI_MISO_PULL_CFG_1
-          default 3 if PREDEFINED_NRFX_SPI_MISO_PULL_CFG_3
       choice NRFX_SPI_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
         default PREDEFINED_NRFX_SPI_DEFAULT_CONFIG_IRQ_PRIORITY_7
@@ -3002,125 +2324,10 @@ menu "nRF_Drivers"
             default 8 if PREDEFINED_NRFX_SPI_CONFIG_DEBUG_COLOR_8
       endmenu
     endmenu
-    config NRFX_SWI_ENABLED
-      bool "nrfx_swi - SWI/EGU peripheral allocator"
-      default y
-    menu "Configuration"
-      depends on NRFX_SWI_ENABLED
-      config NRFX_EGU_ENABLED
-        bool "Enable EGU support"
-        default y
-      config NRFX_SWI0_DISABLED
-        bool "Exclude SWI0 from being utilized by the driver"
-      config NRFX_SWI1_DISABLED
-        bool "Exclude SWI1 from being utilized by the driver"
-      config NRFX_SWI2_DISABLED
-        bool "Exclude SWI2 from being utilized by the driver"
-      config NRFX_SWI3_DISABLED
-        bool "Exclude SWI3 from being utilized by the driver"
-      config NRFX_SWI4_DISABLED
-        bool "Exclude SWI4 from being utilized by the driver"
-      config NRFX_SWI5_DISABLED
-        bool "Exclude SWI5 from being utilized by the driver"
-      config NRFX_SWI_CONFIG_LOG_ENABLED
-        bool "Enables logging in the module."
-      menu "Configuration"
-        depends on NRFX_SWI_CONFIG_LOG_ENABLED
-        choice NRFX_SWI_CONFIG_LOG_LEVEL
-          prompt "Default Severity level"
-          default PREDEFINED_NRFX_SWI_CONFIG_LOG_LEVEL_3
-          config PREDEFINED_NRFX_SWI_CONFIG_LOG_LEVEL_0
-            bool "Off"
-          config PREDEFINED_NRFX_SWI_CONFIG_LOG_LEVEL_1
-            bool "Error"
-          config PREDEFINED_NRFX_SWI_CONFIG_LOG_LEVEL_2
-            bool "Warning"
-          config PREDEFINED_NRFX_SWI_CONFIG_LOG_LEVEL_3
-            bool "Info"
-          config PREDEFINED_NRFX_SWI_CONFIG_LOG_LEVEL_4
-            bool "Debug"
-        endchoice
-        config  NRFX_SWI_CONFIG_LOG_LEVEL
-          int
-            default 0 if PREDEFINED_NRFX_SWI_CONFIG_LOG_LEVEL_0
-            default 1 if PREDEFINED_NRFX_SWI_CONFIG_LOG_LEVEL_1
-            default 2 if PREDEFINED_NRFX_SWI_CONFIG_LOG_LEVEL_2
-            default 3 if PREDEFINED_NRFX_SWI_CONFIG_LOG_LEVEL_3
-            default 4 if PREDEFINED_NRFX_SWI_CONFIG_LOG_LEVEL_4
-        choice NRFX_SWI_CONFIG_INFO_COLOR
-          prompt "ANSI escape code prefix."
-          default PREDEFINED_NRFX_SWI_CONFIG_INFO_COLOR_0
-          config PREDEFINED_NRFX_SWI_CONFIG_INFO_COLOR_0
-            bool "Default"
-          config PREDEFINED_NRFX_SWI_CONFIG_INFO_COLOR_1
-            bool "Black"
-          config PREDEFINED_NRFX_SWI_CONFIG_INFO_COLOR_2
-            bool "Red"
-          config PREDEFINED_NRFX_SWI_CONFIG_INFO_COLOR_3
-            bool "Green"
-          config PREDEFINED_NRFX_SWI_CONFIG_INFO_COLOR_4
-            bool "Yellow"
-          config PREDEFINED_NRFX_SWI_CONFIG_INFO_COLOR_5
-            bool "Blue"
-          config PREDEFINED_NRFX_SWI_CONFIG_INFO_COLOR_6
-            bool "Magenta"
-          config PREDEFINED_NRFX_SWI_CONFIG_INFO_COLOR_7
-            bool "Cyan"
-          config PREDEFINED_NRFX_SWI_CONFIG_INFO_COLOR_8
-            bool "White"
-        endchoice
-        config  NRFX_SWI_CONFIG_INFO_COLOR
-          int
-            default 0 if PREDEFINED_NRFX_SWI_CONFIG_INFO_COLOR_0
-            default 1 if PREDEFINED_NRFX_SWI_CONFIG_INFO_COLOR_1
-            default 2 if PREDEFINED_NRFX_SWI_CONFIG_INFO_COLOR_2
-            default 3 if PREDEFINED_NRFX_SWI_CONFIG_INFO_COLOR_3
-            default 4 if PREDEFINED_NRFX_SWI_CONFIG_INFO_COLOR_4
-            default 5 if PREDEFINED_NRFX_SWI_CONFIG_INFO_COLOR_5
-            default 6 if PREDEFINED_NRFX_SWI_CONFIG_INFO_COLOR_6
-            default 7 if PREDEFINED_NRFX_SWI_CONFIG_INFO_COLOR_7
-            default 8 if PREDEFINED_NRFX_SWI_CONFIG_INFO_COLOR_8
-        choice NRFX_SWI_CONFIG_DEBUG_COLOR
-          prompt "ANSI escape code prefix."
-          default PREDEFINED_NRFX_SWI_CONFIG_DEBUG_COLOR_0
-          config PREDEFINED_NRFX_SWI_CONFIG_DEBUG_COLOR_0
-            bool "Default"
-          config PREDEFINED_NRFX_SWI_CONFIG_DEBUG_COLOR_1
-            bool "Black"
-          config PREDEFINED_NRFX_SWI_CONFIG_DEBUG_COLOR_2
-            bool "Red"
-          config PREDEFINED_NRFX_SWI_CONFIG_DEBUG_COLOR_3
-            bool "Green"
-          config PREDEFINED_NRFX_SWI_CONFIG_DEBUG_COLOR_4
-            bool "Yellow"
-          config PREDEFINED_NRFX_SWI_CONFIG_DEBUG_COLOR_5
-            bool "Blue"
-          config PREDEFINED_NRFX_SWI_CONFIG_DEBUG_COLOR_6
-            bool "Magenta"
-          config PREDEFINED_NRFX_SWI_CONFIG_DEBUG_COLOR_7
-            bool "Cyan"
-          config PREDEFINED_NRFX_SWI_CONFIG_DEBUG_COLOR_8
-            bool "White"
-        endchoice
-        config  NRFX_SWI_CONFIG_DEBUG_COLOR
-          int
-            default 0 if PREDEFINED_NRFX_SWI_CONFIG_DEBUG_COLOR_0
-            default 1 if PREDEFINED_NRFX_SWI_CONFIG_DEBUG_COLOR_1
-            default 2 if PREDEFINED_NRFX_SWI_CONFIG_DEBUG_COLOR_2
-            default 3 if PREDEFINED_NRFX_SWI_CONFIG_DEBUG_COLOR_3
-            default 4 if PREDEFINED_NRFX_SWI_CONFIG_DEBUG_COLOR_4
-            default 5 if PREDEFINED_NRFX_SWI_CONFIG_DEBUG_COLOR_5
-            default 6 if PREDEFINED_NRFX_SWI_CONFIG_DEBUG_COLOR_6
-            default 7 if PREDEFINED_NRFX_SWI_CONFIG_DEBUG_COLOR_7
-            default 8 if PREDEFINED_NRFX_SWI_CONFIG_DEBUG_COLOR_8
-      endmenu
-    endmenu
     config NRFX_SYSTICK_ENABLED
       bool "nrfx_systick - ARM(R) SysTick driver"
-      default y
     config NRFX_TEMP_ENABLED
       bool "nrfx_temp - TEMP peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_TEMP_ENABLED
       choice NRFX_TEMP_DEFAULT_CONFIG_IRQ_PRIORITY
@@ -3156,90 +2363,18 @@ menu "nRF_Drivers"
     endmenu
     config NRFX_TIMER_ENABLED
       bool "nrfx_timer - TIMER periperal driver"
-      default y
     menu "Configuration"
       depends on NRFX_TIMER_ENABLED
       config NRFX_TIMER0_ENABLED
         bool "Enable TIMER0 instance"
-        default y
       config NRFX_TIMER1_ENABLED
         bool "Enable TIMER1 instance"
-        default y
       config NRFX_TIMER2_ENABLED
         bool "Enable TIMER2 instance"
-        default y
       config NRFX_TIMER3_ENABLED
         bool "Enable TIMER3 instance"
-        default y
       config NRFX_TIMER4_ENABLED
         bool "Enable TIMER4 instance"
-        default y
-      choice NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY
-        prompt "Timer frequency if in Timer mode"
-        default PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY_0
-        config PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY_0
-          bool "16 MHz"
-        config PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY_1
-          bool "8 MHz"
-        config PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY_2
-          bool "4 MHz"
-        config PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY_3
-          bool "2 MHz"
-        config PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY_4
-          bool "1 MHz"
-        config PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY_5
-          bool "500 kHz"
-        config PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY_6
-          bool "250 kHz"
-        config PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY_7
-          bool "125 kHz"
-        config PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY_8
-          bool "62.5 kHz"
-        config PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY_9
-          bool "31.25 kHz"
-      endchoice
-      config  NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY
-        int
-          default 0 if PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY_0
-          default 1 if PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY_1
-          default 2 if PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY_2
-          default 3 if PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY_3
-          default 4 if PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY_4
-          default 5 if PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY_5
-          default 6 if PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY_6
-          default 7 if PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY_7
-          default 8 if PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY_8
-          default 9 if PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_FREQUENCY_9
-      choice NRFX_TIMER_DEFAULT_CONFIG_MODE
-        prompt "Timer mode or operation"
-        default PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_MODE_0
-        config PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_MODE_0
-          bool "Timer"
-        config PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_MODE_1
-          bool "Counter"
-      endchoice
-      config  NRFX_TIMER_DEFAULT_CONFIG_MODE
-        int
-          default 0 if PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_MODE_0
-          default 1 if PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_MODE_1
-      choice NRFX_TIMER_DEFAULT_CONFIG_BIT_WIDTH
-        prompt "Timer counter bit width"
-        default PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_BIT_WIDTH_0
-        config PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_BIT_WIDTH_0
-          bool "16 bit"
-        config PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_BIT_WIDTH_1
-          bool "8 bit"
-        config PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_BIT_WIDTH_2
-          bool "24 bit"
-        config PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_BIT_WIDTH_3
-          bool "32 bit"
-      endchoice
-      config  NRFX_TIMER_DEFAULT_CONFIG_BIT_WIDTH
-        int
-          default 0 if PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_BIT_WIDTH_0
-          default 1 if PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_BIT_WIDTH_1
-          default 2 if PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_BIT_WIDTH_2
-          default 3 if PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_BIT_WIDTH_3
       choice NRFX_TIMER_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
         default PREDEFINED_NRFX_TIMER_DEFAULT_CONFIG_IRQ_PRIORITY_7
@@ -3365,32 +2500,12 @@ menu "nRF_Drivers"
     endmenu
     config NRFX_TWIM_ENABLED
       bool "nrfx_twim - TWIM peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_TWIM_ENABLED
       config NRFX_TWIM0_ENABLED
         bool "Enable TWIM0 instance"
-        default y
       config NRFX_TWIM1_ENABLED
         bool "Enable TWIM1 instance"
-        default y
-      choice NRFX_TWIM_DEFAULT_CONFIG_FREQUENCY
-        prompt "Frequency"
-        default PREDEFINED_NRFX_TWIM_DEFAULT_CONFIG_FREQUENCY_26738688
-        config PREDEFINED_NRFX_TWIM_DEFAULT_CONFIG_FREQUENCY_26738688
-          bool "100k"
-        config PREDEFINED_NRFX_TWIM_DEFAULT_CONFIG_FREQUENCY_67108864
-          bool "250k"
-        config PREDEFINED_NRFX_TWIM_DEFAULT_CONFIG_FREQUENCY_104857600
-          bool "400k"
-      endchoice
-      config  NRFX_TWIM_DEFAULT_CONFIG_FREQUENCY
-        int
-          default 26738688 if PREDEFINED_NRFX_TWIM_DEFAULT_CONFIG_FREQUENCY_26738688
-          default 67108864 if PREDEFINED_NRFX_TWIM_DEFAULT_CONFIG_FREQUENCY_67108864
-          default 104857600 if PREDEFINED_NRFX_TWIM_DEFAULT_CONFIG_FREQUENCY_104857600
-      config NRFX_TWIM_DEFAULT_CONFIG_HOLD_BUS_UNINIT
-        bool "Enables bus holding after uninit"
       choice NRFX_TWIM_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
         default PREDEFINED_NRFX_TWIM_DEFAULT_CONFIG_IRQ_PRIORITY_7
@@ -3518,55 +2633,16 @@ menu "nRF_Drivers"
     endmenu
     config NRFX_TWIS_ENABLED
       bool "nrfx_twis - TWIS peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_TWIS_ENABLED
       config NRFX_TWIS0_ENABLED
         bool "Enable TWIS0 instance"
-        default y
       config NRFX_TWIS1_ENABLED
         bool "Enable TWIS1 instance"
-        default y
       config NRFX_TWIS_ASSUME_INIT_AFTER_RESET_ONLY
         bool "Assume that any instance would be initialized only once"
       config NRFX_TWIS_NO_SYNC_MODE
         bool "Remove support for synchronous mode"
-      config NRFX_TWIS_DEFAULT_CONFIG_ADDR0
-        int "NRFX_TWIS_DEFAULT_CONFIG_ADDR0 - Address0"
-        default 0
-      config NRFX_TWIS_DEFAULT_CONFIG_ADDR1
-        int "NRFX_TWIS_DEFAULT_CONFIG_ADDR1 - Address1"
-        default 0
-      choice NRFX_TWIS_DEFAULT_CONFIG_SCL_PULL
-        prompt "SCL pin pull configuration"
-        default PREDEFINED_NRFX_TWIS_DEFAULT_CONFIG_SCL_PULL_0
-        config PREDEFINED_NRFX_TWIS_DEFAULT_CONFIG_SCL_PULL_0
-          bool "Disabled"
-        config PREDEFINED_NRFX_TWIS_DEFAULT_CONFIG_SCL_PULL_1
-          bool "Pull down"
-        config PREDEFINED_NRFX_TWIS_DEFAULT_CONFIG_SCL_PULL_3
-          bool "Pull up"
-      endchoice
-      config  NRFX_TWIS_DEFAULT_CONFIG_SCL_PULL
-        int
-          default 0 if PREDEFINED_NRFX_TWIS_DEFAULT_CONFIG_SCL_PULL_0
-          default 1 if PREDEFINED_NRFX_TWIS_DEFAULT_CONFIG_SCL_PULL_1
-          default 3 if PREDEFINED_NRFX_TWIS_DEFAULT_CONFIG_SCL_PULL_3
-      choice NRFX_TWIS_DEFAULT_CONFIG_SDA_PULL
-        prompt "SDA pin pull configuration"
-        default PREDEFINED_NRFX_TWIS_DEFAULT_CONFIG_SDA_PULL_0
-        config PREDEFINED_NRFX_TWIS_DEFAULT_CONFIG_SDA_PULL_0
-          bool "Disabled"
-        config PREDEFINED_NRFX_TWIS_DEFAULT_CONFIG_SDA_PULL_1
-          bool "Pull down"
-        config PREDEFINED_NRFX_TWIS_DEFAULT_CONFIG_SDA_PULL_3
-          bool "Pull up"
-      endchoice
-      config  NRFX_TWIS_DEFAULT_CONFIG_SDA_PULL
-        int
-          default 0 if PREDEFINED_NRFX_TWIS_DEFAULT_CONFIG_SDA_PULL_0
-          default 1 if PREDEFINED_NRFX_TWIS_DEFAULT_CONFIG_SDA_PULL_1
-          default 3 if PREDEFINED_NRFX_TWIS_DEFAULT_CONFIG_SDA_PULL_3
       choice NRFX_TWIS_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
         default PREDEFINED_NRFX_TWIS_DEFAULT_CONFIG_IRQ_PRIORITY_7
@@ -3692,32 +2768,12 @@ menu "nRF_Drivers"
     endmenu
     config NRFX_TWI_ENABLED
       bool "nrfx_twi - TWI peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_TWI_ENABLED
       config NRFX_TWI0_ENABLED
         bool "Enable TWI0 instance"
-        default y
       config NRFX_TWI1_ENABLED
         bool "Enable TWI1 instance"
-        default y
-      choice NRFX_TWI_DEFAULT_CONFIG_FREQUENCY
-        prompt "Frequency"
-        default PREDEFINED_NRFX_TWI_DEFAULT_CONFIG_FREQUENCY_26738688
-        config PREDEFINED_NRFX_TWI_DEFAULT_CONFIG_FREQUENCY_26738688
-          bool "100k"
-        config PREDEFINED_NRFX_TWI_DEFAULT_CONFIG_FREQUENCY_67108864
-          bool "250k"
-        config PREDEFINED_NRFX_TWI_DEFAULT_CONFIG_FREQUENCY_104857600
-          bool "400k"
-      endchoice
-      config  NRFX_TWI_DEFAULT_CONFIG_FREQUENCY
-        int
-          default 26738688 if PREDEFINED_NRFX_TWI_DEFAULT_CONFIG_FREQUENCY_26738688
-          default 67108864 if PREDEFINED_NRFX_TWI_DEFAULT_CONFIG_FREQUENCY_67108864
-          default 104857600 if PREDEFINED_NRFX_TWI_DEFAULT_CONFIG_FREQUENCY_104857600
-      config NRFX_TWI_DEFAULT_CONFIG_HOLD_BUS_UNINIT
-        bool "Enables bus holding after uninit"
       choice NRFX_TWI_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
         default PREDEFINED_NRFX_TWI_DEFAULT_CONFIG_IRQ_PRIORITY_7
@@ -3843,96 +2899,10 @@ menu "nRF_Drivers"
     endmenu
     config NRFX_UARTE_ENABLED
       bool "nrfx_uarte - UARTE peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_UARTE_ENABLED
       config NRFX_UARTE0_ENABLED
-        bool "NRFX_UARTE0_ENABLED - Enable UARTE0 instance"
-        default y
-      choice NRFX_UARTE_DEFAULT_CONFIG_HWFC
-        prompt "Hardware Flow Control"
-        default PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_HWFC_0
-        config PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_HWFC_0
-          bool "Disabled"
-        config PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_HWFC_1
-          bool "Enabled"
-      endchoice
-      config  NRFX_UARTE_DEFAULT_CONFIG_HWFC
-        int
-          default 0 if PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_HWFC_0
-          default 1 if PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_HWFC_1
-      choice NRFX_UARTE_DEFAULT_CONFIG_PARITY
-        prompt "Parity"
-        default PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_PARITY_0
-        config PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_PARITY_0
-          bool "Excluded"
-        config PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_PARITY_14
-          bool "Included"
-      endchoice
-      config  NRFX_UARTE_DEFAULT_CONFIG_PARITY
-        int
-          default 0 if PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_PARITY_0
-          default 14 if PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_PARITY_14
-      choice NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE
-        prompt "Default Baudrate"
-        default PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_30801920
-        config PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_323584
-          bool "1200 baud"
-        config PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_643072
-          bool "2400 baud"
-        config PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_1290240
-          bool "4800 baud"
-        config PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_2576384
-          bool "9600 baud"
-        config PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_3862528
-          bool "14400 baud"
-        config PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_5152768
-          bool "19200 baud"
-        config PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_7716864
-          bool "28800 baud"
-        config PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_8388608
-          bool "31250 baud"
-        config PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_10289152
-          bool "38400 baud"
-        config PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_15007744
-          bool "56000 baud"
-        config PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_15400960
-          bool "57600 baud"
-        config PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_20615168
-          bool "76800 baud"
-        config PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_30801920
-          bool "115200 baud"
-        config PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_61865984
-          bool "230400 baud"
-        config PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_67108864
-          bool "250000 baud"
-        config PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_121634816
-          bool "460800 baud"
-        config PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_251658240
-          bool "921600 baud"
-        config PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_268435456
-          bool "1000000 baud"
-      endchoice
-      config  NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE
-        int
-          default 323584 if PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_323584
-          default 643072 if PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_643072
-          default 1290240 if PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_1290240
-          default 2576384 if PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_2576384
-          default 3862528 if PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_3862528
-          default 5152768 if PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_5152768
-          default 7716864 if PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_7716864
-          default 8388608 if PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_8388608
-          default 10289152 if PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_10289152
-          default 15007744 if PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_15007744
-          default 15400960 if PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_15400960
-          default 20615168 if PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_20615168
-          default 30801920 if PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_30801920
-          default 61865984 if PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_61865984
-          default 67108864 if PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_67108864
-          default 121634816 if PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_121634816
-          default 251658240 if PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_251658240
-          default 268435456 if PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_BAUDRATE_268435456
+        bool "Enable UARTE0 instance"
       choice NRFX_UARTE_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
         default PREDEFINED_NRFX_UARTE_DEFAULT_CONFIG_IRQ_PRIORITY_7
@@ -4058,96 +3028,10 @@ menu "nRF_Drivers"
     endmenu
     config NRFX_UART_ENABLED
       bool "nrfx_uart - UART peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_UART_ENABLED
       config NRFX_UART0_ENABLED
-        bool "NRFX_UART0_ENABLED - Enable UART0 instance"
-        default y
-      choice NRFX_UART_DEFAULT_CONFIG_HWFC
-        prompt "Hardware Flow Control"
-        default PREDEFINED_NRFX_UART_DEFAULT_CONFIG_HWFC_0
-        config PREDEFINED_NRFX_UART_DEFAULT_CONFIG_HWFC_0
-          bool "Disabled"
-        config PREDEFINED_NRFX_UART_DEFAULT_CONFIG_HWFC_1
-          bool "Enabled"
-      endchoice
-      config  NRFX_UART_DEFAULT_CONFIG_HWFC
-        int
-          default 0 if PREDEFINED_NRFX_UART_DEFAULT_CONFIG_HWFC_0
-          default 1 if PREDEFINED_NRFX_UART_DEFAULT_CONFIG_HWFC_1
-      choice NRFX_UART_DEFAULT_CONFIG_PARITY
-        prompt "Parity"
-        default PREDEFINED_NRFX_UART_DEFAULT_CONFIG_PARITY_0
-        config PREDEFINED_NRFX_UART_DEFAULT_CONFIG_PARITY_0
-          bool "Excluded"
-        config PREDEFINED_NRFX_UART_DEFAULT_CONFIG_PARITY_14
-          bool "Included"
-      endchoice
-      config  NRFX_UART_DEFAULT_CONFIG_PARITY
-        int
-          default 0 if PREDEFINED_NRFX_UART_DEFAULT_CONFIG_PARITY_0
-          default 14 if PREDEFINED_NRFX_UART_DEFAULT_CONFIG_PARITY_14
-      choice NRFX_UART_DEFAULT_CONFIG_BAUDRATE
-        prompt "Default Baudrate"
-        default PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_30924800
-        config PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_323584
-          bool "1200 baud"
-        config PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_643072
-          bool "2400 baud"
-        config PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_1290240
-          bool "4800 baud"
-        config PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_2576384
-          bool "9600 baud"
-        config PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_3866624
-          bool "14400 baud"
-        config PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_5152768
-          bool "19200 baud"
-        config PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_7729152
-          bool "28800 baud"
-        config PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_8388608
-          bool "31250 baud"
-        config PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_10309632
-          bool "38400 baud"
-        config PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_15007744
-          bool "56000 baud"
-        config PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_15462400
-          bool "57600 baud"
-        config PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_20615168
-          bool "76800 baud"
-        config PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_30924800
-          bool "115200 baud"
-        config PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_61845504
-          bool "230400 baud"
-        config PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_67108864
-          bool "250000 baud"
-        config PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_123695104
-          bool "460800 baud"
-        config PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_247386112
-          bool "921600 baud"
-        config PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_268435456
-          bool "1000000 baud"
-      endchoice
-      config  NRFX_UART_DEFAULT_CONFIG_BAUDRATE
-        int
-          default 323584 if PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_323584
-          default 643072 if PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_643072
-          default 1290240 if PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_1290240
-          default 2576384 if PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_2576384
-          default 3866624 if PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_3866624
-          default 5152768 if PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_5152768
-          default 7729152 if PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_7729152
-          default 8388608 if PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_8388608
-          default 10309632 if PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_10309632
-          default 15007744 if PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_15007744
-          default 15462400 if PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_15462400
-          default 20615168 if PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_20615168
-          default 30924800 if PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_30924800
-          default 61845504 if PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_61845504
-          default 67108864 if PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_67108864
-          default 123695104 if PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_123695104
-          default 247386112 if PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_247386112
-          default 268435456 if PREDEFINED_NRFX_UART_DEFAULT_CONFIG_BAUDRATE_268435456
+        bool "Enable UART0 instance"
       choice NRFX_UART_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
         default PREDEFINED_NRFX_UART_DEFAULT_CONFIG_IRQ_PRIORITY_7
@@ -4273,30 +3157,10 @@ menu "nRF_Drivers"
     endmenu
     config NRFX_WDT_ENABLED
       bool "nrfx_wdt - WDT peripheral driver"
-      default y
     menu "Configuration"
       depends on NRFX_WDT_ENABLED
-      choice NRFX_WDT_CONFIG_BEHAVIOUR
-        prompt "WDT behavior in CPU SLEEP or HALT mode"
-        default PREDEFINED_NRFX_WDT_CONFIG_BEHAVIOUR_1
-        config PREDEFINED_NRFX_WDT_CONFIG_BEHAVIOUR_1
-          bool "Run in SLEEP, Pause in HALT"
-        config PREDEFINED_NRFX_WDT_CONFIG_BEHAVIOUR_8
-          bool "Pause in SLEEP, Run in HALT"
-        config PREDEFINED_NRFX_WDT_CONFIG_BEHAVIOUR_9
-          bool "Run in SLEEP and HALT"
-        config PREDEFINED_NRFX_WDT_CONFIG_BEHAVIOUR_0
-          bool "Pause in SLEEP and HALT"
-      endchoice
-      config  NRFX_WDT_CONFIG_BEHAVIOUR
-        int
-          default 1 if PREDEFINED_NRFX_WDT_CONFIG_BEHAVIOUR_1
-          default 8 if PREDEFINED_NRFX_WDT_CONFIG_BEHAVIOUR_8
-          default 9 if PREDEFINED_NRFX_WDT_CONFIG_BEHAVIOUR_9
-          default 0 if PREDEFINED_NRFX_WDT_CONFIG_BEHAVIOUR_0
-      config NRFX_WDT_CONFIG_RELOAD_VALUE
-        int "NRFX_WDT_CONFIG_RELOAD_VALUE - Reload value"
-        default 2000
+      config NRFX_WDT0_ENABLED
+        bool "Enable WDT0 instance"
       choice NRFX_WDT_CONFIG_NO_IRQ
         prompt "Remove WDT IRQ handling from WDT driver"
         default PREDEFINED_NRFX_WDT_CONFIG_NO_IRQ_0
@@ -4309,36 +3173,36 @@ menu "nRF_Drivers"
         int
           default 0 if PREDEFINED_NRFX_WDT_CONFIG_NO_IRQ_0
           default 1 if PREDEFINED_NRFX_WDT_CONFIG_NO_IRQ_1
-      choice NRFX_WDT_CONFIG_IRQ_PRIORITY
+      choice NRFX_WDT_DEFAULT_CONFIG_IRQ_PRIORITY
         prompt "Interrupt priority"
-        default PREDEFINED_NRFX_WDT_CONFIG_IRQ_PRIORITY_7
-        config PREDEFINED_NRFX_WDT_CONFIG_IRQ_PRIORITY_0
+        default PREDEFINED_NRFX_WDT_DEFAULT_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_WDT_DEFAULT_CONFIG_IRQ_PRIORITY_0
           bool "0 (highest)"
-        config PREDEFINED_NRFX_WDT_CONFIG_IRQ_PRIORITY_1
+        config PREDEFINED_NRFX_WDT_DEFAULT_CONFIG_IRQ_PRIORITY_1
           bool "1"
-        config PREDEFINED_NRFX_WDT_CONFIG_IRQ_PRIORITY_2
+        config PREDEFINED_NRFX_WDT_DEFAULT_CONFIG_IRQ_PRIORITY_2
           bool "2"
-        config PREDEFINED_NRFX_WDT_CONFIG_IRQ_PRIORITY_3
+        config PREDEFINED_NRFX_WDT_DEFAULT_CONFIG_IRQ_PRIORITY_3
           bool "3"
-        config PREDEFINED_NRFX_WDT_CONFIG_IRQ_PRIORITY_4
+        config PREDEFINED_NRFX_WDT_DEFAULT_CONFIG_IRQ_PRIORITY_4
           bool "4"
-        config PREDEFINED_NRFX_WDT_CONFIG_IRQ_PRIORITY_5
+        config PREDEFINED_NRFX_WDT_DEFAULT_CONFIG_IRQ_PRIORITY_5
           bool "5"
-        config PREDEFINED_NRFX_WDT_CONFIG_IRQ_PRIORITY_6
+        config PREDEFINED_NRFX_WDT_DEFAULT_CONFIG_IRQ_PRIORITY_6
           bool "6"
-        config PREDEFINED_NRFX_WDT_CONFIG_IRQ_PRIORITY_7
+        config PREDEFINED_NRFX_WDT_DEFAULT_CONFIG_IRQ_PRIORITY_7
           bool "7"
       endchoice
-      config  NRFX_WDT_CONFIG_IRQ_PRIORITY
+      config  NRFX_WDT_DEFAULT_CONFIG_IRQ_PRIORITY
         int
-          default 0 if PREDEFINED_NRFX_WDT_CONFIG_IRQ_PRIORITY_0
-          default 1 if PREDEFINED_NRFX_WDT_CONFIG_IRQ_PRIORITY_1
-          default 2 if PREDEFINED_NRFX_WDT_CONFIG_IRQ_PRIORITY_2
-          default 3 if PREDEFINED_NRFX_WDT_CONFIG_IRQ_PRIORITY_3
-          default 4 if PREDEFINED_NRFX_WDT_CONFIG_IRQ_PRIORITY_4
-          default 5 if PREDEFINED_NRFX_WDT_CONFIG_IRQ_PRIORITY_5
-          default 6 if PREDEFINED_NRFX_WDT_CONFIG_IRQ_PRIORITY_6
-          default 7 if PREDEFINED_NRFX_WDT_CONFIG_IRQ_PRIORITY_7
+          default 0 if PREDEFINED_NRFX_WDT_DEFAULT_CONFIG_IRQ_PRIORITY_0
+          default 1 if PREDEFINED_NRFX_WDT_DEFAULT_CONFIG_IRQ_PRIORITY_1
+          default 2 if PREDEFINED_NRFX_WDT_DEFAULT_CONFIG_IRQ_PRIORITY_2
+          default 3 if PREDEFINED_NRFX_WDT_DEFAULT_CONFIG_IRQ_PRIORITY_3
+          default 4 if PREDEFINED_NRFX_WDT_DEFAULT_CONFIG_IRQ_PRIORITY_4
+          default 5 if PREDEFINED_NRFX_WDT_DEFAULT_CONFIG_IRQ_PRIORITY_5
+          default 6 if PREDEFINED_NRFX_WDT_DEFAULT_CONFIG_IRQ_PRIORITY_6
+          default 7 if PREDEFINED_NRFX_WDT_DEFAULT_CONFIG_IRQ_PRIORITY_7
       config NRFX_WDT_CONFIG_LOG_ENABLED
         bool "Enables logging in the module."
       menu "Configuration"

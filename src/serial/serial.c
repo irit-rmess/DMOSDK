@@ -134,9 +134,8 @@ static void serial_receive_task(void * pvParameter)
 
 int serial_init()
 {
-    nrfx_uart_config_t config = NRFX_UART_DEFAULT_CONFIG;
-    config.pseltxd = TX_PIN;
-    config.pselrxd = RX_PIN;
+    nrfx_uart_config_t config = NRFX_UART_DEFAULT_CONFIG(TX_PIN, RX_PIN);
+    config.baudrate = SERIAL_DEFAULT_BAUDRATE;
     nrfx_err_t res = nrfx_uart_init(&serial, &config, uart_event_handler);
     if (res != NRFX_SUCCESS)
         return 1;

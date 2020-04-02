@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 - 2019, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2020, Nordic Semiconductor ASA
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -243,8 +243,8 @@ extern "C" {
 /** @brief Bitmask that defines PPI groups that are reserved for use outside of the nrfx library. */
 #define NRFX_PPI_GROUPS_USED    0
 
-/** @brief Bitmask that defines SWI instances that are reserved for use outside of the nrfx library. */
-#define NRFX_SWI_USED           0
+/** @brief Bitmask that defines EGU instances that are reserved for use outside of the nrfx library. */
+#define NRFX_EGUS_USED          0
 
 /** @brief Bitmask that defines TIMER instances that are reserved for use outside of the nrfx library. */
 #define NRFX_TIMERS_USED        0

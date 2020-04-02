@@ -272,8 +272,10 @@ SRC_C += \
   $(NRFX_PATH)/drivers/src/nrfx_clock.c \
   $(NRFX_PATH)/drivers/src/nrfx_comp.c \
   $(NRFX_PATH)/drivers/src/nrfx_dppi.c \
+  $(NRFX_PATH)/drivers/src/nrfx_egu.c \
   $(NRFX_PATH)/drivers/src/nrfx_gpiote.c \
   $(NRFX_PATH)/drivers/src/nrfx_i2s.c \
+  $(NRFX_PATH)/drivers/src/nrfx_ipc.c \
   $(NRFX_PATH)/drivers/src/nrfx_lpcomp.c \
   $(NRFX_PATH)/drivers/src/nrfx_nfct.c \
   $(NRFX_PATH)/drivers/src/nrfx_nvmc.c \
@@ -289,20 +291,19 @@ SRC_C += \
   $(NRFX_PATH)/drivers/src/nrfx_spi.c \
   $(NRFX_PATH)/drivers/src/nrfx_spim.c \
   $(NRFX_PATH)/drivers/src/nrfx_spis.c \
-  $(NRFX_PATH)/drivers/src/nrfx_swi.c \
   $(NRFX_PATH)/drivers/src/nrfx_systick.c \
   $(NRFX_PATH)/drivers/src/nrfx_temp.c \
   $(NRFX_PATH)/drivers/src/nrfx_timer.c \
   $(NRFX_PATH)/drivers/src/nrfx_twi.c \
+  $(NRFX_PATH)/drivers/src/nrfx_twi_twim.c \
   $(NRFX_PATH)/drivers/src/nrfx_twim.c \
   $(NRFX_PATH)/drivers/src/nrfx_twis.c \
   $(NRFX_PATH)/drivers/src/nrfx_uart.c \
   $(NRFX_PATH)/drivers/src/nrfx_uarte.c \
   $(NRFX_PATH)/drivers/src/nrfx_usbd.c \
+  $(NRFX_PATH)/drivers/src/nrfx_usbreg.c \
   $(NRFX_PATH)/drivers/src/nrfx_wdt.c \
   $(NRFX_PATH)/drivers/src/prs/nrfx_prs.c \
-  $(NRFX_PATH)/hal/nrf_ecb.c \
-  $(NRFX_PATH)/hal/nrf_nvmc.c \
   $(NRFX_PATH)/mdk/system_nrf52.c \
   $(NRFX_PATH)/soc/nrfx_atomic.c \
 

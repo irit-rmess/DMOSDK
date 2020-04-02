@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 - 2019, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2020, Nordic Semiconductor ASA
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -167,12 +167,16 @@ nrfx_err_t nrfx_i2s_init(nrfx_i2s_config_t const * p_config,
                          NRFX_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
+
+#if NRF_I2S_HAS_CLKCONFIG
+    nrf_i2s_clk_configure(NRF_I2S, p_config->clksrc, p_config->enable_bypass);
+#endif
     configure_pins(p_config);
 
     m_cb.handler = handler;
 
-    NRFX_IRQ_PRIORITY_SET(I2S_IRQn, p_config->irq_priority);
-    NRFX_IRQ_ENABLE(I2S_IRQn);
+    NRFX_IRQ_PRIORITY_SET(nrfx_get_irq_number(NRF_I2S), p_config->irq_priority);
+    NRFX_IRQ_ENABLE(nrfx_get_irq_number(NRF_I2S));
 
     m_cb.state = NRFX_DRV_STATE_INITIALIZED;
 
@@ -187,7 +191,7 @@ void nrfx_i2s_uninit(void)
 
     nrfx_i2s_stop();
 
-    NRFX_IRQ_DISABLE(I2S_IRQn);
+    NRFX_IRQ_DISABLE(nrfx_get_irq_number(NRF_I2S));
 
     nrf_i2s_pins_set(NRF_I2S,
                      NRF_I2S_PIN_NOT_CONNECTED,
@@ -377,12 +381,18 @@ void nrfx_i2s_irq_handler(void)
         nrf_i2s_disable(NRF_I2S);
 
         // When stopped, release all buffers, including these scheduled for
-        // the next transfer.
-        m_cb.handler(&m_cb.current_buffers, 0);
-        m_cb.handler(&m_cb.next_buffers, 0);
+        // the next part of the transfer, and signal that the transfer has
+        // finished.
 
+        m_cb.handler(&m_cb.current_buffers, 0);
+
+        // Change the state of the driver before calling the handler with
+        // the flag signaling that the transfer has finished, so that it is
+        // possible to start a new transfer directly from the handler function.
         m_cb.state = NRFX_DRV_STATE_INITIALIZED;
         NRFX_LOG_INFO("Stopped.");
+
+        m_cb.handler(&m_cb.next_buffers, NRFX_I2S_STATUS_TRANSFER_STOPPED);
     }
     else
     {
