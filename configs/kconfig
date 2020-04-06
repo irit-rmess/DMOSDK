@@ -1,5 +1,5 @@
 # DMOSDK - DecaWave Module Open Software Development Kit
-# Copyright (C) 2018-2019 IRIT-RMESS
+# Copyright (C) 2018-2020 IRIT-RMESS
 #
 # This file is part of DMOSDK.
 #
