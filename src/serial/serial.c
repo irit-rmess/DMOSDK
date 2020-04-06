@@ -26,6 +26,9 @@
 
 #include "serial.h"
 
+#define SERIAL_DEFAULT_NRF_UART_BAUDRATE(baudrate) NRF_UART_BAUDRATE_ ## baudrate
+#define SERIAL_DEFAULT_NRF_UART_BAUDRATE_FROM_DEFINE(def) SERIAL_DEFAULT_NRF_UART_BAUDRATE(def)
+
 #define TX_PIN 5  // DWM1001 module pin 20
 #define RX_PIN 11 // DWM1001 module pin 18
 
@@ -135,7 +138,7 @@ static void serial_receive_task(void * pvParameter)
 int serial_init()
 {
     nrfx_uart_config_t config = NRFX_UART_DEFAULT_CONFIG(TX_PIN, RX_PIN);
-    config.baudrate = SERIAL_DEFAULT_BAUDRATE;
+    config.baudrate = SERIAL_DEFAULT_NRF_UART_BAUDRATE_FROM_DEFINE(SERIAL_DEFAULT_BAUDRATE);
     nrfx_err_t res = nrfx_uart_init(&serial, &config, uart_event_handler);
     if (res != NRFX_SUCCESS)
         return 1;
