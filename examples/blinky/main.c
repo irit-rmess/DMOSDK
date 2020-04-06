@@ -24,44 +24,15 @@
  * This file contains the source code for a sample application using FreeRTOS to blink a LED. Adapted from nRF5_SDK's blinky example.
  *
  */
-
 #include <stdbool.h>
-#include <stdint.h>
 
 #include "FreeRTOS.h"
 #include "task.h"
-#include "nrf_gpio.h"
-
-#define LED_PIN 13
-
-#define TASK_DELAY 100
-
-TaskHandle_t  led_toggle_task_handle;   /**< Reference to LED toggling FreeRTOS task. */
-
-/**@brief LED task entry function.
- *
- * @param[in] pvParameter Pointer that will be used as the parameter for the task.
- */
-static void led_toggle_task_function (void * pvParameter)
-{
-    while (true)
-    {
-        nrf_gpio_pin_toggle(LED_PIN);
-
-        /* Delay a task for a given number of ticks */
-        vTaskDelay(TASK_DELAY);
-
-        /* Tasks must be implemented to never return... */
-    }
-}
+#include "heartbeat.h"
 
 int main(void)
 {
-    /* Configure LED-pins as outputs */
-    nrf_gpio_cfg_output(LED_PIN);
-
-    /* Create task for led blinking with priority set to 1 */
-    xTaskCreate(led_toggle_task_function, "led", configMINIMAL_STACK_SIZE, NULL, 1, &led_toggle_task_handle);
+    heartbeat_init();
 
     /* Start FreeRTOS scheduler. */
     vTaskStartScheduler();

@@ -57,7 +57,7 @@ static void hello_world_task_function (void * pvParameter)
 
 int main(void)
 {
-    serial_init();
+    configASSERT(serial_init() == 0);
 
     xTaskCreate(
             hello_world_task_function,
